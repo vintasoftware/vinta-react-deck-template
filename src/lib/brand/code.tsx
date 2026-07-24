@@ -84,7 +84,10 @@ export function CodeBlock({
               padding: dots ? "58px 30px 28px" : "28px 30px",
               fontSize,
               lineHeight: 1.62,
-              whiteSpace: "pre",
+              // Wrap over-long lines instead of clipping them at the window edge
+              // (which also let overflow leak off-slide in PDF/PPTX exports).
+              whiteSpace: "pre-wrap",
+              overflowWrap: "anywhere",
               color: t.plain.color,
             }}
           >

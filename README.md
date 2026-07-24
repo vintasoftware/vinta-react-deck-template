@@ -18,7 +18,6 @@ npm run dev      # http://localhost:5173  → your deck
 |---|---|---|
 | `/` | **Your main slides** — build your presentation here | `src/slides/` |
 | `/template` | The 50 official Vinta template slides (reference/starter) | `src/template/` |
-| `/examples` | Semantic component patterns to copy from | `src/examples/` |
 
 - **`src/lib/`** — the UI library (single entrypoint `@/lib`): `Deck`, `Slide`, `Place`, typography,
   shapes, `Photo`, `CodeBlock`, layout and content blocks. Fully typed with JSDoc.

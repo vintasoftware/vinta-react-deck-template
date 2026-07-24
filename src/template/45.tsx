@@ -19,7 +19,7 @@ export interface Slide45Props {
 
 /** Fixed contact slots — left edge + label/value max width, preserved from the original. */
 const POS = [
-  { x: 101, lMax: 200, vMax: 394 },
+  { x: 101, lMax: 200, vMax: 540 },
   { x: 799, lMax: 201, vMax: 234 },
 ];
 

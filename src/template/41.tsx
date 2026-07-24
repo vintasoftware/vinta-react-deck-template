@@ -1,4 +1,4 @@
-import { CodeBlock, Photo, Place, Slide, Text } from "@/lib";
+import { CodeBlock, Photo, Place, Slide, Stack, Text } from "@/lib";
 
 export const meta = { title: "Slide 41" };
 
@@ -45,14 +45,12 @@ export default function Slide41({
       <Place x={885.1} y={148.2} w={948.1} h={832.8}>
         <CodeBlock theme="dark" language={language} fontSize={fontSize} code={code} />
       </Place>
-      <Place x={106.1} y={284.5}>
-        <Text size={71} weight={700} color="#000000" leading={1.14} maxWidth={452}>{title}</Text>
-      </Place>
-      <Place x={101} y={411.4}>
-        <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={558}>{body[0]}</Text>
-      </Place>
-      <Place x={101} y={611.4}>
-        <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={539}>{body[1]}</Text>
+      <Place x={101} y={284.5} w={575}>
+        <Stack gap={40}>
+          <Text size={71} weight={700} color="#000000" leading={1.14} maxWidth={452}>{title}</Text>
+          <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={558}>{body[0]}</Text>
+          <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={539}>{body[1]}</Text>
+        </Stack>
       </Place>
     </Slide>
   );

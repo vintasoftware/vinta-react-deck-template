@@ -1,5 +1,4 @@
-import { Photo, Place, Slide, Text } from "@/lib";
-import { Fragment } from "react";
+import { Photo, Place, Slide, Stack, Text } from "@/lib";
 
 export const meta = { title: "Slide 11" };
 
@@ -21,16 +20,8 @@ export interface Slide11Props {
   features?: Slide11Feature[];
 }
 
-/**
- * Fixed feature-row slots (shared left edge x=1151). Slots 0–1 render a bold
- * heading at `titleY` plus a paragraph at `textY`; slot 2 renders a single
- * combined block (`title\ntext`) at `textY`, preserved from the original.
- */
-const FEATURE_POS = [
-  { titleY: 303.2, textY: 363.2, combined: false },
-  { titleY: 541.2, textY: 601.2, combined: false },
-  { titleY: 0, textY: 779.2, combined: true },
-];
+/** Fixed feature-row top edges (shared left edge x=1151), one per icon. */
+const FEATURE_Y = [303.2, 541.2, 775];
 
 // Parametrized reproduction of the official template's Slide 11 (feature-card grid).
 export default function Slide11({
@@ -59,26 +50,14 @@ export default function Slide11({
       <Place x={70.8} y={774.1}>
         <Text size={26.9} weight={500} color="#FFFFFF" leading={1.32} maxWidth={626}>{overlayBody}</Text>
       </Place>
-      {features.slice(0, 3).map((f, i) => {
-        const p = FEATURE_POS[i];
-        if (p.combined) {
-          return (
-            <Place key={i} x={1151} y={p.textY}>
-              <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={641}>{`${f.title}\n${f.text}`}</Text>
-            </Place>
-          );
-        }
-        return (
-          <Fragment key={i}>
-            <Place x={1151} y={p.titleY}>
-              <Text size={33.9} weight={700} color="#000000" leading={1.32} maxWidth={362}>{f.title}</Text>
-            </Place>
-            <Place x={1151} y={p.textY}>
-              <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={641}>{f.text}</Text>
-            </Place>
-          </Fragment>
-        );
-      })}
+      {features.slice(0, 3).map((f, i) => (
+        <Place key={i} x={1151} y={FEATURE_Y[i]} w={660}>
+          <Stack gap={16}>
+            <Text size={33.9} weight={700} color="#000000" leading={1.32} maxWidth={362}>{f.title}</Text>
+            <Text size={26.9} weight={500} color="#000000" leading={1.32} maxWidth={641}>{f.text}</Text>
+          </Stack>
+        </Place>
+      ))}
     </Slide>
   );
 }

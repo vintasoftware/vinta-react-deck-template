@@ -77,8 +77,9 @@ the copy. Even in custom slides, respect the defined patterns — spacing (~96px
 scale, and the color tokens.
 
 **06 · Codes — use the built-in `<CodeBlock>`.** Code is a real, editable, syntax-highlighted
-component (via `prism-react-renderer`) — no external tools or pasted screenshots. Choose the theme by
-background, set the `language`, and pass the source as `code`; size and position it with `<Place>`:
+component (via `prism-react-renderer`) — no external tools or pasted screenshots. Do not render
+more than 60 characthers per line. Choose the theme by background, set the `language`, and pass 
+the source as `code`; size and position it with `<Place>`:
 - **Blue / dark background** → `theme="dark"`
 - **White background** → `theme="light"`
 

@@ -1,4 +1,4 @@
-import { Photo, Place, Slide, Text } from "@/lib";
+import { Photo, Place, Slide, Stack, Text } from "@/lib";
 
 export const meta = { title: "Slide 29" };
 
@@ -13,7 +13,7 @@ export interface Slide29Props {
 
 // Parametrized reproduction of the official template's Slide 29 (text + hero collage).
 export default function Slide29({
-  title = "Insert very long\n text here",
+  title = "Insert very\nlong text here",
   body = "Lorem ipsum dolor sit amet consectetur\nadipiscing elit etiam nec suscipit dui sed\ncursus nibh id risus ultrices convallis\nphasellus vel tristique diam nam placerat\naliquet libero.",
   photo = "img-9109dff5c4.png",
 }: Slide29Props = {}) {
@@ -26,11 +26,11 @@ export default function Slide29({
       <Place x={1636} y={742} w={89.35} h={87.82}><Photo src="img-ffe9cade81.png" /></Place>
       <Place x={1151.21} y={917.96} w={87.79} h={88}><Photo src="img-0bb0126824.png" /></Place>
       <Place x={0} y={514.51} w={1101} h={565.49}><Photo src={photo} inner={{ x: -68.47, y: -115.8, w: 1169.47, h: 849.81 }} /></Place>
-      <Place x={1239} y={254.4}>
-        <Text size={71} weight={700} color="#000000" leading={1.14} maxWidth={487}>{title}</Text>
-      </Place>
-      <Place x={1239} y={463.1}>
-        <Text size={24.7} weight={500} color="#0052FF" leading={1.32} maxWidth={562}>{body}</Text>
+      <Place x={1239} y={254.4} w={575}>
+        <Stack gap={36}>
+          <Text size={71} weight={700} color="#000000" leading={1.14} maxWidth={487}>{title}</Text>
+          <Text size={24.7} weight={500} color="#0052FF" leading={1.32} maxWidth={562}>{body}</Text>
+        </Stack>
       </Place>
     </Slide>
   );

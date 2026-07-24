@@ -19,9 +19,9 @@ export interface Slide48Props {
 
 /** Fixed contact columns — left edge + value max width, preserved from the original. */
 const POS = [
-  { x: 101, vMax: 289 },
-  { x: 1047, vMax: 200 },
-  { x: 1730, vMax: 200 },
+  { x: 101, vMax: 345 },
+  { x: 1047, vMax: 300 },
+  { x: 1560, vMax: 300 },
 ];
 
 // Parametrized reproduction of the official template's Slide 48 (thanks / closing).

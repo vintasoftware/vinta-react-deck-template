@@ -103,3 +103,13 @@
 body.deck-print {
   overflow: auto;
 }
+
+/* Chromium's PDF/print renderer tiles large blur box-shadows and leaves visible
+   seams (the code window looked "broken" in the PDF export), so drop the shadow
+   under print media. The on-screen slideshow and the PPTX background screenshot
+   (both screen media) keep the full shadow. */
+@media print {
+  .code-win {
+    box-shadow: none !important;
+  }
+}

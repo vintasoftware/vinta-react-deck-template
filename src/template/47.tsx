@@ -21,9 +21,9 @@ export interface Slide47Props {
 
 /** Fixed right-column contact slots — label/value y + value max width, preserved from the original. */
 const POS = [
-  { ly: 108.8, vy: 192.8, vMax: 596 },
-  { ly: 472.8, vy: 556.8, vMax: 374 },
-  { ly: 836.8, vy: 920.8, vMax: 374 },
+  { ly: 108.8, vy: 192.8, vMax: 745 },
+  { ly: 472.8, vy: 556.8, vMax: 745 },
+  { ly: 836.8, vy: 920.8, vMax: 745 },
 ];
 
 // Parametrized reproduction of the official template's Slide 47 (thanks / closing, split).

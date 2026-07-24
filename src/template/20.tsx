@@ -11,8 +11,8 @@ export interface Slide20Props {
 
 // Parametrized reproduction of the official template's Slide 20 (big statement over photo).
 export default function Slide20({
-  kicker = "Texto",
-  statement = "Clique nesta\ncaixa para editar\no texto",
+  kicker = "Text",
+  statement = "Edit the\nvery long copy\non this box",
 }: Slide20Props = {}) {
   return (
     <Slide bg="white" pad={false}>
