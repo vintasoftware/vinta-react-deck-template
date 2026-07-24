@@ -17,7 +17,6 @@ decks by URL:
 |---|---|---|---|
 | `/` | **Your deck** — author here | `src/slides/` | what you build |
 | `/template` | 50 official Vinta layouts | `src/template/` | reference / copy from |
-| `/examples` | component patterns | `src/examples/` | reference / copy from |
 
 Build a deck by **adapting an existing layout** and filling it with content — never by inventing a new
 visual style. Everything imports from the single entrypoint **`@/lib`**.
@@ -25,12 +24,12 @@ visual style. Everything imports from the single entrypoint **`@/lib`**.
 ## Workflow
 
 1. `cd vinta-react-deck-template` — run `npm install` once, then `npm run dev` (→ http://localhost:5173, your deck at `/`).
-2. **Pick a layout.** Browse `/template` (all 50) and `/examples` (cover, columns, cards, pipeline, stat, team, code, thanks). Find the closest match to the content.
-3. **Add the slide.** Create `src/slides/NN-name.tsx` (two-digit prefix sets the order; auto-discovered, no registry edit). Start by copying the closest `src/template/NN.tsx` or `src/examples/*.tsx`, then replace its content.
+2. **Pick a layout.** Browse `/template` (all 50). Find the closest match to the content.
+3. **Add the slide.** Create `src/slides/NN-name.tsx` (two-digit prefix sets the order; auto-discovered, no registry edit). Start by copying the closest `src/template/NN.tsx`, then replace its content.
 4. Keep the `<Slide>` (a fixed 1920×1080 canvas). Prefer flow layout components over absolute `<Place>`.
 5. **Verify.** Screenshot at native size via `http://localhost:5173/?shot=N`, and run `npx tsc -b`.
 
-For a runnable starting point, copy the closest real slide from `src/template/` or `src/examples/`
+For a runnable starting point, copy the closest real slide from `src/template/`
 rather than writing one from scratch. The slide anatomy, full component catalog, design tokens and
 archetype recipes live in **`vinta-react-deck-template/AUTHORING.md`** (with a minimal-slide walkthrough
 in § Add a slide) — read it for anything beyond the brand rules below.
@@ -40,7 +39,7 @@ in § Add a slide) — read it for anything beyond the brand rules below.
 ## Brand rules — adapted from the official template's "Dicas para melhor uso deste Template"
 
 **01 · The slides — reuse layouts, don't reinvent.** There is an extensive set of ready layouts
-(`/template`, `/examples`); prefer adapting one over designing something new. Change only the *content*
+(`/template`); prefer adapting one over designing something new. Change only the *content*
 (text, photos, code), not the visual system. Compose from the layout and content components — the full
 catalog is in AUTHORING.md § Component catalog.
 
@@ -90,4 +89,4 @@ Optional props: `fontSize` (px), `dots` (the window's traffic-light dots, on by 
 - **Set the cover/closing:** edit `src/slides/01-cover.tsx` and the closing slide (title, `MetaRow`, contact).
 - **Reorder:** rename files (the `NN-` prefix drives order).
 - **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid.
-- **Turn an outline into a deck:** map each section to the closest layout from `/template`/`/examples`, create one `src/slides/NN-*.tsx` per slide, then screenshot-check each with `?shot=N`.
+- **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.tsx` per slide, then screenshot-check each with `?shot=N`.
