@@ -13,19 +13,23 @@ export interface Slide16Props {
 // (the bullets) aligned to the title at x≈158.4. `MARKER` reserves room for the native
 // bullet inside that edge, so the text sits just to its right.
 const MARKER = 34;
+// Fixed height per item. Sized to hold up to 2 wrapped lines (2 × 32.3 × 1.32 ≈ 85px)
+// plus breathing room, so a longer item never pushes the bullets below it out of place.
+const ROW = 120;
 const LIST = {
   x: 158.4,
   y: 370.9,
-  w: 1160.2,
-  colGap: 416.2,
-  height: 490,
+  w: 1440,
+  colGap: 96,
+  // Four fixed rows per column (+ slack so rounding never spills a 4th item early).
+  height: ROW * 4 + 10,
 };
 
 // Parametrized reproduction of the official template's Slide 16 (bulleted list).
 export default function Slide16({
   title = "Text here",
   items = [
-    "Insert text here",
+    "Insert text here very long text to test the wrapping of the text in the list",
     "Insert text here",
     "Insert text here",
     "Insert text here",
@@ -67,9 +71,24 @@ export default function Slide16({
             color: "#000000",
           }}
         >
+          {/* No `overflow` on the <li>: it would clip the outside list marker. The
+              inner text does its own 2-line clamp, so the fixed height is never exceeded. */}
           {items.slice(0, 8).map((item, i) => (
-            <li key={i} style={{ breakInside: "avoid", marginBottom: 79 }}>
-              <Text size={32.3} weight={700} color="#000000" leading={1.32}>{item}</Text>
+            <li key={i} style={{ breakInside: "avoid", height: ROW }}>
+              <Text
+                size={32.3}
+                weight={700}
+                color="#000000"
+                leading={1.32}
+                style={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                  overflow: "hidden",
+                }}
+              >
+                {item}
+              </Text>
             </li>
           ))}
         </ul>

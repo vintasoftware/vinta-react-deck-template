@@ -154,7 +154,8 @@ Blue kicker/title on the left; white heading + paragraph over a photo panel on t
 ```
 
 ### 16 · Bulleted list (2 cols × 4)
-- `title?: string` (blue) · `items?: string[]` (up to 8; include the `"● "` bullet in the string)
+- `title?: string` (blue) · `items?: string[]` (up to 8; plain text — the bullet marker is rendered natively, don't prefix `"● "`)
+- Each item is capped at **2 lines** (fixed-height rows keep the bullets aligned); longer text is truncated, so keep items short
 
 ### 18 · Five numbered feature blocks
 - `items?: {number, title, text}[]` (up to 5)
