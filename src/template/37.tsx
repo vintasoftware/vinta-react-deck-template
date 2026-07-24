@@ -33,7 +33,7 @@ export default function Slide37({
   title = "Insert long text here",
   code = DEFAULT_CODE,
   language = "js",
-  fontSize = 36,
+  fontSize = 32,
 }: Slide37Props = {}) {
   return (
     <Slide bg="white" pad={false}>
