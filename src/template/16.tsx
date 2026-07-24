@@ -9,30 +9,30 @@ export interface Slide16Props {
   items?: string[];
 }
 
-/** Fixed slots for the bullet items, left-to-right then top-to-bottom, preserved from the original. */
-const ITEM_POS = [
-  { x: 158.2, y: 370.9 },
-  { x: 946.4, y: 370.9 },
-  { x: 158.2, y: 497.6 },
-  { x: 946.4, y: 497.6 },
-  { x: 158.2, y: 617.3 },
-  { x: 946.4, y: 617.3 },
-  { x: 158.2, y: 737 },
-  { x: 946.4, y: 737 },
-];
+// The list spans the footprint of the original 2×4 fixed slots, with its left edge
+// (the bullets) aligned to the title at x≈158.4. `MARKER` reserves room for the native
+// bullet inside that edge, so the text sits just to its right.
+const MARKER = 34;
+const LIST = {
+  x: 158.4,
+  y: 370.9,
+  w: 1160.2,
+  colGap: 416.2,
+  height: 490,
+};
 
 // Parametrized reproduction of the official template's Slide 16 (bulleted list).
 export default function Slide16({
-  title = "Texto",
+  title = "Text here",
   items = [
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
-    "● Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
+    "Insert text here",
   ],
 }: Slide16Props = {}) {
   return (
@@ -44,13 +44,36 @@ export default function Slide16({
       <Place x={79.3} y={921.62} w={0} h={0}><Shape n={13} fit="cover" /></Place>
       <Place x={158.38} y={999.87} w={0} h={0}><Shape n={21} fit="cover" /></Place>
       <Place x={158.4} y={199.4}>
-        <Text size={71} weight={700} color="#0052FF" leading={1.14} maxWidth={236}>{title}</Text>
+        <Text size={71} weight={700} color="#0052FF" leading={1.14} maxWidth={900}>{title}</Text>
       </Place>
-      {items.slice(0, 8).map((item, i) => (
-        <Place key={i} x={ITEM_POS[i].x} y={ITEM_POS[i].y}>
-          <Text size={32.3} weight={700} color="#000000" leading={1.32} maxWidth={372}>{item}</Text>
-        </Place>
-      ))}
+      <Place x={LIST.x} y={LIST.y} w={LIST.w}>
+        {/* Single semantic list flowing into two columns: items fill the left
+            column top-to-bottom first, then spill into the right. */}
+        <ul
+          style={{
+            columnCount: 2,
+            columnGap: LIST.colGap,
+            columnFill: "auto",
+            height: LIST.height,
+            margin: 0,
+            paddingInlineStart: MARKER,
+            listStyleType: "disc",
+            listStylePosition: "outside",
+            // The native marker inherits these; matching them to the text keeps the
+            // bullet sized and colored like the copy, with wrapped lines hanging under it.
+            fontSize: 32.3,
+            fontWeight: 700,
+            lineHeight: 1.32,
+            color: "#000000",
+          }}
+        >
+          {items.slice(0, 8).map((item, i) => (
+            <li key={i} style={{ breakInside: "avoid", marginBottom: 79 }}>
+              <Text size={32.3} weight={700} color="#000000" leading={1.32}>{item}</Text>
+            </li>
+          ))}
+        </ul>
+      </Place>
     </Slide>
   );
 }
