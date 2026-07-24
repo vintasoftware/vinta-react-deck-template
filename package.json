@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Vinta 2023 presentation template as a reusable React + Tailwind slide-deck library",
   "scripts": {
+    "init": "node scripts/init.mjs",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
