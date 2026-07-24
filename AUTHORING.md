@@ -17,11 +17,11 @@ npm run build          # typecheck + production build
 **Slideshow controls:** `←/→` or `Space` move · `Home/End` jump to ends · type a number then
 `Enter` to jump · `f` fullscreen · `o` overview grid · `#/N` deep-links slide N.
 
-**Three decks (by URL path):**
+**Two decks (by URL path):**
 - `/` → **your main slides** (`src/slides/`) — this is where you build your presentation.
-- `/template` → the faithful 50-slide reproduction of the official Vinta 2023 template
-  (`src/template/`) — the reference/starter to copy from.
-- `/examples` → semantic component patterns (`src/examples/`) to imitate when authoring.
+- `/template` → the 50 official Vinta 2023 layouts (`src/template/`), each a **parametrized component**
+  (`Slide01`–`Slide50`) whose defaults reproduce the official slide exactly. Import one and pass your
+  content as props — per-slide props and examples are in **`src/template/CATALOG.md`**.
 
 **URL modes (handy for screenshots):** `?solo=N` one slide, chromeless · `?shot=N` one slide at native
 1920×1080 from the origin · `?print` every slide stacked. They apply to whichever deck the path selects
@@ -30,6 +30,10 @@ npm run build          # typecheck + production build
 ---
 
 ## Add a slide
+
+**Fastest path:** import a ready layout from `@/template` and pass props —
+`import { Slide12 } from "@/template"` then `<Slide12 title=… stats={…} />`. All 50 are catalogued with
+their props in **`src/template/CATALOG.md`**. Build from the `@/lib` primitives below only for bespoke slides.
 
 1. Create `src/slides/NN-name.tsx` — this is your main deck at `/`. (Files are auto-discovered and
    **ordered by filename** — no registry edit.) Use a two-digit prefix, e.g. `04-results.tsx`.
@@ -161,4 +165,4 @@ Type scale → `text-cover` (96) `text-thanks` (112) `text-h2` (56) `text-h3` (2
 </TeamGrid>
 ```
 
-See `src/examples/*.tsx` for full, working versions of each.
+For full, working slides see the 50 parametrized layouts in `src/template/` (props in `src/template/CATALOG.md`).
