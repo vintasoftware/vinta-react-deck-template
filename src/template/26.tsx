@@ -1,37 +1,43 @@
-import { Photo, Place, Slide, Text } from "@/lib";
+import { Donut, Photo, Place, Slide, Text } from "@/lib";
 import { Fragment } from "react";
 
 export const meta = { title: "Slide 26" };
 
 export interface Slide26Panel {
-  /** Big number on the panel (white), e.g. "10M". */
+  /** Big number in the gauge center (white), e.g. "10M". */
   stat: string;
-  /** Short heading under the number (white). */
+  /** Gauge fill, 0–1. Drives how much of the ring is drawn. */
+  percent?: number;
+  /** Short heading under the gauge (white). */
   title: string;
   /** Caption under the heading (white). Use `\n` for line breaks. */
   caption: string;
-  /** Optional panel photo src. Falls back to the slot's default. */
-  photo?: string;
+  /** Arc color override (defaults to the deep-blue ring). */
+  color?: string;
 }
 
 export interface Slide26Props {
-  /** Up to 3 panels (stat + title + caption + photo). Extra items are ignored. */
+  /** Up to 3 panels (gauge + stat + title + caption). Extra items are ignored. */
   panels?: Slide26Panel[];
 }
 
-/** Fixed 3-panel slots — photo box, stat x, and text-column x, preserved from the original. */
+/** Fixed 3-column slots — gauge center x and the text-column x, preserved from the original. */
 const PANEL_POS = [
-  { photo: { src: "img-a82a2279c5.png", x: -104.55, y: 126.37, w: 900, h: 556.5 }, statX: 280.6, textX: 95.4 },
-  { photo: { src: "img-25a6cedeec.png", x: 503.29, y: 126.37, w: 900, h: 556.5 }, statX: 895.2, textX: 710 },
-  { photo: { src: "img-a82a2279c5.png", x: 1112.01, y: 126.37, w: 900, h: 556.5 }, statX: 1496.3, textX: 1311.1 },
+  { cx: 345.4, textX: 95.4 },
+  { cx: 960, textX: 710 },
+  { cx: 1561.1, textX: 1311.1 },
 ];
 
-// Parametrized reproduction of the official template's Slide 26 (3-panel stats).
+const GAUGE = 400;
+/** Gauge top — sits it low enough that its base nearly meets the title below. */
+const GAUGE_Y = 250;
+
+// Parametrized reproduction of the official template's Slide 26 (3-panel radial gauges).
 export default function Slide26({
   panels = [
-    { stat: "10M", title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
-    { stat: "10M", title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
-    { stat: "10M", title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
+    { stat: "10M", percent: 0.25, title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
+    { stat: "10M", percent: 0.66, title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
+    { stat: "10M", percent: 0.25, title: "Insert text here", caption: "Lectus enim adipiscing suspendisse\nviverra cras facilisi blandit celolr\nscelerisque facilisis" },
   ],
 }: Slide26Props = {}) {
   return (
@@ -45,9 +51,16 @@ export default function Slide26({
         const pos = PANEL_POS[i];
         return (
           <Fragment key={i}>
-            <Place x={pos.photo.x} y={pos.photo.y} w={pos.photo.w} h={pos.photo.h}><Photo src={p.photo ?? pos.photo.src} /></Place>
-            <Place x={pos.statX} y={376.6}>
-              <Text size={53.8} weight={700} color="#FFFFFF" leading={1.14} maxWidth={200}>{p.stat}</Text>
+            <Place x={pos.cx - GAUGE / 2} y={GAUGE_Y}>
+              <Donut
+                percent={p.percent ?? 0.5}
+                value={p.stat}
+                size={GAUGE}
+                thickness={62}
+                color={p.color ?? "#0040c8"}
+                track="rgba(255,255,255,0.18)"
+                valueColor="#ffffff"
+              />
             </Place>
             <Place x={pos.textX} y={697.7} w={500}>
               <Text size={51.6} weight={700} color="#FFFFFF" align="center" leading={1.14}>{p.title}</Text>

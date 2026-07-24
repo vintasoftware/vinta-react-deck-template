@@ -59,8 +59,8 @@ Prefer a layout close to your content over forcing content into the wrong one. W
 | Numbered & bulleted lists | 10, 14, 16, 18, 19 |
 | Feature-card grids | 11, 15, 17, 33 |
 | Stats & metrics | 12, 13, 22 |
-| Charts & diagrams | 23 (funnel), 24 (donut) |
-| Image showcase / comparison | 25, 26, 27, 28, 29 |
+| Charts & diagrams | 23 (bar), 24 (pie), 25 (column), 26 (gauges) |
+| Image showcase / comparison | 27, 28, 29 |
 | Logo / badge grids | 31, 32 |
 | Code | 35, 36, 37, 38, 39, 40, 41 |
 | Team grids | 42, 43, 44 |
@@ -206,22 +206,30 @@ The `"N. "` index is prepended automatically.
 
 ## Charts & diagrams
 
-### 23 · Funnel / pyramid
-Value labels sit on the funnel diagram (which is fixed decoration).
-- `title?: string` · `body?: string` · `values?: string[]` (up to 4, top → bottom)
+Charts render dynamically from data (SVG), so they scale to any dataset — no image assets.
+The underlying primitives (`BarChart`, `PieChart`, `ColumnChart`, `Donut`) live in `@/lib`.
 
-### 24 · Donut chart + legend
-- `title?: string` · `values?: string[]` (up to 3 percentage labels) · `legend?: string[]` (up to 3)
+### 23 · Horizontal bar chart
+Bars, on-bar values and the value axis all scale to the data.
+- `title?: string` · `body?: string`
+- `data?: {label, value, valueLabel?, color?}[]` (top → bottom) · `max?: number` (axis bound, auto by default)
+
+### 24 · Pie chart + legend
+Slice sizes, the on-slice `%` and the legend all derive from `data`.
+- `title?: string`
+- `data?: {value, color, label?, labelColor?}[]` (up to 3 in the legend)
+
+### 25 · Grouped column chart
+- `title?: string`
+- `series?: {name, color}[]` (legend) · `groups?: {label, values[]}[]` (one value per series) · `max?: number`
+
+### 26 · Three radial-gauge panels
+Each panel is a `Donut` gauge with the stat in its center.
+- `panels?: {stat, percent?, title, caption, color?}[]` (up to 3)
 
 ---
 
 ## Image showcase / comparison
-
-### 25 · Centered title + one large image
-- `title?: string` · `image?: string` (the subject image src)
-
-### 26 · Three stat panels
-- `panels?: {stat, title, caption, photo?}[]` (up to 3)
 
 ### 27 · Centered title + intro over an image band
 - `title?: string` (blue) · `body?: string[]` (two centered blocks)
