@@ -13,9 +13,12 @@ export interface Slide36Props {
   fontSize?: number;
 }
 
-const DEFAULT_CODE = `const pluckDeep = key => obj => key.split('.').reduce((accum, key) => accum[key], obj)
+const DEFAULT_CODE = `const pluckDeep = key => obj =>
+  key.split('.')
+    .reduce((accum, k) => accum[k], obj)
 
-const compose = (...fns) => res => fns.reduce((accum, next) => next(accum), res)
+const compose = (...fns) => res =>
+  fns.reduce((accum, next) => next(accum), res)
 
 const unfold = (f, seed) => {
   const go = (f, seed, acc) => {
