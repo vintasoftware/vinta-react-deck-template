@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { ModePanel, Row } from './live'
+
+<Meta title="01 Foundations/05 Modes & Contrast" />
+
+# Modes & Contrast
+
+**Decision:** the deck has 3 semantic modes. Slides are **light by default**; covers and dividers
+use **invert**. Of the 24 source screens, 17 were light and 7 inverted — invert is the exception, not the
+rule. Contrast targets **AA** on all text (the deck goes on a projector, not close-up reading).
+
+<Row>
+  <ModePanel mode="light" label="light — slide default" />
+  <ModePanel mode="invert-blue" label="invert-blue — covers/Divider" />
+  <ModePanel mode="invert-navy" label="invert-navy — dark variant" />
+</Row>
+
+## Core guardrail: an accent never carries a title
+
+An accent (any of the 5 secondaries) is a **detail/marker** — tick, underline, label,
+card tint. It is never the color of a title or of a block of running text. Text emphasis
+on a colored surface is always **white**, never an accent.
+
+`cyan` is the strictest case: it fails contrast on a light background (~1.4:1) and on blue itself
+(~1.9:1, same color family) — it only works as text on `invert-navy`. In those two cases the
+accent system already resolves to white automatically (see tokens.css).
+
+## Do / Don't
+
+**Do**
+- Light by default; reserve invert for cover/divider/transition moment.
+- Pick the mode by semantic role (`data-mode`), never apply a loose color.
+- Always target AA — the projector washes out contrast, weak text disappears.
+
+**Don't**
+- Use an accent as a title color.
+- Use `cyan` as text outside `invert-navy`.
+- Mix two modes in the same content block (e.g. light text inside an invert card).

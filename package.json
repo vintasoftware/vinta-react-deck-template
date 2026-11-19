@@ -14,6 +14,10 @@
     "export:pdf": "node scripts/export-deck.mjs --format pdf",
     "export:pptx": "node scripts/export-deck.mjs --format pptx",
     "build-deck": "node scripts/build-deck.mjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "gallery": "node scripts/gallery.mjs --serve",
+    "gallery:build": "node scripts/gallery.mjs",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
@@ -26,6 +30,10 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.7",
+    "@storybook/addon-docs": "^10.6.7",
+    "@storybook/addon-mcp": "^10.6.7",
+    "@storybook/react-vite": "^10.6.7",
     "@tailwindcss/vite": "^4.1.13",
     "@types/node": "^22.20.0",
     "@types/react": "^18.3.12",
@@ -34,6 +42,8 @@
     "pdf-lib": "^1.17.1",
     "playwright": "^1.61.1",
     "pptxgenjs": "^4.0.1",
+    "remark-gfm": "^4.0.1",
+    "storybook": "^10.6.7",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.6.3",
     "vite": "^6.0.3"

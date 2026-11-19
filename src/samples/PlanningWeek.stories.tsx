@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CalendarCheck, Flag, Users } from 'lucide-react'
 import { SlideCover } from '../components/patterns/SlideCover'
 import { SlideAgenda } from '../components/patterns/SlideAgenda'

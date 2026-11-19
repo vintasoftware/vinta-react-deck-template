@@ -1,59 +1,31 @@
-import type { ComponentProps, JSXElementConstructor, ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { DeckSlide } from "@/lib/deck";
 
-// The pattern examples (`patterns/*/*.stories.tsx`) and the sample decks (`src/samples/`) keep the
-// Component Story Format they were written in for the vinta-slidedeck Storybook. There is no
-// Storybook here: these minimal types stand in for `@storybook/react-vite`, and `storySlides()`
-// turns each story into a deck slide, so `/patterns` and `/samples` browse them with the normal
-// deck runtime (overview, presenter window, export…).
+// The pattern examples (`patterns/*/*.stories.tsx`) and the sample decks (`src/samples/`) are Storybook stories
+// (Component Story Format; `npm run storybook`). `storySlides()` also turns each story into a deck slide, so
+// `/patterns` and `/samples` show them in the normal deck runtime (overview, presenter window, export…).
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyComponent = JSXElementConstructor<any>;
-
-/** The default export of a story file. */
-export interface Meta<C extends AnyComponent = AnyComponent> {
+/** The parts of a story's default export the deck needs. */
+interface StoryMeta {
   /** "Patterns/SlideCover", "Samples/Northwind Pilot"… The last segment names the slides. */
   title: string;
-  /** Rendered with each story's `args` when the story has no `render`. */
-  component?: C;
-  args?: Partial<ComponentProps<C>>;
-  tags?: string[];
-  parameters?: StoryParameters;
-  /** Storybook controls config. Kept for reference; unused here. */
-  argTypes?: Record<string, unknown>;
+  component?: ComponentType<Record<string, unknown>>;
+  args?: Record<string, unknown>;
+  parameters?: { notes?: string };
 }
 
-export interface StoryParameters {
-  /** Speaker notes for the presenter window (`p`). */
-  notes?: string;
-  [key: string]: unknown;
-}
-
-type RequiredKeys<T> = { [K in keyof T]-?: object extends Pick<T, K> ? never : K }[keyof T];
-/** The story's args: the component's props, with the required ones the meta's `args` doesn't cover still required. */
-type StoryArgs<M, P> = [Exclude<RequiredKeys<P>, M extends { args: infer A } ? keyof A : never>] extends [infer Missing extends keyof P]
-  ? [Missing] extends [never]
-    ? { args?: Partial<P> }
-    : { args: Partial<P> & Pick<P, Missing> }
-  : never;
-
-interface StoryBase {
-  /** Label in the overview / HUD. Defaults to the export name ("TwoColumns" → "Two Columns"). */
+/** The parts of one story (a named export) the deck needs. */
+interface Story {
   name?: string;
-  render?: () => ReactNode;
-  parameters?: StoryParameters;
+  args?: Record<string, unknown>;
+  render?: (...args: never[]) => ReactNode;
+  /** `parameters.notes` become the slide's speaker notes in the presenter window. */
+  parameters?: { notes?: string };
 }
-
-/**
- * One named export of a story file = one slide. As in Storybook, `args` is required when the
- * component has required props the meta's `args` doesn't cover.
- */
-export type StoryObj<M = Meta> = StoryBase &
-  (M extends { component: infer C extends AnyComponent } ? StoryArgs<M, ComponentProps<C>> : { args?: Record<string, unknown> });
 
 /** Shape of a story module as loaded by `import.meta.glob`. */
 export interface StoryModule {
-  default: Meta;
+  default: StoryMeta;
   /** Story export names in source order; added to every `*.stories.tsx` by a plugin in vite.config.ts. */
   __namedExportsOrder?: string[];
   [exportName: string]: unknown;
@@ -75,10 +47,11 @@ export function storySlides(modules: Record<string, StoryModule>, idPrefix: stri
       return names
         .filter((name) => isStory(mod[name]))
         .map((name): DeckSlide => {
-          const story = mod[name] as StoryBase & { args?: Record<string, unknown> };
+          const story = mod[name] as Story;
           const Comp = meta.component;
           const args = { ...meta.args, ...story.args };
-          const Component = () => <>{story.render ? story.render() : Comp ? <Comp {...args} /> : null}</>;
+          const render = story.render as (() => ReactNode) | undefined;
+          const Component = () => <>{render ? render() : Comp ? <Comp {...args} /> : null}</>;
           Component.displayName = `${group}.${name}`;
           return {
             id: `${idPrefix}-${group.replace(/\W+/g, "-")}-${name}`,
@@ -90,6 +63,6 @@ export function storySlides(modules: Record<string, StoryModule>, idPrefix: stri
     });
 }
 
-function isStory(value: unknown): value is StoryBase {
+function isStory(value: unknown): value is Story {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }

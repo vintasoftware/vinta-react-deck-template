@@ -5,8 +5,11 @@
 `src/components/tokens.css`. It is the Vinta presentation look (vintasoftware.com) and the only slide system in
 this repo: every slide in a deck is one of these patterns.
 
-- **Browse:** `/patterns` shows every example of every pattern (press `o` for the grid, `p` for the
-  presenter window). `/samples` shows complete sample presentations built only from patterns.
+- **Browse:** the **template gallery** (`npm run gallery`, port 6007) shows every template by use with
+  plain-language labels — the page for non-technical users. **Storybook** (`npm run storybook`, port 6006) has
+  every pattern and element with its props (*Docs* tab) and the foundations pages. In the deck app, `/patterns`
+  shows every example as a slide (press `o` for the grid, `p` for the presenter window) and `/samples` the sample
+  presentations.
 - **Use in a `.tsx` slide:** import from the single entrypoint `@/components`:
 
   ```tsx
@@ -23,9 +26,9 @@ this repo: every slide in a deck is one of these patterns.
   ```
 
 - **Use in a `.md` slide:** `template: SlideCover` (or `cover`) in the frontmatter — see MARKDOWN.md.
-- **Examples:** every pattern has `patterns/<Name>/<Name>.stories.tsx` (Component Story Format, kept from the
-  slidedeck's Storybook; `story.tsx` stands in for Storybook's types). Copy their props as a starting point.
-  `src/samples/*.stories.tsx` are whole decks.
+- **Examples:** every pattern and element has a Storybook story next to it (`<Name>.stories.tsx`). Copy their props
+  as a starting point. `src/samples/*.stories.tsx` are whole decks (one story per slide). The deck app reads the
+  same pattern and sample stories for `/patterns` and `/samples` (`story.tsx`).
 - **Everything else works on every slide:** speaker notes (`meta.notes`), presenter window, overview,
   `?shot=N` / `?print`, PDF/PPTX (`npm run export`) and the Claude artifact (`npm run build-deck`, publish-deck skill).
 - **Integration notes:** every pattern renders inside `SlideShell` (or the full-screen `Divider`), whose root
@@ -216,6 +219,40 @@ Code: `CodeWindow` (navy code card with a mono file label and syntax colors from
 Common props: `mode` (`light | light-tint | invert-blue | invert-navy`) and `accent`
 (`blue | cyan | purple | mint | rose | orange`). The accent resolves to the right shade for the mode
 (see `tokens.css`, "Configurable accent"); cyan and blue fall back to white in `invert-blue`.
+
+---
+
+## Creating a new element or pattern
+
+- **Name by function** (`SpectrumTrack`, not `ConfidenceTrack`); patterns may be named after a screen.
+- Folder with `X.tsx`, `X.module.css`, `index.ts`, `X.stories.tsx`. Props with JSDoc (feeds Storybook's autodocs).
+  Export it from `src/components/index.ts`.
+- Tokens only. No literal color/font/size. Mode and accent via `data-mode` / `data-accent`.
+- A new element needs a story with the relevant modes and variants. A new pattern's stories (`title: 'Patterns/X'`,
+  `parameters: { layout: 'fullscreen' }`) also become its slides at `/patterns`.
+- Stop and show the user before continuing when: a token is missing, you need an element that does not exist,
+  or a pattern requires a Tier 3 color.
+
+## Importing from Figma (exact copy)
+
+File `0S546H4QgffNj4L22cMxUQ`, page "Auditoria Business Proposal" (node `426:202`).
+`get_design_context` + `get_screenshot` for the screen; `download_assets` for images (the URLs expire in 7 days:
+download them with `curl` to `public/assets/<screen>/`). For a clean background: clone the frame onto a temporary Figma
+page, delete text and elements, export PNG, **delete the temporary page and confirm**. Frames from HTML imports
+have insets in % (×19.2 horizontal, ×10.8 vertical) and `scale-65` wrappers that shrink the text (50px → 32.5px).
+Font becomes DM Sans/DM Mono; an exact color within ΔE<3 of a token uses the token, otherwise it goes in as Tier 3.
+
+## Verification and maintenance
+
+- Clean `npx tsc -b` and passing `npm run build-storybook` (and `npm run build`) before calling anything done.
+- **Template gallery** (`gallery/`, the page non-technical users open with `npm run gallery`): after adding or
+  changing a pattern, a story or a sample, run `npm run gallery:build` (`--skip-existing` to reshoot only new
+  stories). The gallery's categories (by use, in deck order) and plain-language labels live in
+  `scripts/gallery-catalog.mjs`: a new pattern must be added there (and to the pattern catalog tables above, where
+  the limits come from), or it lands in "Uncategorized" and the script prints a warning.
+- `docs/foundations.md` and `docs/layout.md` are the written source of truth; Storybook is the visual truth.
+  If they diverge, tell the user. (vinta-slidedeck regenerates the token reference in `docs/foundations.md` with
+  `npm run sync-harness`; that script is not ported here, so update that section by hand when a token changes.)
 
 ---
 

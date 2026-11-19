@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CodeXml, Compass, Database, Gauge, Workflow, Wallet, Puzzle } from 'lucide-react'
 import { SlideVsTable } from './SlideVsTable'
 

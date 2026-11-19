@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { SlideComparison } from './SlideComparison'
 import { Highlight } from '../../elements/Highlight'
 

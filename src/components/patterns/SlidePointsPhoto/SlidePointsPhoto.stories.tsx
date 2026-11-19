@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Users, KeyRound, CalendarCheck, Handshake, MessageSquareText, ClipboardPenLine, Blocks } from 'lucide-react'
 import { SlidePointsPhoto } from './SlidePointsPhoto'
 

@@ -35,6 +35,15 @@ Carried over from vinta-slidedeck where they still apply, plus what is specific 
 - Animated product mocks are captured with reduced motion (a still frame).
 - Box shadows are dropped in the PDF (Chromium prints large blurred shadows as gray boxes); the PPTX background keeps them.
 
+## Storybook and the gallery
+
+- Ported without slidedeck's Vitest (`@storybook/addon-vitest`) and Chromatic addons, so stories aren't run as
+  tests; the a11y addon reports in the Storybook UI only (`a11y.test: 'todo'`).
+- `npm run sync-harness` (regenerates the token reference in `docs/foundations.md` from `tokens.css`) isn't ported:
+  update that section by hand when a token changes.
+- Storybook's dev server compiles each story on first open, so the first `npm run gallery` takes a few minutes;
+  later runs can use `--skip-existing`.
+
 ## Repository
 
-- `output/` (artifacts) and `export/` (PDF/PPTX) are gitignored.
+- `output/` (artifacts), `export/` (PDF/PPTX), `gallery/` and `storybook-static/` are gitignored.

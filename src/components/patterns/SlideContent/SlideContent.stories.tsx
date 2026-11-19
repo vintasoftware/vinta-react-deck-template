@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Stethoscope, KeyRound, Users, Handshake } from 'lucide-react'
 import { SlideContent } from './SlideContent'
 import { Highlight } from '../../elements/Highlight'

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { SlideCover } from '../components/patterns/SlideCover'
 import { SlideNumberedGrid } from '../components/patterns/SlideNumberedGrid'
 import { SlideAgenda } from '../components/patterns/SlideAgenda'

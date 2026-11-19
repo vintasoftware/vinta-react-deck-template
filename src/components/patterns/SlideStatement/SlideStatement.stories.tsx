@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CalendarCheck, Receipt, ShieldCheck } from 'lucide-react'
 import { SlideStatement } from './SlideStatement'
 

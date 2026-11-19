@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Highlight } from '../../elements/Highlight'
 import { SlideOrgTeam } from './SlideOrgTeam'
 

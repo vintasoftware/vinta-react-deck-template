@@ -16,11 +16,13 @@ font, size or icon; if no pattern fits, say so instead of creating a style. Writ
 in whatever language the user asks for (ask if the brief doesn't say — Portuguese runs longer, so recheck limits).
 (Workflow ported from vinta-slidedeck's new-deck skill.)
 
-| URL | Deck | Folder |
+| Where | What | Folder |
 |---|---|---|
-| `/` | **The user's deck** — author here | `src/slides/` |
+| `/` (`npm run dev`, :5173) | **The user's deck** — author here | `src/slides/` |
 | `/patterns` | Every pattern, one slide per example | `src/components/patterns/` |
 | `/samples` | Sample presentations with fictional data | `src/samples/` |
+| `npm run gallery` (:6007) | Template gallery for non-technical users: templates by use, limits, samples, the deck | `scripts/gallery*.mjs` |
+| `npm run storybook` (:6006) | Every pattern and element with props (*Docs* tab), foundations | `.storybook/` |
 
 `npm install` once, then `npm run dev` (→ http://localhost:5173).
 
@@ -46,7 +48,8 @@ in whatever language the user asks for (ask if the brief doesn't say — Portugu
 
 ## 2. Pick the patterns and propose the outline
 
-Use the CATALOG.md tables; prefer the site-look, vivid and generic patterns for new content; use the Figma
+Use the CATALOG.md tables (and the gallery for a visual pick, if the user wants to see options); prefer the
+site-look, vivid and generic patterns for new content; use the Figma
 "Classic" screens only when the user asks for the original approved screens (fixed number of items). Code goes in
 `SlideCode`. Write titles two-tone: `title` (line 1) + `accent` (line 2). Respect the text and item limits.
 

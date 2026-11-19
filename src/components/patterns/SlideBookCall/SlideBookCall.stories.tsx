@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { SlideBookCall } from './SlideBookCall'
 import { PhotoSlot } from '../../elements/PhotoSlot'
 import { Body } from '../../elements/Body'

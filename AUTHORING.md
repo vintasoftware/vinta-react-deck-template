@@ -79,10 +79,11 @@ markdown body fills it (paragraph above `#` = eyebrow, `#` title, a second `#` =
 
 ## Picking and filling a pattern
 
-- **Pick** at `/patterns` (press `o`); `CATALOG.md` lists every pattern with its use, main props and limits,
-  grouped by family, plus the typical sales-deck sequence. `/samples` shows whole decks.
+- **Pick** in the template gallery (`npm run gallery`), Storybook (`npm run storybook`) or at `/patterns` (press
+  `o`); `CATALOG.md` lists every pattern with its use, main props and limits, grouped by family, plus the typical
+  sales-deck sequence. `/samples` (or *Samples* in Storybook) shows whole decks.
 - **Fill** from the examples in `patterns/<Name>/<Name>.stories.tsx` — every story's `args` is a working set of
-  props. Prop types and JSDoc are in `patterns/<Name>/<Name>.tsx`.
+  props. Prop types and JSDoc are in `patterns/<Name>/<Name>.tsx` (Storybook's *Docs* tab shows them).
 - **Two-tone titles:** `title` (line 1, ink) + `accent` (line 2, blue; turquoise on dark). Headers sit at the top.
 - **Generic patterns take `tone`** (`light` · `invert-blue` · `invert-navy`) to switch background; change the
   tone instead of touching colors. Others have `variant` / `background`.
@@ -118,7 +119,7 @@ When no pattern fits and the user agrees to a new composition, build it from ele
 `<SlideShell mode safeArea background={<VividBackground variant="wash" />}>` with `SlideHeader` on top
 (padding `112px 144px 120px`), tokens only. `SlideShell` is what scopes the design-system styles (`.vds`), so
 every slide needs it. A slide that would be reused belongs in `src/components/patterns/` as a new pattern, with
-a story — see CATALOG.md for the conventions.
+a story and an entry in `scripts/gallery-catalog.mjs` — see CATALOG.md, "Creating a new element or pattern".
 
 ---
 
@@ -126,7 +127,9 @@ a story — see CATALOG.md for the conventions.
 
 - `src/lib/` (`@/lib`) — the runtime: `Deck` (navigation, overview, HUD, capture modes), the presenter window and
   its sync, the markdown parser. Slides are plain components rendered on a 1920×1080 stage.
-- `src/components/` (`@/components`) — patterns, elements, tokens (`tokens.css`), the markdown → pattern mappers
-  (`markdown.tsx`, `markdownSlide.tsx`) and the story helpers behind `/patterns` and `/samples` (`story.tsx`).
+- `src/components/` (`@/components`) — patterns, elements and their Storybook stories, tokens (`tokens.css`), the
+  markdown → pattern mappers (`markdown.tsx`, `markdownSlide.tsx`) and the stories → slides adapter behind
+  `/patterns` and `/samples` (`story.tsx`). `src/foundations/` and `src/stories/` are Storybook's foundations pages.
+- `.storybook/` — Storybook config (tokens on the whole page, no Tailwind); `scripts/gallery*.mjs` — the gallery.
 - `src/slides/` — your deck; `src/samples/` — sample decks; `src/artifact/` — what `build-deck` adds to the artifact.
 - Tailwind styles only the deck chrome; slides use CSS Modules and the tokens (see `src/index.css`).

@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { RadiusSample, ShadowSample } from './live'
+
+<Meta title="01 Foundations/04 Radius & Elevation" />
+
+# Radius & Elevation
+
+**Decision:** generous radii (the deck doesn't use near-square corners) and shadow always soft —
+low alpha, high blur. No hard shadows or 2-4px radii.
+
+## Radius
+
+<RadiusSample name="--radius-none" />
+<RadiusSample name="--radius-sm" />
+<RadiusSample name="--radius-md" />
+<RadiusSample name="--radius-lg" />
+<RadiusSample name="--radius-pill" />
+
+**When to use:** `none` — full-bleed/background image. `sm` — chips, tags, small icon.
+`md` — default card (most components). `lg` — large frame (ImageFrame, hero panel).
+`pill` — badge, dot, pre-title, anything rounded at the ends.
+
+## Shadow
+
+<ShadowSample name="--shadow-sm" usage="Small element floating over the surface (badge, chip)." />
+<ShadowSample name="--shadow-md" usage="Default card — the most used shadow in the deck." />
+<ShadowSample name="--shadow-lg" usage="Hero/highlighted element, visibly lifting it off the background." />
+
+## Do / Don't
+
+**Do**
+- Use `radius-md` as the card default; only go up to `lg` when the element is
+  visually "hero" (large frame, highlighted panel).
+- Keep shadows soft — always `rgba(5,5,8,.04–.08)`, never solid black.
+
+**Don't**
+- Use a square radius (`none`) on a content card — it's only for full-bleed.
+- Stack two shadows or use a shadow outside the 3 tokens.

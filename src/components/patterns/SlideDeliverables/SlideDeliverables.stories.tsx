@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AppWindow, FileText, GitBranch, Compass } from 'lucide-react'
 import { SlideDeliverables } from './SlideDeliverables'
 

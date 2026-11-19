@@ -12,9 +12,11 @@ npm run dev      # http://localhost:5173  → your deck
 
 ## For non-technical users
 
-Open Claude Code in this folder and ask for a deck (`/create-deck`): it asks what's missing, proposes an outline,
-builds the slides, checks them and publishes the deck as a private link when you approve. Ready-made prompts and
-rules: **[docs/team-guide.md](docs/team-guide.md)**.
+See every slide template with `npm run gallery` (opens http://localhost:6007: templates grouped by what they're
+for, with a screenshot of each variant, when to use it and its limits). Then open Claude Code in this folder and ask
+for a deck (`/create-deck`): it asks what's missing, proposes an outline, builds the slides, checks them and
+publishes the deck as a private link when you approve. Ready-made prompts and rules:
+**[docs/team-guide.md](docs/team-guide.md)**.
 
 ## Decks (by URL)
 
@@ -33,6 +35,8 @@ timer, speaker notes, previous/next slides — synced with the deck window) · n
 | Command | What it does |
 |---|---|
 | `npm run dev` | The decks at http://localhost:5173 |
+| `npm run gallery` | Builds the template gallery (`gallery/`) and serves it on port 6007; `gallery:build` only builds (`--skip-existing` reshoots only new stories). Categories and labels live in `scripts/gallery-catalog.mjs` |
+| `npm run storybook` | Storybook on port 6006: every pattern and element with its props, plus the foundations pages (for whoever edits the design system); `build-storybook` builds it statically |
 | `npm run build` | Typecheck + production build |
 | `npm run build-deck [-- samples] [--shots] [--name "Title"]` | Your deck as one self-contained HTML in `output/exports/<name>/`, ready to publish as a Claude artifact (with `text.txt` to scan and `artifact.json`). See the publish-deck skill |
 | `npm run export` | PDF + editable PPTX of your deck in `export/` (`--format pdf\|pptx`, `--deck patterns\|samples`) |
@@ -41,7 +45,8 @@ timer, speaker notes, previous/next slides — synced with the deck window) · n
 ## Where things are
 
 - **[src/components/CATALOG.md](src/components/CATALOG.md)** — every pattern: when to use it, its props, item
-  and character limits, plus the design rules. Patterns and their elements import from `@/components`.
+  and character limits, plus the design rules and how to add a pattern. Patterns and their elements import from
+  `@/components`; each has a Storybook story next to it.
 - **[AUTHORING.md](AUTHORING.md)** — writing slides in `.tsx`: the workflow, bespoke slides, code slides.
 - **[MARKDOWN.md](MARKDOWN.md)** — writing slides as `.md` files that fill a pattern.
 - **`src/lib/`** — the deck runtime (`@/lib`): navigation, overview, presenter window, capture modes, markdown parser.

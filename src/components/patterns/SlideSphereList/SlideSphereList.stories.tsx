@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { House, MessageSquareText, Lightbulb, Clock, CalendarCheck, Star } from 'lucide-react'
 import { SlideSphereList } from './SlideSphereList'
 

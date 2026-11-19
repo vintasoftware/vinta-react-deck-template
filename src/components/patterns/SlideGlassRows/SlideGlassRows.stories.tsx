@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Database, Users, FileText, Settings } from 'lucide-react'
 import { SlideGlassRows } from './SlideGlassRows'
 

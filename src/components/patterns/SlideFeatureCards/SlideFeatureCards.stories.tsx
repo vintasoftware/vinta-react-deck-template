@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { GitBranch, Bot, KeyRound, CalendarCheck } from 'lucide-react'
 import { SlideFeatureCards } from './SlideFeatureCards'
 

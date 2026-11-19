@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { markInteracted } from '../../elements/BlockPreviews/shared'
 import { SlideBlocksCompare } from './SlideBlocksCompare'
 

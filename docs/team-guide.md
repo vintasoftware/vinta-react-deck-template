@@ -8,8 +8,9 @@ You build the deck by talking to **Claude Code** inside this repository. It uses
 Vinta design system and delivers the deck as a **Claude artifact**: a private link to a navigable, on-brand Vinta
 presentation. You never edit code.
 
-- Every slide template, with examples: open http://localhost:5173/patterns while the app runs (press **O** for
-  the grid). Complete example decks with fictional data: http://localhost:5173/samples.
+- Visual catalog of every slide template: the gallery (`npm run gallery`, opens http://localhost:6007), grouped by
+  what each template is for, with its limits. It also shows the sample presentations (complete decks with fictional
+  data) and your own deck. Storybook (`npm run storybook`, port 6006) is the internal tool behind it.
 - Your deck lives in `src/slides/` on your copy of the repository; the published artifact is what you share.
 
 ## Set up your machine (once)
@@ -21,7 +22,8 @@ presentation. You never edit code.
 npm install
 ```
 
-3. To look at the slides yourself: `npm run dev`, then open http://localhost:5173.
+3. To browse the templates: `npm run gallery` (the first build takes a few minutes). To look at your deck:
+   `npm run dev`, then open http://localhost:5173.
 
 ## Start in 3 steps
 

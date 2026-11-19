@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@/components/story'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Compass, CodeXml, Send } from 'lucide-react'
 import { SlidePhotoBand } from './SlidePhotoBand'
 

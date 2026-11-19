@@ -7,3 +7,7 @@ dist-ssr
 scratchpad
 # Artifacts built by npm run build-deck
 output
+# npm run build-storybook / npm run gallery
+storybook-static
+gallery
+*storybook.log
