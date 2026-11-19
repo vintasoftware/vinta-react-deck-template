@@ -36,7 +36,7 @@ const lead = (c: MdContent) => c.paragraphs[0];
 const afterLead = (c: MdContent) => mdText({ paragraphs: c.paragraphs.slice(1) });
 const rest = (xs: string[]) => (xs.length ? xs.join("\n") : undefined);
 
-/** A bare `photo.webp` resolves from `public/assets/`, like the classic layouts; paths and URLs pass through. */
+/** A bare `photo.webp` resolves from `public/assets/`; paths and URLs pass through. */
 const assetSrc = (src: string) => (/^(https?:|\/|data:)/.test(src) ? src : `/assets/${src}`);
 const images = (d: MdDoc) => [...d.images, ...d.sections.flatMap((s) => s.images)].map((i) => assetSrc(i.src));
 const photo = (d: MdDoc) => images(d)[0];
@@ -83,6 +83,10 @@ const MAPPERS: Record<string, (doc: MdDoc) => Record<string, unknown>> = {
     variant: photo(d) ? ("split" as const) : undefined,
   })),
   statement: map(DS.SlideStatement, (d) => ({ ...header(d), text: afterLead(d) })),
+  code: map(DS.SlideCode, (d) => {
+    const fence = d.code ?? d.sections.find((s) => s.code)?.code;
+    return { ...header(d), code: fence?.value, language: fence?.lang };
+  }),
   agenda: map(DS.SlideAgenda, (d) => ({
     ...header(d),
     items:

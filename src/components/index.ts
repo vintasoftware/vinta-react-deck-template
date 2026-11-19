@@ -1,5 +1,5 @@
 // The Vinta design system (ported from vinta-slidedeck): site-look slide patterns + the elements
-// they are built from. A single import surface, separate from @/lib (the classic 2023 kit):
+// they are built from. A single import surface (the deck runtime itself is @/lib):
 //   import { SlideCover, SlideAgenda, Highlight } from "@/components";
 // Catalog, limits and rules: src/components/CATALOG.md. Browse every pattern at /patterns.
 
@@ -16,6 +16,7 @@ export * from "./patterns/SlideCaseStudy";
 export * from "./patterns/SlideClientCase";
 export * from "./patterns/SlideClientsWall";
 export * from "./patterns/SlideClosing";
+export * from "./patterns/SlideCode";
 export * from "./patterns/SlideComparison";
 export * from "./patterns/SlideContent";
 export * from "./patterns/SlideCover";
@@ -90,6 +91,7 @@ export * from "./elements/BulletList";
 export * from "./elements/CardHeader";
 export * from "./elements/ChevronStage";
 export * from "./elements/ClientLogos";
+export * from "./elements/CodeWindow";
 export * from "./elements/ConcentricRings";
 export * from "./elements/ContactCard";
 export * from "./elements/CoverageCard";

@@ -47,7 +47,7 @@ export interface MdDoc extends MdContent {
   title?: string;
   /**
    * A second `#` heading written right after the first (blank lines between them are fine): the
-   * title's second line — the accent-colored half of the design-system patterns' two-tone titles.
+   * title's second line — the accent-colored half of the patterns' two-tone titles.
    */
   accent?: string;
   /** Every `##`+ heading after the title, with its content. */

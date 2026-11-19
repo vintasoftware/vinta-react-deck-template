@@ -2,8 +2,8 @@
 
 `src/components/` is the Vinta presentation design system, ported from **vinta-slidedeck**: **patterns**
 (full 1920×1080 slides) built from **elements** (atomic pieces), styled with CSS Modules and the tokens in
-`src/components/tokens.css`. It is the current Vinta look (vintasoftware.com); the 50 classic *Vinta 2023*
-layouts in `src/template/` (see `src/template/CATALOG.md`) are still available alongside it.
+`src/components/tokens.css`. It is the Vinta presentation look (vintasoftware.com) and the only slide system in
+this repo: every slide in a deck is one of these patterns.
 
 - **Browse:** `/patterns` shows every example of every pattern (press `o` for the grid, `p` for the
   presenter window). `/samples` shows complete sample presentations built only from patterns.
@@ -26,13 +26,15 @@ layouts in `src/template/` (see `src/template/CATALOG.md`) are still available a
 - **Examples:** every pattern has `patterns/<Name>/<Name>.stories.tsx` (Component Story Format, kept from the
   slidedeck's Storybook; `story.tsx` stands in for Storybook's types). Copy their props as a starting point.
   `src/samples/*.stories.tsx` are whole decks.
-- **Everything else works as for any slide:** speaker notes (`meta.notes`), presenter window, overview,
-  `?shot=N` / `?print`, and `npm run export -- --deck main|patterns|samples`.
+- **Everything else works on every slide:** speaker notes (`meta.notes`), presenter window, overview,
+  `?shot=N` / `?print`, PDF/PPTX (`npm run export`) and the Claude artifact (`npm run build-deck`, publish-deck skill).
 - **Integration notes:** every pattern renders inside `SlideShell` (or the full-screen `Divider`), whose root
-  carries the `vds` class (scopes the tokens and opts out of Tailwind's preflight; see `src/index.css`) and
-  `data-slide` (the slide root the exporter captures). A bespoke slide composed from elements must sit inside a
-  `SlideShell` too. Don't mix `@/lib` classic primitives into a pattern slide, or elements into a classic
-  `<Slide>`. Animated product mocks (`BlockPreviews`) honour `prefers-reduced-motion`, which the exporter sets.
+  carries the `vds` class (scopes the tokens and opts out of the Tailwind reset the deck chrome uses; see
+  `src/index.css`) and `data-slide` (the slide root the exporters capture). A bespoke slide composed from elements
+  must sit inside a `SlideShell` too. Animated product mocks (`BlockPreviews`) honour `prefers-reduced-motion`,
+  which the PDF/PPTX exporter sets; in the artifact they run live.
+- **Added here (not in vinta-slidedeck):** `SlideCode` + the `CodeWindow` element, for code snippets. Built only
+  from existing tokens; its syntax colors are pending design review.
 - **Reference docs:** `docs/foundations.md` (tokens and the 3-tier palette) and `docs/layout.md` (slide anatomy),
   both carried over from vinta-slidedeck.
 
@@ -50,7 +52,7 @@ for text slides, `"hero"` (200) for covers/quotes, `"dense"` (64) for dense scre
 
 ## Rules that never change
 
-1. **Fonts:** only DM Sans and DM Mono inside patterns (both bundled offline). JetBrains Mono belongs to the classic kit only.
+1. **Fonts:** only DM Sans and DM Mono (both bundled offline). Moderat/Roboto/JetBrains/Inter do not exist here.
 2. **Icons:** only Lucide (`lucide-react`), `strokeWidth={1.5}`. Custom icons only when they already
    exist as an SVG exported from Figma inside a copied pattern.
 3. **Color in 3 tiers** (details in `docs/foundations.md` §1):
@@ -124,6 +126,7 @@ filled. All take `grid` (64px grid over the wash, off by default). Stories carry
 | `SlideBigStat` | impact numbers | `tone, eyebrow, title[], stats[{value,label}]` | 1–3 numbers; value ≤ ~5 characters with 3 |
 | `SlideBuildingBlocks` | animated building blocks map (site) | `count, claim, lede, blocks[[name, patient|practice]], slots, filter, autoplay, cycleFilters` | 42 blocks, 16 named cubes; `autoplay={false}` for a static image |
 | `SlideBlocksCompare` | "Same block, a different product every time" carousel (site) | `title, accent, lede, deck{blocks, autoplay, live, startIndex}` | 4 cards (Provider Experience, AI Concierge, Patient Intake, Provider Payouts) with animated tour |
+| `SlideCode` | a code snippet: an API, a config, a rule (added in this repo) | `tone, eyebrow, title, accent, lede, code, language, filename, density, layout` split \| stacked | split ≤ ~22 lines × ~60 chars (compact ~30 × 80); stacked ≤ ~13 × ~110 |
 
 ### Vivid (case library and data slides)
 Ported from the approved Claude Design templates. Light `wash`, blue `mesh` or `night` background
@@ -208,6 +211,7 @@ Vivid: `VividBackground` (`wash`/`mesh`/`night`/`green`/`purple`, `glow="horizon
 `VividCard` (white/glass/navy card surface) · `PhotoSlot` (photo cropped to its slot, overlay blue/veil/fade, dashed placeholder without `src`) ·
 `ConcentricRings` (decorative rings + glow on mesh).
 Brand/media: `Logo`/`LogoStrip` · `Badge` · `ImageFrame` (card/browser) · `Divider` · `BlockPreviews` (the site's animated product mocks, standalone: `ProviderExperience`, `Intake`, `Concierge`, `Payouts`, `CompareFrame`, `BlocksDeck`, `PreviewCard`, `ProductSlot` (the live mock sized for a slide's UI slot); site CSS in `BlockPreviews/blocks.css`, classes `homepage-bb-*`) · `ClientLogos` (catalog of client logos by name; `clientLogo('Medplum')`, `getClient('Everself')` in `Logo/clients.ts`, with the link to the case on the site).
+Code: `CodeWindow` (navy code card with a mono file label and syntax colors from tokens; `density` regular/compact, `surface` light/dark).
 
 Common props: `mode` (`light | light-tint | invert-blue | invert-navy`) and `accent`
 (`blue | cyan | purple | mint | rose | orange`). The accent resolves to the right shade for the mode

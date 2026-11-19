@@ -214,7 +214,8 @@ export function Deck({ slides }: DeckProps) {
   // ---- Single slide ----
   const cur = slides[idx];
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1c]">
+    // data-deck-index/count let scripts (npm run build-deck) know which slide is showing.
+    <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1c]" data-deck-index={idx} data-deck-count={count}>
       <Stage Component={cur.Component} scale={scale} className="shadow-2xl" />
       <Hud
         idx={idx}
@@ -286,7 +287,7 @@ function Hud({
   onPresenter: () => void;
 }) {
   return (
-    <div className="fixed bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white backdrop-blur">
+    <div data-deck-hud className="fixed bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white backdrop-blur">
       <button className="px-2 py-0.5 hover:text-vinta-blue-soft" onClick={onPrev} aria-label="Previous">‹</button>
       <span className="tabular-nums">{jump || idx + 1} / {count}</span>
       <button className="px-2 py-0.5 hover:text-vinta-blue-soft" onClick={onNext} aria-label="Next">›</button>

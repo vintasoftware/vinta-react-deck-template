@@ -1,4 +1,4 @@
-import { Slide04 } from "@/template";
+import { SlideCover } from "@/components";
 
 export const meta = {
   title: "Cover",
@@ -6,17 +6,16 @@ export const meta = {
     "Speaker notes live here, in each slide's `meta.notes`.\n\nPress P to open the presenter window: it shows these notes, a clock and timer, and the previous/next slides — and stays in sync with this one.",
 };
 
-/** Starter cover — swap in your title and meta, or pick another cover in CATALOG.md (04, 05, 07). */
+/** Starter cover — swap in your title. Other covers: `variant="split"` (photo) or `"night"`; see CATALOG.md. */
 export default function Cover() {
   return (
-    <Slide04
-      line1="Your"
-      line2="title here"
-      meta={[
-        { label: "Topic", value: "Edit src/slides/" },
-        { label: "Audience", value: "—" },
-        { label: "Date", value: "2026" },
-      ]}
+    <SlideCover
+      variant="night"
+      eyebrow="EDIT SRC/SLIDES/"
+      title="Your title"
+      accent="goes here"
+      lede="One line on what this deck is for"
+      preparedFor="PREPARED FOR YOUR AUDIENCE  ·  2026"
     />
   );
 }

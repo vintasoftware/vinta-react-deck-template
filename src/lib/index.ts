@@ -1,27 +1,9 @@
-// The Vinta slide-deck UI library — a single import surface.
-//   import { Slide, SectionHeader, Columns, Card } from "@/lib";
+// The slideshow runtime — what turns a list of slides into a presentation:
+//   import { Deck, type DeckSlide } from "@/lib";
+// Slides themselves are built from the design-system patterns in @/components.
 
-// Deck runtime & slide canvas
+// Deck runtime: navigation, overview, presenter window, capture modes
 export * from "./deck";
 
-// Typography
-export * from "./type/text";
-
-// Shapes & decoration
-export * from "./shapes/shapes";
-
-// Brand media & code
-export * from "./brand/media";
-export * from "./brand/code";
-
-// Layout
-export * from "./layout/layout";
-
-// Content blocks
-export * from "./blocks/cards";
-export * from "./blocks/data";
-export * from "./blocks/people";
-export * from "./blocks/flow";
-
-// Markdown slide parsing (used by the markdown-slide loader in @/template)
+// Markdown slide parsing (used by the markdown-slide loader in @/components/markdown)
 export * from "./markdown/parse";

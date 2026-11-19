@@ -6,8 +6,8 @@
   default) instead of assuming a number.
 
   Scoped to `.vds` (the root of every SlideShell / Divider) instead of :root, so these tokens
-  (--font-sans, --font-mono, --radius-*, --shadow-*…) never override the Tailwind theme the
-  classic 2023 layouts in @/lib and @/template rely on. See src/index.css.
+  (--font-sans, --font-mono, --radius-*, --shadow-*…) and the Tailwind theme of the deck chrome
+  (src/lib/deck) never leak into each other. See src/index.css.
 */
 
 .vds {

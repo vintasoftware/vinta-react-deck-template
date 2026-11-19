@@ -1,6 +1,5 @@
 import { Deck, type DeckSlide } from "@/lib";
 import { mainSlides } from "./slides/registry";
-import { templateSlides } from "./template/registry";
 import { patternSlides } from "./components/registry";
 import { sampleSlides } from "./samples/registry";
 
@@ -8,12 +7,17 @@ import { sampleSlides } from "./samples/registry";
 //   /            → your main slides (src/slides/)
 //   /patterns    → every design-system pattern, with examples (src/components/patterns/)
 //   /samples     → sample presentations built from the patterns (src/samples/)
-//   /template    → the 50-slide classic Vinta 2023 template reference (src/template/)
 // Slide index still lives in the hash (#/N); capture modes in the query (?shot…).
-const segment = window.location.pathname.split("/").filter(Boolean).pop() ?? "";
+// A self-contained artifact (npm run build-deck) has no meaningful path: it names its deck in
+// `window.__DECK_NAME__` instead.
+declare global {
+  interface Window {
+    __DECK_NAME__?: string;
+  }
+}
+const segment = window.__DECK_NAME__ ?? window.location.pathname.split("/").filter(Boolean).pop() ?? "";
 
 const DECKS: Record<string, DeckSlide[]> = {
-  template: templateSlides,
   patterns: patternSlides,
   samples: sampleSlides,
 };
