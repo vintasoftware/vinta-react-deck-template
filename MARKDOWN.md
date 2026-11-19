@@ -1,7 +1,9 @@
 # Markdown slides
 
-Write a slide as a `.md` file instead of a `.tsx` component. The file picks one of the 50 template
-layouts and its markdown fills that layout's props — same brand, same pixel-faithful layouts, no JSX.
+Write a slide as a `.md` file instead of a `.tsx` component. The file picks a layout — a
+**design-system pattern** by name (`template: SlideAgenda`, see [Patterns](#patterns)) or one of the 50
+**classic layouts** by number (`template: 12`) — and its markdown fills that layout's props. Same brand,
+same layouts, no JSX.
 
 ```md
 <!-- src/slides/04-numbers.md -->
@@ -26,7 +28,8 @@ Active users
 
 - Put it in `src/slides/` as `NN-name.md`. Markdown and `.tsx` slides are discovered together and
   **ordered by filename**, so you can mix them freely.
-- Browse `/template` to choose a layout, then look it up in the table below (props in `src/template/CATALOG.md`).
+- Browse `/patterns` (or `/template` for the classic layouts) to choose a layout, then look it up in the
+  tables below (props in `src/components/CATALOG.md` and `src/template/CATALOG.md`).
 - A mistake (bad YAML, unknown layout, misspelled key) never breaks the deck: that slide renders as an
   error card naming the file and the problem.
 
@@ -36,7 +39,7 @@ Active users
 
 | Key | Required | Meaning |
 |---|---|---|
-| `template` | yes | Layout number `1`–`50` (`19`, `"19"` and `Slide19` all work). |
+| `template` | yes | A pattern name (`SlideAgenda`, `agenda`, `slide-agenda` and `Agenda` all work) or a classic layout number `1`–`50` (`19`, `"19"` and `Slide19` all work). |
 | `title` | no | Label in the overview grid / HUD. Defaults to the `#` heading. **Not** the slide's title text. |
 | `notes` | no | Speaker notes for the presenter window. Usually easier as a closing comment — see [Speaker notes](#speaker-notes). |
 | `props` | no | Raw layout props, exactly as in CATALOG.md. They **override** whatever the body produced. |
@@ -60,6 +63,7 @@ The body is read as a small, predictable structure:
 |---|---|
 | a paragraph **above** the `#` heading | the **kicker** (eyebrow) |
 | `# Heading` | the **title** |
+| a second `# Heading` right after the first | the title's **accent line** (patterns' two-tone titles). In classic layouts it opens a section, as before |
 | paragraphs | **body** text. Each line break is kept as a hard break (like `\n` in a prop); a blank line starts a new paragraph |
 | first paragraph, in layouts that have a lead/subtitle | the **lead** (the rest is body) |
 | `- item` / `1. item` | **list** items (indent a line to continue an item) |
@@ -108,7 +112,90 @@ Then: three phases, one PR each.
 
 ---
 
-## Per-layout mapping
+## Patterns
+
+Name any design-system pattern in `template:` (props and limits in `src/components/CATALOG.md`). Every
+site-look pattern opens with the same header, read from the body:
+
+```md
+---
+template: SlideAgenda
+---
+NORTHWIND HEALTH · KICKOFF
+
+# Today's
+# agenda
+
+What we'll cover in the next hour.
+
+## Where we are today
+The product, the team and the constraints
+10 MIN
+
+## What we heard from you
+Goals, risks and open questions
+15 MIN
+```
+
+| Markdown | Header prop |
+|---|---|
+| paragraph above `#` | `eyebrow` |
+| `#` | `title` (line 1, ink) |
+| a second `#` right after it | `accent` (line 2, blue / turquoise) |
+| first paragraph | `lede` |
+
+Then, per pattern ("lines" are the lines of a section's text and list, in order):
+
+| Pattern | Body → props |
+|---|---|
+| `SlideCover` | list → `tags` · image → `photo` (and `variant: split`) |
+| `SlideStatement` | paragraphs after the lede → `text` |
+| `SlideAgenda` | `## title` + lines `detail`, `meta` → `items` (or a plain list → item titles) · image → `photo` |
+| `SlideContent` | list → `bullets` · image → `photo` |
+| `SlideTwoColumn` | paragraphs after the lede → `body` · list → `bullets` · image → `photo` |
+| `SlideQuote` | first paragraph → `quote` · second paragraph's lines → `author`, `role` · image → `photo` |
+| `SlideBigStat` | `## value` + text → `stats` (`label`) · image → `photo` |
+| `SlideFaq` | `## question` + text → `items` (`answer`) |
+| `SlideNumberedList` | `## title` + text → `items` |
+| `SlideNumberedGrid` | `## title` + list → `cards` (`bullets`) |
+| `SlideStatRows` | `## value` + lines `title`, `text…` → `rows` |
+| `SlideVersus` | first `##` + list → `left`, second → `right` |
+| `SlideComparison` | table: header row → `columns` (first cell → `labelHeader`), rows → `rows` (`✓`/`yes` = check, `—`/`no` = dash) · paragraphs after the lede → `note` |
+| `SlideDataTable` | table: header → `columns`, rows → `rows` |
+| `SlideTeam` | `## name` + lines `role`, `bio…` (+ an image → `src`) → `people` |
+| `SlideRankingBars` | `\| label \| value \|` table or `- label: value` → `rows` (a value like `28% · 10` keeps its text) |
+| `SlideDonutChart` | table or `- label: value` → `segments` · a list next to a table → `takeaways` |
+| `SlideProgressRings` | `## 92%` + lines `label`, `description…` → `rings` |
+| `SlideHeroNumber` | first `##` → `value` (`## 37 → 17` also sets `previous`), its text → `caption` · list → `points` |
+| `SlideFunnel` | `## label` + lines `value`, `description…` → `stages` |
+| `SlideBarChart` | table: header cells after the first → bar labels, each row → a group |
+| `SlideLineChart` | table: first column → `labels`, second → `primary`, third (optional) → `reference` |
+
+**Every other pattern** (`SlideStepPath`, `SlideIconCards`, `SlideCaseStudy`, `SlideClosing`…) takes its content
+from `props:` only — and patterns built on icons need a `.tsx` slide, since an icon is a component, not text.
+`variant`, `tone`, `background` and other options always go under `props:`. A pattern missing a required
+part (no sections, no table…) renders as an error card naming the file, like any other markdown mistake.
+Images: a bare `photo.webp` resolves from `public/assets/`; the team photos are `team/<key>.webp`.
+
+```md
+---
+template: SlideHeroNumber
+props:
+  background: night
+---
+# Less, but
+# better
+
+## 37 → 17
+articles published, 2025 vs 2026 so far
+
+- Two editors instead of five
+- Every piece reviewed by a clinician
+```
+
+---
+
+## Per-layout mapping (classic layouts)
 
 Items beyond a layout's slot count are ignored, exactly as with props. Layouts 01–03 and 50 take no content.
 
@@ -223,9 +310,11 @@ Questions?
 ## How it works
 
 - `src/lib/markdown/parse.ts` — parses frontmatter (YAML) and the body into a generic structure
-  (`MdDoc`: kicker, title, paragraphs, list, sections, images, code, table). Exported from `@/lib`.
-- `src/template/markdown.tsx` — `MARKDOWN_TEMPLATES`, the per-layout mapping table above (each entry is
+  (`MdDoc`: kicker, title, accent, paragraphs, list, sections, images, code, table). Exported from `@/lib`.
+- `src/template/markdown.tsx` — `MARKDOWN_TEMPLATES`, the classic per-layout mapping table above (each entry is
   type-checked against that layout's props), and `markdownSlide()`, which turns a file into a deck slide.
+- `src/components/markdown.tsx` — `PATTERN_TEMPLATES`: every `Slide*` pattern by name, with the body mappers
+  of the pattern table above (also type-checked against each pattern's props).
 - `src/slides/registry.ts` — globs `NN-*.md` alongside `NN-*.tsx`.
 
 Need something a layout can't do? Write that slide as `.tsx` (see AUTHORING.md).

@@ -1,0 +1,88 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  /* Sit in the middle of the space under the header instead of leaving it all at the bottom. */
+  margin-block: auto;
+}
+
+.steps[data-count='5'] {
+  gap: 32px;
+}
+
+.step {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.steps[data-count='5'] .step {
+  gap: var(--space-2);
+}
+
+/* Tile + thin line running to the next step. */
+.rail {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.connector {
+  flex: 1;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--blue-600) 22%, transparent);
+}
+
+/* Steps before the active one and the active one: the line is drawn in blue (progress so far). */
+.step[data-done] .connector {
+  background: var(--blue-600);
+}
+
+.step[data-active] .connector {
+  background: linear-gradient(90deg, var(--blue-600) 0%, color-mix(in srgb, var(--blue-600) 22%, transparent) 100%);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--slate-500);
+}
+
+.step[data-active] .label {
+  color: var(--step-label);
+}
+
+/* One accent per step: the active label takes the tile's deep tone. */
+.step[data-accent='blue'] {
+  --step-label: var(--blue-600);
+}
+.step[data-accent='cyan'],
+.step[data-accent='mint'] {
+  --step-label: var(--vivid-teal-night);
+}
+.step[data-accent='purple'] {
+  --step-label: var(--accent-purple);
+}
+.step[data-accent='rose'] {
+  --step-label: var(--accent-rose-dark);
+}
+.step[data-accent='orange'] {
+  --step-label: var(--accent-orange);
+}

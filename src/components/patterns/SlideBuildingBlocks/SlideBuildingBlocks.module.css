@@ -1,0 +1,486 @@
+/* Port of the home's "building blocks" field (website.vinta.studio). Same geometry, colors and animations;
+   colors come from the --field-* tokens (Tier 3, this pattern only). 1920 × 1080 slide. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--field-blue);
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow {
+  position: absolute;
+  inset: -112px -80px;
+  background:
+    radial-gradient(ellipse 30% 42% at 94% 84%, var(--field-aqua), var(--field-sky) 30%, transparent 72%),
+    radial-gradient(ellipse 26% 30% at 42% 8%, var(--field-azure), transparent 72%),
+    radial-gradient(ellipse 26% 32% at 100% 6%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 26% 32% at 82% 14%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 26% 34% at 66% 28%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 26% 34% at 54% 44%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 26% 34% at 44% 60%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 28% 34% at 32% 76%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 28% 32% at 18% 92%, var(--field-indigo), transparent 70%),
+    radial-gradient(ellipse 22% 30% at 6% 26%, var(--field-indigo), transparent 70%),
+    var(--field-blue);
+  filter: blur(40px);
+}
+
+.lines {
+  --grid: 48px;
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(color-mix(in srgb, var(--white) 11%, transparent) 1px, transparent 1px) 0 0 / var(--grid) var(--grid),
+    linear-gradient(90deg, color-mix(in srgb, var(--white) 11%, transparent) 1px, transparent 1px) 0 0 / var(--grid) var(--grid);
+  -webkit-mask-image:
+    linear-gradient(transparent, #000 112px, #000 calc(100% - 112px), transparent),
+    radial-gradient(ellipse 62% 58% at 50% 50%, #000 0, #0000008c 55%, transparent 100%),
+    linear-gradient(90deg, #00000073 0, #00000073 40%, #000 55%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(transparent, #000 112px, #000 calc(100% - 112px), transparent),
+    radial-gradient(ellipse 62% 58% at 50% 50%, #000 0, #0000008c 55%, transparent 100%),
+    linear-gradient(90deg, #00000073 0, #00000073 40%, #000 55%);
+  mask-composite: intersect;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--white);
+}
+
+.stars use {
+  animation: twinkle 4.8s var(--ease-standard) infinite;
+  animation-delay: calc(var(--i, 0) * -0.7s);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* dark floor of the field (the site's field:before) */
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 300px;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 72%, color-mix(in srgb, var(--field-blue) 22%, transparent), transparent 70%),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      color-mix(in srgb, var(--field-navy) 8%, transparent) 128px,
+      color-mix(in srgb, var(--field-navy) 25%, transparent) 256px,
+      color-mix(in srgb, var(--field-navy) 50%, transparent) 384px,
+      color-mix(in srgb, var(--field-navy) 75%, transparent) 512px,
+      color-mix(in srgb, var(--field-navy) 92%, transparent) 640px,
+      var(--field-navy) 736px
+    );
+}
+
+/* ---------- campo ---------- */
+
+.field {
+  --patient: var(--field-turquoise);
+  --practice: color-mix(in srgb, var(--field-sky) 35%, var(--white));
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans);
+  color: var(--white);
+}
+
+.head {
+  position: absolute;
+  left: 144px;
+  right: 144px;
+  top: 76px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  column-gap: 96px;
+}
+
+.title {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  font-weight: 300;
+}
+
+.count {
+  width: fit-content;
+  font-size: 190px;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(90deg, var(--field-turquoise), var(--field-teal-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.claim {
+  max-width: 13em;
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--white);
+}
+
+.side {
+  display: grid;
+  gap: 40px;
+  padding-top: 24px;
+}
+
+.lede {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--white) 86%, transparent);
+}
+
+.lede span {
+  display: block;
+  white-space: nowrap;
+}
+
+.toggle {
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  width: fit-content;
+  padding: 6px;
+  border: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--field-navy) 55%, transparent);
+  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--field-navy) 60%, transparent);
+}
+
+.thumb {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  width: calc(33.3333% - 4px);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--field-navy) 80%, transparent);
+  transition:
+    transform 0.42s var(--ease-out),
+    background-color 0.42s var(--ease-standard);
+}
+
+.toggle[data-mode='patient'] .thumb {
+  background: var(--patient);
+  transform: translate(100%);
+}
+
+.toggle[data-mode='practice'] .thumb {
+  background: var(--practice);
+  transform: translate(200%);
+}
+
+.option {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 30px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  font: inherit;
+  font-size: 26px;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--white) 80%, transparent);
+  cursor: pointer;
+  transition: color 0.3s var(--ease-standard);
+}
+
+.option[aria-pressed='true'] {
+  color: var(--field-ink);
+}
+
+.option[data-mode='patient'] {
+  --key-ink: var(--patient);
+}
+
+.option[data-mode='practice'] {
+  --key-ink: var(--practice);
+}
+
+.keyCube {
+  flex: none;
+  width: 30px;
+  height: 34px;
+  background:
+    linear-gradient(to bottom right, transparent 49.5%, #0000002e 50%) right bottom / 50% 75% no-repeat,
+    var(--key-ink);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.option[aria-pressed='true'] .keyCube {
+  filter: brightness(0.75) saturate(1.4);
+}
+
+.canvas {
+  position: absolute;
+  left: 120px;
+  top: 440px;
+  width: 1680px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.grid polygon {
+  fill: color-mix(in srgb, var(--field-indigo) 14%, transparent);
+  stroke: color-mix(in srgb, var(--field-sky) 30%, transparent);
+  stroke-width: 0.8px;
+}
+
+.quiet {
+  animation: breathe 7s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -0.53s);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.32;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.quiet .cube,
+.lamp .cube {
+  filter: none;
+}
+
+.lamp {
+  opacity: 0.4;
+  animation: name-in 0.24s var(--ease-out) both;
+}
+
+.lamp[data-nearest] {
+  opacity: 1;
+}
+
+.lamp[data-nearest] .cube {
+  filter: brightness(1.3) drop-shadow(0 0 22px);
+  transition: transform 0.4s var(--ease-out);
+  transform: translateY(-6px) scale(1.08);
+}
+
+.field :is(.quiet, .lamp, .place) {
+  transition: opacity 0.5s var(--ease-standard);
+}
+
+.field[data-filter='patient'] :is(.quiet, .lamp, .place)[data-audience='practice'],
+.field[data-filter='practice'] :is(.quiet, .lamp, .place)[data-audience='patient'] {
+  opacity: 0.06;
+  animation: none;
+}
+
+.cube {
+  color: var(--practice);
+  filter: drop-shadow(0 0 14px color-mix(in srgb, currentColor 55%, transparent));
+}
+
+.cube[data-audience='patient'] {
+  color: var(--patient);
+}
+
+.faceTop {
+  fill: color-mix(in srgb, currentColor 88%, var(--white));
+  fill-opacity: 0.95;
+}
+
+.faceLeft {
+  fill: color-mix(in srgb, currentColor 78%, var(--field-indigo));
+  fill-opacity: 0.9;
+}
+
+.faceRight {
+  fill: color-mix(in srgb, currentColor 58%, var(--field-indigo));
+  fill-opacity: 0.9;
+}
+
+.cube polygon {
+  stroke: color-mix(in srgb, var(--white) 70%, transparent);
+  stroke-width: 0.8px;
+}
+
+.cubeEdge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--white) 85%, transparent);
+  stroke-width: 0.8px;
+}
+
+.cube[data-state='in'] {
+  animation: rise 0.75s var(--ease-standard) both;
+}
+
+.cube[data-state='out'] {
+  animation: sink 0.65s var(--ease-standard) both;
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    filter: brightness(1.25) drop-shadow(0 0 16px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sink {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.88);
+  }
+}
+
+.named {
+  transition:
+    transform 0.4s var(--ease-out),
+    filter 0.4s var(--ease-out);
+}
+
+.place[data-held] .named {
+  filter: brightness(1.15);
+  transform: translateY(-6px);
+}
+
+.lead {
+  stroke: color-mix(in srgb, var(--white) 70%, transparent);
+  stroke-width: 1px;
+}
+
+.dot {
+  fill: var(--white);
+  stroke: var(--field-navy);
+  stroke-width: 3px;
+  paint-order: stroke;
+}
+
+.nameTag {
+  animation: name-in 0.36s 0.14s var(--ease-out) both;
+  transition: opacity 0.5s var(--ease-standard);
+}
+
+.nameTag[data-audience='patient'] .dot {
+  fill: var(--patient);
+}
+
+.nameTag[data-audience='patient'] .lead {
+  stroke: color-mix(in srgb, var(--patient) 80%, transparent);
+}
+
+@keyframes name-in {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+.names {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tag {
+  position: absolute;
+  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--field-navy) 86%, transparent);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--field-navy) 90%, transparent);
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white);
+  transform: translate(10px, -50%);
+  animation: name-in 0.6s 0.18s var(--ease-standard) both;
+  transition:
+    opacity 0.5s var(--ease-standard),
+    border-color 0.22s var(--ease-standard);
+}
+
+.tag[data-clash] {
+  visibility: hidden;
+}
+
+.tag[data-end] {
+  transform: translate(calc(-100% - 10px), -50%);
+}
+
+.tag[data-audience='patient'] {
+  border-color: color-mix(in srgb, var(--patient) 40%, transparent);
+  color: var(--patient);
+}
+
+.tag[data-held] {
+  border-color: currentColor;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, currentColor 18%, transparent),
+    0 10px 24px -10px color-mix(in srgb, var(--field-navy) 95%, transparent);
+}
+
+.tagLamp,
+.tagLamp[data-end] {
+  z-index: 2;
+  transform: translate(-50%, -100%);
+  animation: name-in 0.18s var(--ease-out) both;
+}
+
+.field :is(.names) .tag {
+  transition: opacity 0.5s var(--ease-standard);
+}
+
+.field[data-filter='patient'] .tag[data-audience='practice'],
+.field[data-filter='practice'] .tag[data-audience='patient'] {
+  opacity: 0.12;
+}

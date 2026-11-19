@@ -1,0 +1,69 @@
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* hero photo: 1920×430 band at y636 (Figma 427:1466); tint/gradient on top */
+.photo,
+.overlay {
+  left: 0;
+  top: 636px;
+  width: 1920px;
+  height: 430px;
+  overflow: hidden;
+}
+
+.photo :global(img),
+.overlay :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Figma (427:1452): everything at x64. Eyebrow y93 · title y134 · text y335 ·
+   logo y566 (200×51) · CTA x304 y576. */
+.eyebrow {
+  left: 64px;
+  top: 93px;
+}
+
+.title {
+  left: 64px;
+  top: 140px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 76px;
+  line-height: 78.3px;
+  letter-spacing: -2.4px; /* DM Sans Bold is ~5% wider than Roboto Bold; compensates to keep the Figma width */
+  white-space: nowrap;
+  color: var(--blue-900);
+}
+
+.text {
+  left: 64px;
+  top: 330px;
+  white-space: nowrap; /* line breaks come from the content (<br />), as in Figma */
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-body);
+  font-size: 26px;
+  line-height: 40.3px;
+  color: var(--slate-400);
+}
+
+.logo {
+  left: 64px;
+  top: 566px;
+}
+
+.link {
+  left: 304px;
+  top: 576px;
+}

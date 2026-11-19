@@ -1,0 +1,106 @@
+.plain {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-mist);
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* Figma: "The Journey" 120 thin at x144 / y127, width 440 */
+.title {
+  left: 144px;
+  top: 127px;
+  width: 440px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-display);
+  line-height: normal;
+  letter-spacing: -2.64px;
+  color: var(--blue-050);
+}
+
+/* Figma: subtitle 38.54, line height 1.5, ends at y583, width 582 */
+.subtitle {
+  left: 144px;
+  top: 467px;
+  width: 640px; /* Figma 582 in Moderat; DM Sans is wider, 640 keeps the same 2 lines */
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-body);
+  font-size: 38.54px;
+  line-height: 1.5;
+  letter-spacing: 0.19px;
+  color: var(--white);
+}
+
+.subtitle strong {
+  font-weight: 700;
+}
+
+/* Figma: phase block at x726 / y186 */
+.phase {
+  left: 726px;
+  top: 186px;
+}
+
+/* circular photos (Figma 427:811 and 427:875): clipped by the slide, as in Figma */
+.photoTop,
+.photoBottom {
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.photoTop {
+  left: 1351px;
+  top: -48px;
+  width: 641px;
+  height: 641px;
+}
+
+.photoBottom {
+  left: 1309px;
+  top: 439px;
+  width: 756px;
+  height: 756px;
+}
+
+.photoTop :global(img),
+.photoBottom :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* optional treatment: grayscale + overlay tint (30%), as in Figma */
+.photoTop[data-treatment='duotone'] :global(img),
+.photoBottom[data-treatment='duotone'] :global(img) {
+  filter: grayscale(1) contrast(1.2);
+}
+
+.photoTop[data-treatment='duotone']::after,
+.photoBottom[data-treatment='duotone']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+}
+
+.photoTop[data-treatment='duotone']::after {
+  background: var(--blue-600);
+}
+
+.photoBottom[data-treatment='duotone']::after {
+  background: var(--accent-purple-light);
+}

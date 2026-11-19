@@ -1,0 +1,67 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-family: var(--font-mono);
+  /* mono ~22 (layout.md) — reuses mono-md, the same role already used in the Divider pill */
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  padding: var(--padding-tag-y) var(--padding-tag-x);
+  border-radius: var(--radius-pill);
+}
+
+.tag[data-variant='outline'] {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.tag[data-variant='filled'][data-accent='blue'] {
+  background: var(--tint-blue);
+  color: var(--blue-600);
+}
+
+.tag[data-variant='filled'][data-accent='purple'] {
+  background: var(--tint-purple);
+  color: var(--accent-purple);
+}
+
+.tag[data-variant='filled'][data-accent='mint'] {
+  background: var(--tint-mint);
+  color: var(--accent-mint-dark);
+}
+
+.tag[data-variant='glass'] {
+  background: color-mix(in srgb, var(--white) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--white) 45%, transparent);
+  color: var(--white);
+}
+
+.tag[data-icon='true'] {
+  gap: var(--space-2);
+  padding: var(--space-2) 30px var(--space-2) 22px;
+  white-space: nowrap;
+}
+
+.tag[data-variant='white'] {
+  background: var(--white);
+  border: 1px solid var(--border-card-concern);
+  color: var(--vivid-blue);
+}
+
+.tag[data-size='sm'] {
+  font-size: var(--font-size-mono-label);
+  padding: var(--space-1) var(--space-2);
+}
+
+.tag[data-size='sm'][data-icon='true'] {
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2) var(--space-1) 10px;
+}
+
+/* filled on dark backgrounds: translucent chip with a turquoise label. */
+.tag[data-variant='filled'][data-mode='invert-blue'],
+.tag[data-variant='filled'][data-mode='invert-navy'] {
+  background: color-mix(in srgb, var(--white) 14%, transparent);
+  color: var(--vivid-turquoise);
+}

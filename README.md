@@ -13,16 +13,22 @@ npm install
 npm run dev      # http://localhost:5173  → your deck
 ```
 
-### Three decks (by URL)
+### Four decks (by URL)
 | URL | Deck | Folder |
 |---|---|---|
 | `/` | **Your main slides** — build your presentation here | `src/slides/` |
-| `/template` | The 50 official Vinta template slides (reference/starter) | `src/template/` |
+| `/patterns` | Every design-system pattern (the current site look), with examples | `src/components/patterns/` |
+| `/samples` | Sample presentations built only from the patterns (fictional data) | `src/samples/` |
+| `/template` | The 50 classic *Vinta 2023* template slides (reference/starter) | `src/template/` |
 
-- **`src/lib/`** — the UI library (single entrypoint `@/lib`): `Deck`, `Slide`, `Place`, typography,
+- **`src/components/`** — the Vinta design system, ported from vinta-slidedeck (single entrypoint
+  `@/components`): ~70 slide **patterns** (`SlideCover`, `SlideAgenda`, `SlideStepPath`, charts, case
+  studies…) built from **elements**, with CSS Modules and design tokens. Catalog, rules and text limits:
+  **[src/components/CATALOG.md](src/components/CATALOG.md)**.
+- **`src/lib/`** — the classic UI library (single entrypoint `@/lib`): `Deck`, `Slide`, `Place`, typography,
   shapes, `Photo`, `CodeBlock`, layout and content blocks. Fully typed with JSDoc.
 - **[AUTHORING.md](AUTHORING.md)** — the guide: add-a-slide workflow, component catalog, tokens, recipes.
-- **[MARKDOWN.md](MARKDOWN.md)** — write slides as `.md` files that fill any of the 50 template layouts.
+- **[MARKDOWN.md](MARKDOWN.md)** — write slides as `.md` files that fill any pattern or any of the 50 classic layouts.
 - **[.agents/skills/create-deck/SKILL.md](.agents/skills/create-deck/SKILL.md)** — the agent brief for
   generating on-brand slides (workflow + brand rules). One canonical file, symlinked into each AI tool's
   expected path (see below).
@@ -45,6 +51,10 @@ timer, speaker notes, previous/next slides — synced with the deck window) · n
 `#/N` deep-links a slide within the current deck.
 
 ### Self-contained
-The app bundles its own copies of the shapes, photos and logo under `public/`, so it runs with no
-external dependencies. `src/template/` (the 50-slide reference deck) is now hand-owned source — the
-one-time script that first generated it from the original Figma export has been retired.
+The app bundles its own copies of the shapes, photos, logos and fonts (DM Sans, DM Mono, JetBrains Mono)
+under `public/` and `node_modules`, so it runs with no external dependencies. `src/template/` (the 50-slide
+reference deck) is now hand-owned source — the one-time script that first generated it from the original
+Figma export has been retired. The design-system assets live in `public/assets/<pattern>/` subfolders.
+
+**Export:** `npm run export` writes a PDF and an editable PPTX of your deck to `export/`;
+`npm run export -- --deck patterns|samples|template` exports one of the reference decks instead.

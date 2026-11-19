@@ -1,0 +1,92 @@
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* product windows (Figma 427:1232 and 427:1243): main one behind, secondary in front */
+.imageMain {
+  left: 966px;
+  top: 186px;
+  width: 840px;
+  height: 542px;
+}
+
+.imageSecondary {
+  left: 1298px;
+  top: 354px;
+  width: 558px;
+  height: 456px;
+}
+
+.imageMain :global(img),
+.imageSecondary :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Figma (427:1213): logo x64 y88 (192×44) · title 46 bold y167 · body 22
+   y298 · metrics in a 2×2 grid (x64/502, y482/606) · Clutch seal x1667 y96
+   (189×204) · label y883 · logos y950–1010 */
+.logo {
+  left: 64px;
+  top: 88px;
+}
+
+.title {
+  left: 64px;
+  top: 168px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 50.4px;
+  letter-spacing: -2px; /* DM Sans Bold is ~5% wider than Roboto Bold */
+  white-space: nowrap;
+  color: var(--blue-900);
+}
+
+.body {
+  left: 64px;
+  top: 294px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-body);
+  font-size: 22px;
+  line-height: 33px;
+  letter-spacing: -0.5px; /* DM Sans is ~4% wider than Roboto at the same size */
+  white-space: nowrap;
+  color: var(--slate-400);
+}
+
+.metric {
+  white-space: nowrap;
+}
+
+.badge {
+  left: 1667px;
+  top: 96px;
+}
+
+.logosLabel {
+  left: 64px;
+  top: 883px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: normal;
+  white-space: nowrap;
+  color: var(--slate-400);
+}
+
+/* client logos always in grayscale (team request) */
+.clientLogo {
+  filter: grayscale(1);
+}

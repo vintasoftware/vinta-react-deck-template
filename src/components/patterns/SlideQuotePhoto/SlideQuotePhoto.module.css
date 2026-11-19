@@ -1,0 +1,58 @@
+.wordmark {
+  position: absolute;
+  left: var(--shell-safe-area);
+  top: 96px;
+  width: 192px;
+  height: auto;
+  z-index: 1;
+}
+
+.body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* bleed: quote on the veiled (dark) left side of the photo. */
+.body[data-variant='bleed'] {
+  padding: 112px var(--shell-safe-area) 120px;
+}
+
+.body[data-variant='bleed'] .quote {
+  width: 1060px;
+}
+
+/* portrait: quote column at the right of the rings (rings end at x 864). */
+.body[data-variant='portrait'] {
+  padding: 112px var(--shell-safe-area) 120px 1020px;
+}
+
+.body[data-variant='portrait'] .quote {
+  width: 756px;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Round portrait centred in the rings: 552×552 at x 204, y 264. */
+.portrait {
+  position: absolute;
+  left: 204px;
+  top: 264px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+}
+
+.logoInline {
+  padding-top: 20px;
+}
+
+.logoCorner {
+  position: absolute;
+  left: var(--shell-safe-area);
+  top: 900px;
+}

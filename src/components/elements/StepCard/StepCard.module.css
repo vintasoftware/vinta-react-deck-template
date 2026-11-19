@@ -1,0 +1,62 @@
+.card {
+  box-sizing: border-box;
+  width: 340.2px;
+  height: 505px;
+  padding: 32px 28px 0;
+  border: 1px solid var(--blue-100);
+  border-radius: 10px;
+  background: var(--white);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56.8px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 19px;
+  color: var(--white);
+}
+
+.card[data-accent='teal'] .pill {
+  background: var(--accent-teal);
+}
+.card[data-accent='aqua'] .pill {
+  background: var(--accent-aqua);
+}
+.card[data-accent='sky'] .pill {
+  background: var(--accent-blue-bright);
+}
+.card[data-accent='blue'] .pill {
+  background: var(--blue-600);
+}
+.card[data-accent='navy'] .pill {
+  background: var(--blue-deep);
+}
+
+.title {
+  margin: 14px 0 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 40px;
+  color: var(--blue-600);
+  white-space: nowrap;
+}
+
+.body {
+  margin-top: 24px;
+}
+
+.line {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 37.2px;
+  color: var(--slate-500);
+  white-space: nowrap;
+}

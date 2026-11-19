@@ -1,0 +1,58 @@
+/* Slide layout: two columns (0.85fr / 1.15fr) like the site's `.homepage-blocks-compare`.
+   The deck measures ~880 px wide: the mocks' UI (base 840 px) sits at a scale of ~1. */
+
+.compare {
+  position: absolute;
+  inset: 0;
+  padding: 0 144px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  column-gap: 96px;
+  font-family: var(--font-sans);
+  color: var(--white);
+}
+
+.copy {
+  max-width: 660px;
+}
+
+.title {
+  margin: 0;
+  max-width: 13em;
+  font-size: 76px;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--white);
+}
+
+.accent {
+  padding-bottom: 0.14em;
+  background-image: linear-gradient(90deg, var(--field-turquoise), var(--field-teal-glow));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: transparent;
+}
+
+.lede {
+  margin: 40px 0 0;
+  max-width: 21em;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--white) 86%, transparent);
+}
+
+.deckSlot {
+  min-width: 0;
+}
+
+/* Small adjustment: on this slide the deck fills the whole column (on the site the column is ~600 px). */
+.deckSlot > :global(.homepage-deck) {
+  width: 100%;
+  max-width: none;
+}

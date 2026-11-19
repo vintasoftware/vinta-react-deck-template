@@ -24,9 +24,13 @@ ones, the slide's **speaker notes** (`meta.notes`), and navigation (previous/nex
 overview grid, plus all the keyboard shortcuts). The two windows follow each other, whichever one you
 navigate in. It is the same deck at `?presenter`, so both windows must be in the same browser.
 
-**Two decks (by URL path):**
+**Decks (by URL path):**
 - `/` → **your main slides** (`src/slides/`) — this is where you build your presentation.
-- `/template` → the 50 official Vinta 2023 layouts (`src/template/`), each a **parametrized component**
+- `/patterns` → every **design-system pattern** (`src/components/`, the current Vinta site look), one slide
+  per example. Import a pattern from `@/components` and pass your content as props — catalog, rules and text
+  limits are in **`src/components/CATALOG.md`**.
+- `/samples` → complete sample presentations built only from the patterns (`src/samples/`, fictional data).
+- `/template` → the 50 classic Vinta 2023 layouts (`src/template/`), each a **parametrized component**
   (`Slide01`–`Slide50`) whose defaults reproduce the official slide exactly. Import one and pass your
   content as props — per-slide props and examples are in **`src/template/CATALOG.md`**.
 
@@ -38,13 +42,16 @@ navigate in. It is the same deck at `?presenter`, so both windows must be in the
 
 ## Add a slide
 
-**No-code path:** write `src/slides/NN-name.md` — frontmatter `template: NN` picks a layout and the
-markdown body fills it (`#` title, paragraphs, lists, `##` sections, images, code fences, tables).
-End the file with an `<!-- … -->` comment for speaker notes. See **[MARKDOWN.md](MARKDOWN.md)**.
+**No-code path:** write `src/slides/NN-name.md` — frontmatter `template: SlideAgenda` (a pattern) or
+`template: NN` (a classic layout) picks the layout and the markdown body fills it (`#` title, a second `#`
+for the accent line, paragraphs, lists, `##` sections, images, code fences, tables). End the file with an
+`<!-- … -->` comment for speaker notes. See **[MARKDOWN.md](MARKDOWN.md)**.
 
-**Fastest path:** import a ready layout from `@/template` and pass props —
-`import { Slide12 } from "@/template"` then `<Slide12 title=… stats={…} />`. All 50 are catalogued with
-their props in **`src/template/CATALOG.md`**. Build from the `@/lib` primitives below only for bespoke slides.
+**Fastest path:** import a ready pattern from `@/components` (or a classic layout from `@/template`) and
+pass props — `import { SlideAgenda } from "@/components"` then `<SlideAgenda title=… accent=… items={…} />`.
+Patterns are catalogued in **`src/components/CATALOG.md`**, classic layouts in **`src/template/CATALOG.md`**.
+Build from the `@/lib` primitives below only for bespoke classic slides (see
+[Design-system patterns](#design-system-patterns-components) for bespoke site-look slides).
 
 1. Create `src/slides/NN-name.tsx` — this is your main deck at `/`. (Files are auto-discovered and
    **ordered by filename** — no registry edit.) Use a two-digit prefix, e.g. `04-results.tsx`.
@@ -75,6 +82,48 @@ export default function Slide51() {
 ```
 
 Everything is imported from the single entrypoint **`@/lib`**.
+
+---
+
+## Design-system patterns (`@/components`)
+
+`src/components/` is the Vinta presentation design system ported from vinta-slidedeck — the current
+site look (two-tone titles, wash/mesh/night backgrounds, Lucide icons, DM Sans + DM Mono). Patterns are
+whole slides; give one your content and you're done:
+
+```tsx
+import { SlideStepPath } from "@/components";
+import { Search, PenTool, Rocket } from "lucide-react";
+
+export const meta = { title: "How we work", notes: "One week per phase." };
+
+export default function HowWeWork() {
+  return (
+    <SlideStepPath
+      eyebrow="OUR APPROACH"
+      title="Three phases,"
+      accent="one team"
+      steps={[
+        { icon: Search, label: "WEEK 1", title: "Discover", text: "Interviews and a scoped spec." },
+        { icon: PenTool, label: "WEEK 2", title: "Design", text: "Flows validated with real users." },
+        { icon: Rocket, label: "WEEKS 3–4", title: "Ship", text: "A working MVP in production." },
+      ]}
+    />
+  );
+}
+```
+
+- **Pick a pattern** at `/patterns` (press `o`); every one is listed with its use, props and item limits in
+  **`src/components/CATALOG.md`**, and has copy-ready examples in `patterns/<Name>/<Name>.stories.tsx`.
+  `/samples` shows whole decks to copy the structure from.
+- **Rules** (CATALOG.md has the full list): tokens only, one accent color per slide, Lucide icons at
+  `strokeWidth={1.5}`, ≤ ~3 blocks and ≤ 5 list items per slide, fictional data only — never PHI.
+- **Generic patterns take `tone`** (`light` · `invert-blue` · `invert-navy`) to switch background; change the
+  tone instead of touching colors.
+- **Bespoke slide:** compose elements inside `<SlideShell mode safeArea background={<VividBackground />}>`
+  with `SlideHeader` on top. Don't mix in `@/lib` primitives — and don't use elements inside a classic
+  `<Slide>`: the two kits have separate tokens. `SlideShell` is what scopes the design-system styles.
+- Speaker notes, the presenter window, overview, capture modes and export all work the same as for classic slides.
 
 ---
 

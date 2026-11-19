@@ -1,0 +1,75 @@
+/* outer frame — rounds the 4 corners (real overflow:hidden); the
+   top-right corner cut comes from .shape inside, see below. */
+.card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* .shape carries the white background + the clipping — since .card already rounds via
+   overflow:hidden, the clip-path here only has to handle the diagonal
+   cut; the other 3 corners come out rounded for free from the frame. */
+.shape {
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--surface-page);
+  clip-path: polygon(0 0, calc(100% - 56px) 0, 100% 56px, 100% 100%, 0 100%);
+  padding: var(--padding-block);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* icon-inline — icon and title side by side, description below */
+.card[data-variant='icon-inline'] .header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.card[data-variant='icon-inline'] .title {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-h4);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  text-transform: none;
+}
+
+/* icon-top — icon above the title, everything left-aligned. Title in
+   uppercase DM Mono (same mono/label signature as the rest of the DS — harness:
+   "mono is the deck's signature"), not DM Sans. Uses the metric-label role (34,
+   already there for MetricItem) instead of mono-md (24) — explicit request
+   for bigger/more readable text inside the card. Own line-height (the
+   "solid" =1 token is for single-line numbers; here the title wraps onto 2). */
+.card[data-variant='icon-top'] .title {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-metric-label);
+  font-size: var(--font-size-metric-label);
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--accent-color);
+}
+
+/* descriptive text = always H4 (30/Medium), per explicit instruction. */
+.description {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-h4);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  color: var(--color-text-secondary);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: auto;
+  padding-top: var(--space-1);
+}

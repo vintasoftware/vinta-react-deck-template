@@ -1,0 +1,61 @@
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* The numbers take the rest of the frame, anchored at the bottom. */
+.stats {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+.stat {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding-left: 44px;
+  border-left: 1px solid var(--blue-100);
+}
+
+.value {
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-stat-mega);
+  font-weight: var(--font-weight-display);
+  line-height: var(--line-height-stat-mega);
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  line-height: var(--line-height-subtitle);
+  color: var(--vivid-ink);
+}
+
+/* Dark (mesh/night) */
+.body[data-dark] .stat {
+  border-left-color: color-mix(in srgb, var(--white) 32%, transparent);
+}
+
+.body[data-dark] .label {
+  color: var(--white);
+}

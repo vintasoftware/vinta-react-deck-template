@@ -1,0 +1,153 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.chart {
+  width: 1060px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart svg {
+  display: block;
+}
+
+.gridLine {
+  stroke: var(--white);
+  stroke-opacity: 0.18;
+  stroke-width: 1;
+}
+
+.area {
+  fill: var(--vivid-turquoise);
+  fill-opacity: 0.14;
+}
+
+.primaryLine,
+.referenceLine {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.primaryLine {
+  stroke: var(--vivid-turquoise);
+  stroke-width: 7;
+}
+
+.referenceLine {
+  stroke: var(--white);
+  stroke-width: 5;
+  stroke-dasharray: 14 10;
+}
+
+.dot {
+  fill: var(--vivid-turquoise);
+}
+
+/* x labels sit under their point (centered on the point's x) */
+.xLabels {
+  position: relative;
+  height: 30px;
+}
+
+.xLabel {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.xLabel,
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-subtitle);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 40px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+}
+
+.swatch[data-series='primary'] {
+  background: var(--vivid-turquoise);
+}
+
+.swatch[data-series='reference'] {
+  background: var(--white);
+}
+
+.legendText {
+  margin: 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--white);
+}
+
+.stats {
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Each stat card takes an equal share of the chart's height. */
+.stats > * {
+  flex: 1;
+  justify-content: center;
+}
+
+/* row inside the glass VividCard: icon tile, number and caption */
+.stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.statText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statValue {
+  margin: 0;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-h2);
+  color: var(--white);
+}
+
+.statLabel {
+  margin: 0;
+}

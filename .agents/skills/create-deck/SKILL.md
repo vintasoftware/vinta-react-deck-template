@@ -4,55 +4,97 @@ description: >-
   Build or extend a Vinta-branded slide deck using the React + Tailwind template
   in vinta-react-deck-template/. Use whenever the user wants to create a
   presentation, add or design slides, turn notes/outline/content into slides, or
-  restyle content to the Vinta 2023 brand. Covers layouts, colors, fonts, photos
-  and code blocks. Adapts the official template's "Dicas para melhor uso".
+  restyle content to the Vinta brand — the current site look (design-system
+  patterns) or the classic Vinta 2023 layouts. Covers layouts, colors, fonts,
+  photos, icons and code blocks. Adapts the official template's "Dicas para melhor uso".
 ---
 
 # Create a Vinta deck
 
-The presentation system lives in **`vinta-react-deck-template/`** (a React + Tailwind app). Three
-decks by URL:
+The presentation system lives in **`vinta-react-deck-template/`** (a React app). Decks by URL:
 
 | URL | Deck | Folder | Role |
 |---|---|---|---|
 | `/` | **Your deck** — author here | `src/slides/` | what you build |
-| `/template` | 50 official Vinta layouts | `src/template/` | reference / copy from |
+| `/patterns` | Every design-system pattern, with examples | `src/components/patterns/` | **pick from here first** |
+| `/samples` | Sample presentations built from the patterns | `src/samples/` | structure to copy |
+| `/template` | 50 classic Vinta 2023 layouts | `src/template/` | reference / copy from |
 
 Build a deck by **importing a ready layout and passing your content as props** — never by inventing a new
-visual style. The 50 official layouts live in `src/template/` as parametrized components (`Slide01`–`Slide50`,
-whose defaults reproduce the official slide exactly); their per-slide props and copy-paste examples are
-catalogued in **`src/template/CATALOG.md`**. Library primitives import from the single entrypoint **`@/lib`**.
+visual style. Two kits, one deck runtime:
+
+- **Design-system patterns** (`@/components`) — the current Vinta look (vintasoftware.com), ported from
+  vinta-slidedeck: ~70 whole-slide patterns (`SlideCover`, `SlideAgenda`, `SlideStepPath`, charts, case
+  studies, closings…) built from elements, with two-tone titles and Lucide icons. Catalog with each pattern's
+  use, props and item/character limits, plus the design rules: **`src/components/CATALOG.md`**. **Default to
+  these for new decks.**
+- **Classic layouts** (`@/template`, primitives in `@/lib`) — the 50 official Vinta 2023 slides as
+  parametrized components (`Slide01`–`Slide50`); per-slide props in **`src/template/CATALOG.md`**. Use them
+  when the user asks for the 2023 look or for a layout only they have (e.g. code windows).
+
+Keep one kit per slide; mixing kits across slides of one deck works but looks inconsistent, so avoid it unless asked.
 
 ## Workflow
 
 1. `cd vinta-react-deck-template` — run `npm install` once, then `npm run dev` (→ http://localhost:5173, your deck at `/`).
-2. **Pick a layout.** Browse `/template` (all 50; press `o` for the grid) and skim **`src/template/CATALOG.md`** to find the closest archetype. Note its number.
-3. **Add the slide.** Create `src/slides/NN-name.tsx` (two-digit prefix sets the order; auto-discovered, no registry edit). `export default` a component that renders the layout with your content:
+2. **Pick a layout.** Browse `/patterns` (press `o` for the grid) and skim **`src/components/CATALOG.md`** to
+   find the closest pattern — `/samples` shows typical deck sequences. (Classic: `/template` and
+   `src/template/CATALOG.md`.)
+3. **Add the slide.** Create `src/slides/NN-name.tsx` (two-digit prefix sets the order; auto-discovered, no registry edit). `export default` a component that renders the pattern with your content:
 
    ```tsx
-   import { Slide12 } from "@/template";
-   export const meta = { title: "Our numbers" };
+   import { SlideBigStat } from "@/components";
+   export const meta = { title: "Our numbers", notes: "Pause on the 42%." };
    export default function Metrics() {
-     return <Slide12 title="Our year" stats={[{ value: "10M", caption: "Users" }]} />;
+     return (
+       <SlideBigStat
+         tone="invert-navy"
+         eyebrow="RESULTS"
+         title="What changed"
+         accent="in 90 days"
+         stats={[{ value: "42%", label: "Faster intake" }, { value: "3x", label: "More visits" }]}
+       />
+     );
    }
    ```
 
-   Every prop is optional (omit → keeps the placeholder) and listed in CATALOG.md.
+   Pattern props are typed and documented (JSDoc) in `src/components/patterns/<Name>/<Name>.tsx`; the
+   `<Name>.stories.tsx` next to it has ready examples to copy. Respect each pattern's item limits.
+   (Classic: `import { Slide12 } from "@/template"` — every prop optional, listed in its CATALOG.md.)
 
-   **Or write it in markdown:** `src/slides/NN-name.md` with `template: NN` in its frontmatter; the body
-   (`#` title, paragraphs, lists, `##` sections, images, code fences, tables) fills the layout, and
-   `props:` in the frontmatter sets anything else. The per-layout mapping is in **`MARKDOWN.md`**.
-   Prefer `.md` for plain content slides; use `.tsx` when you need logic or bespoke composition.
-4. **Only for structural surgery** (changing the layout itself, not just its content): copy `src/template/NN.tsx` into `src/slides/` and edit the copy. The `<Slide>` canvas is a fixed 1920×1080; prefer flow layout components over absolute `<Place>`.
-5. **Verify.** Screenshot at native size via `http://localhost:5173/?shot=N`, and run `npx tsc -b`.
+   **Or write it in markdown:** `src/slides/NN-name.md` with `template: SlideBigStat` (or a classic
+   number, `template: 12`) in its frontmatter; the body (paragraph above `#` = eyebrow, `#` title, a second
+   `#` = accent line, paragraphs, lists, `##` sections, images, code fences, tables) fills the layout, and
+   `props:` in the frontmatter sets anything else (`tone`, `variant`…). The mappings are in **`MARKDOWN.md`**.
+   Prefer `.md` for plain content slides; use `.tsx` when you need icons, logic or bespoke composition.
+4. **Only for bespoke slides:** compose design-system elements inside `<SlideShell>` with `SlideHeader` on
+   top (CATALOG.md, "Composing a slide without a pattern"). Classic: copy `src/template/NN.tsx` into
+   `src/slides/` and edit the copy. Both canvases are a fixed 1920×1080.
+5. **Verify.** Screenshot at native size via `http://localhost:5173/?shot=N`, and run `npx tsc -b`. Look for
+   text overflowing its box and dead space.
 
-Reach for a parametrized layout first (**`src/template/CATALOG.md`** — per-slide props + examples); drop to
-raw `@/lib` primitives only for bespoke slides. The slide anatomy, full component catalog, design tokens and
+Reach for a pattern (or parametrized layout) first; drop to elements or raw `@/lib` primitives only for
+bespoke slides. The slide anatomy, full component catalog, design tokens and
 archetype recipes live in **`vinta-react-deck-template/AUTHORING.md`** — read it for anything beyond the brand rules below.
 
 ---
 
-## Brand rules — adapted from the official template's "Dicas para melhor uso deste Template"
+## Design-system rules (patterns, `@/components`)
+
+The full list is in `src/components/CATALOG.md` ("Rules that never change"); the ones that matter most:
+
+- **Tokens only.** Colors, sizes, radii and spacing come from `src/components/tokens.css` — no loose hex or
+  `px` in new CSS. Something missing? Stop and tell the user instead of approximating.
+- **One accent per slide** (brand blue by default); a second color only when it encodes meaning. Change a
+  generic pattern's `tone` (`light` · `invert-blue` · `invert-navy`) instead of touching colors.
+- **Two-tone titles:** `title` (line 1) + `accent` (line 2). Header at the top, never vertically centered.
+- **Icons:** Lucide only (`lucide-react`, `strokeWidth={1.5}`), every icon different and concrete; no icon per bullet.
+- **Anti-wall-of-text:** title + up to ~3 blocks, lists ≤ 5 items; check each pattern's character limits.
+- **Fonts:** DM Sans and DM Mono, already loaded. **Photos:** `/assets/team/<key>.webp` for team shots (keys and
+  usage rules in CATALOG.md); client logos by name from `Logo/clients.ts`.
+- **Always fictional data** in examples — never real patient data or any PHI.
+
+## Brand rules for the classic layouts — adapted from the official template's "Dicas para melhor uso deste Template"
 
 **01 · The slides — reuse layouts, don't reinvent.** There is an extensive set of ready layouts
 (`/template`, all 50 parametrized as `Slide01`–`Slide50`); import the closest one and pass your content as
@@ -108,4 +150,5 @@ Optional props: `fontSize` (px), `dots` (the window's traffic-light dots, on by 
 - **Reorder:** rename files (the `NN-` prefix drives order).
 - **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid, `p` for the presenter window (clock, timer, notes, previous/next slides; synced with the deck window).
 - **Speaker notes:** add `notes` to a slide's `meta` (`export const meta = { title: "…", notes: "…" }`). Plain text, `\n` for line breaks; shown only in the presenter window, never on the slide.
-- **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.md` (or `.tsx`) per slide, then screenshot-check each with `?shot=N`.
+- **Turn an outline into a deck:** map each section to the closest pattern from `/patterns` (the typical sales sequence is in CATALOG.md; `/samples` has full examples), create one `src/slides/NN-*.md` (or `.tsx`) per slide, then screenshot-check each with `?shot=N`.
+- **Export:** `npm run export` (PDF + editable PPTX of `/` into `export/`); `--format pdf|pptx`, `--deck patterns|samples|template`.

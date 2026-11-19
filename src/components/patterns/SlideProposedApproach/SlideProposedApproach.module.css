@@ -1,0 +1,110 @@
+/* background: page gray (--surface-gray) + exported arcs + bottom strip */
+.bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--surface-gray);
+}
+
+.arcs {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 198px;
+  background: url('/assets/proposed-approach/background-top.png') no-repeat;
+  /* the exported strip ends at y198; the arcs keep fading */
+  mask-image: linear-gradient(180deg, black 70%, transparent 100%);
+}
+
+.strip {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 14px;
+  background: url('/assets/shared/footer-strip-14.svg') no-repeat;
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* Figma (427:1046, measured on the 1920×1080 raster): title 96 / 96 bold at x64,
+   subtitle 32 light, intro 30 / 44 light at x1010, track y466, stages
+   y520 (313 tall), callout y877 (1792×133). */
+.title {
+  left: 64px;
+  top: 70px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 88px; /* Figma 96 in Roboto; DM Sans Bold is ~16% wider — 88 + tight tracking keeps the width */
+  line-height: 96px;
+  letter-spacing: -5.3px;
+  white-space: nowrap;
+  color: var(--blue-900);
+}
+
+.subtitle {
+  left: 64px;
+  top: 288px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.96px; /* DM Sans is wider than Roboto: keeps the Figma width */
+  white-space: nowrap;
+  color: var(--slate-400);
+}
+
+.intro {
+  left: 1010px;
+  top: 195px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 44px;
+  letter-spacing: -1.05px;
+  white-space: nowrap;
+  color: var(--ink-table-value);
+}
+
+.track {
+  left: 64px;
+  top: 466px;
+  width: 1792px;
+}
+
+.stages {
+  left: 64px;
+  top: 520px;
+  width: 1792px;
+  height: 313px;
+  display: flex;
+  align-items: stretch;
+}
+
+.stage {
+  flex: 1;
+  min-width: 0;
+}
+
+/* each stage overlaps the previous one by 43px (= ChevronStage notch) */
+.stage + .stage {
+  margin-left: -43px;
+}
+
+.callout {
+  left: 64px;
+  top: 877px;
+  width: 1792px;
+}

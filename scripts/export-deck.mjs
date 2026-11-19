@@ -15,7 +15,7 @@
 //
 // Usage:
 //   node scripts/export-deck.mjs [options]
-//     --deck   main|template            which deck to export (default: main)
+//     --deck   main|patterns|samples|template  which deck to export (default: main)
 //     --format pdf|pptx|both            output(s) to produce   (default: both)
 //     --out    <dir>                    output directory       (default: export)
 //     --scale  <n>                      background image DPR    (default: 2)
@@ -68,7 +68,7 @@ const PX_PER_IN = SLIDE_W / PPT_W; // 144
 const inch = (px) => px / PX_PER_IN;
 const pt = (px) => px / 2;
 
-const DECK_PATH = { main: "/", template: "/template", };
+const DECK_PATH = { main: "/", patterns: "/patterns", samples: "/samples", template: "/template" };
 if (!(deck in DECK_PATH)) {
   console.error(`Unknown --deck "${deck}". Use one of: ${Object.keys(DECK_PATH).join(", ")}`);
   process.exit(1);
@@ -262,6 +262,9 @@ async function capture() {
     const page = await browser.newPage({
       viewport: { width: SLIDE_W, height: SLIDE_H },
       deviceScaleFactor: scale,
+      // The design-system patterns (@/components) animate their product mocks, but honour
+      // prefers-reduced-motion: ask for it so each capture is a still, settled frame.
+      reducedMotion: "reduce",
     });
 
     await page.goto(`${deckUrl}?print`, { waitUntil: "networkidle" });

@@ -1,0 +1,61 @@
+.plain {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-tint);
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* Figma: "Thank you!" 160 fino, x123 / y395 */
+.title {
+  left: 123px;
+  top: 395px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-display);
+  font-size: 160px;
+  line-height: 211.33px;
+  letter-spacing: -3.52px;
+  color: var(--blue-logo);
+  white-space: nowrap;
+}
+
+/* Figma: portrait at x142 / y648, text starting at y643 */
+.contact {
+  left: 142px;
+  top: 643px;
+}
+
+.rule {
+  left: 142px;
+  width: 1672px;
+}
+.rule[data-index='0'] {
+  top: 873px;
+}
+.rule[data-index='1'] {
+  top: 889px;
+}
+
+.rule :global(img) {
+  display: block;
+}
+
+.logo {
+  left: 166px;
+  top: 956px;
+}
+
+.logo :global(img) {
+  display: block;
+  width: 128px;
+  height: 29px;
+}

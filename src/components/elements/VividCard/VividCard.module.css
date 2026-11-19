@@ -1,0 +1,37 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.card[data-radius='md'] {
+  border-radius: var(--radius-md);
+}
+.card[data-radius='lg'] {
+  border-radius: var(--radius-lg);
+}
+
+.card[data-padding='md'] {
+  padding: 28px;
+}
+.card[data-padding='lg'] {
+  padding: 40px;
+}
+
+.card[data-surface='white'] {
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  box-shadow: var(--shadow-lg);
+}
+
+.card[data-surface='glass'] {
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--white) 30%, transparent);
+}
+
+.card[data-surface='navy'] {
+  background: var(--vivid-navy);
+  border: 1px solid var(--vivid-navy);
+  box-shadow: var(--shadow-lg);
+}

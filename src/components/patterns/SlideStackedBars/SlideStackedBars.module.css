@@ -1,0 +1,116 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.columns {
+  width: 1180px;
+  display: flex;
+  gap: var(--space-4);
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bar {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  overflow: hidden;
+}
+
+.segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segmentValue {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: 1;
+}
+
+.segment[data-color='navy'],
+.swatch[data-color='navy'] {
+  background: var(--vivid-navy);
+  color: var(--white);
+}
+.segment[data-color='blue'],
+.swatch[data-color='blue'] {
+  background: var(--vivid-blue);
+  color: var(--white);
+}
+.segment[data-color='sky'],
+.swatch[data-color='sky'] {
+  background: var(--vivid-sky);
+  color: var(--vivid-ink);
+}
+.segment[data-color='turquoise'],
+.swatch[data-color='turquoise'] {
+  background: var(--vivid-turquoise);
+  color: var(--vivid-ink);
+}
+
+.columnLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-subtitle);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--vivid-indigo);
+  white-space: nowrap;
+}
+
+.caption {
+  margin: 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--slate-500);
+}
+
+.legend {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-bottom: 90px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.swatch {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: calc(var(--radius-sm) / 2);
+}
+
+.legendText {
+  margin: 0;
+  font-size: var(--font-size-metric-label);
+  font-weight: var(--font-weight-h4);
+  line-height: 1.25;
+  color: var(--vivid-ink);
+}

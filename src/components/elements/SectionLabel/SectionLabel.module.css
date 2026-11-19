@@ -1,0 +1,44 @@
+.label {
+  display: flex;
+  align-items: center;
+  gap: 13.5px;
+}
+
+.bar {
+  flex-shrink: 0;
+  width: 5.8px;
+  height: 27px;
+  border-radius: 2.9px;
+}
+
+.label[data-accent='blue'] .bar {
+  background: linear-gradient(180deg, var(--accent-blue-section-dark), var(--accent-blue-section-light));
+}
+.label[data-accent='orange'] .bar {
+  background: var(--accent-orange-sand);
+}
+.label[data-accent='sky'] .bar {
+  height: 21.3px;
+  background: var(--accent-blue-section-bright);
+}
+
+.text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-h2);
+  white-space: nowrap;
+}
+
+.label[data-emphasis='strong'] .text {
+  font-size: 29px;
+  line-height: normal;
+  letter-spacing: -0.58px;
+  color: var(--blue-900);
+}
+
+.label[data-emphasis='soft'] .text {
+  font-size: 28.6px;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  color: var(--slate-heading);
+}

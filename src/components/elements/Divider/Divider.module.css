@@ -1,0 +1,94 @@
+.divider {
+  position: relative;
+  overflow: hidden;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  display: flex;
+  align-items: center;
+  padding-left: var(--slide-safe-area-hero);
+  /* solid scheme color as a fallback while the background image loads */
+  background: var(--divider-bg);
+}
+
+/* ---------------------------------------------------------------------
+ * Text color per scheme (layout.md). 01 and 04 are the bases "written out";
+ * 02 is the inverse of 01 and 03 the inverse of 04. The background itself (formerly
+ * code-generated blobs) now comes from the real art exported from Figma — see .bg.
+ * ------------------------------------------------------------------- */
+
+/* 01 — dark base A */
+.divider[data-scheme='01'] {
+  --divider-bg: var(--surface-invert-blue);
+  --divider-title-color: var(--surface-soft);
+  --divider-pill-text: var(--scheme-01-pill-text);
+}
+
+/* 02 — inverse of 01: light bg, the title takes the blue that was the bg */
+.divider[data-scheme='02'] {
+  --divider-bg: var(--scheme-02-bg);
+  --divider-title-color: var(--scheme-02-title);
+  --divider-pill-text: var(--ink);
+}
+
+/* 03 — inverse of 04: light bg, the title takes the blue that was the bg */
+.divider[data-scheme='03'] {
+  --divider-bg: var(--surface-soft);
+  --divider-title-color: var(--scheme-03-title);
+  --divider-pill-text: var(--ink);
+}
+
+/* 04 — base B escura */
+.divider[data-scheme='04'] {
+  --divider-bg: var(--surface-invert-blue-alt);
+  --divider-title-color: var(--white);
+  --divider-pill-text: var(--ink);
+}
+
+/* real background — art exported from Figma per scheme, full-bleed, behind the content */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: fit-content;
+  background: var(--chip-invert-bg);
+  color: var(--divider-pill-text);
+  padding: var(--padding-tag-y) var(--padding-tag-x);
+  border-radius: var(--radius-pill);
+}
+
+.pillText {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-mono-md);
+  font-size: var(--font-size-mono-md);
+  line-height: var(--line-height-mono-md);
+}
+
+.title {
+  margin: 0;
+  max-width: 1200px;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--divider-title-color);
+}

@@ -1,0 +1,76 @@
+/* Frame of the site-look slides: 112 top · 144 sides (safe area) · 120 bottom, 40 between header and content. */
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+/* takes the rest of the height and centers the cards (no dead space at the bottom) */
+.fill {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grid {
+  flex: 0 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-auto-rows: minmax(0, 340px);
+  gap: var(--space-3) 36px;
+}
+
+/* inside the VividCard: label row, the number, the delta pill */
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-3) 34px;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 0.06em;
+  color: var(--slate-500);
+  white-space: nowrap;
+}
+
+.value {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--vivid-ink);
+  white-space: nowrap;
+}
+
+.delta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-tint);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-h4);
+  line-height: 30px;
+  color: var(--vivid-indigo);
+}

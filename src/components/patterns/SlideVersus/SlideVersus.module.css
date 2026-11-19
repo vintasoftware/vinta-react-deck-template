@@ -1,0 +1,109 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card {
+  width: 760px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4) 52px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.card[data-kind='against'] {
+  border: 1px solid var(--blue-100);
+  background: var(--white);
+  color: var(--vivid-ink);
+}
+
+.card[data-kind='for'] {
+  background: linear-gradient(150deg, var(--vivid-feature-blue) 0%, var(--vivid-indigo) 100%);
+  color: var(--white);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h2);
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: var(--font-size-metric-label);
+  font-weight: var(--font-weight-body);
+  line-height: normal;
+}
+
+.marker {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+.card[data-kind='against'] .marker {
+  background: var(--surface-tint);
+  color: var(--vivid-indigo);
+}
+
+.card[data-kind='for'] .marker {
+  background: color-mix(in srgb, var(--white) 18%, transparent);
+  color: var(--white);
+}
+
+.vs {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--vivid-indigo);
+}
+
+.itemText {
+  max-width: 560px;
+}

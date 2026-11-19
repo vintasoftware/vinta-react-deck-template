@@ -1,0 +1,16 @@
+.highlight {
+  color: var(--vivid-feature-blue);
+}
+
+.highlight[data-mode='invert-blue'],
+.highlight[data-mode='invert-navy'] {
+  color: var(--vivid-turquoise);
+}
+
+.highlight[data-variant='gradient'][data-mode='invert-blue'],
+.highlight[data-variant='gradient'][data-mode='invert-navy'] {
+  background: linear-gradient(90deg, var(--vivid-turquoise), var(--white));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

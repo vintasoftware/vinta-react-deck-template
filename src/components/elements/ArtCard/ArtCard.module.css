@@ -1,0 +1,48 @@
+.card {
+  position: relative;
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+}
+
+.art :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.title,
+.description {
+  position: absolute;
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--accent-blue-card-text);
+}
+
+.card[data-size='lg'] .title {
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: 0.133px;
+}
+
+.card[data-size='md'] .title {
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: 0.113px;
+}
+
+.description {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0.113px;
+  color: var(--ink-blue-soft);
+}

@@ -1,0 +1,67 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+}
+
+.inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 4px;
+}
+
+.logo {
+  display: flex;
+  height: 48px;
+}
+
+/* Opening quote mark: display size, light weight, cropped line box. */
+.mark {
+  display: block;
+  height: 64px;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: 0.9;
+  color: var(--vivid-feature-blue);
+}
+
+.inner[data-highlight] .mark {
+  color: var(--vivid-turquoise);
+}
+
+.person {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.personText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.role {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-label);
+  line-height: 1.25;
+  color: var(--slate-500);
+}
+
+.inner[data-highlight] .role {
+  color: var(--vivid-teal-glow);
+}

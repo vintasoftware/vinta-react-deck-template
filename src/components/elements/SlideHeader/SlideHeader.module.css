@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.header[data-align='center'] {
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* split: title at the left, lede at the right, bottoms aligned (site: dark section headers). */
+.header[data-layout='split'] {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gap-columns);
+}
+
+.header[data-layout='split'] .heading {
+  flex: 1 1 55%;
+}
+
+.header[data-layout='split'] .lede {
+  flex: 0 1 40%;
+}
+
+.lede {
+  max-width: 980px;
+}

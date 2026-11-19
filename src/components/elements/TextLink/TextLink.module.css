@@ -1,0 +1,44 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: fit-content;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: var(--font-weight-mono-label);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* variant="button" — CTA look: solid background in the accent color, white
+   text, bigger (mono-md instead of mono-label) and with "card" padding
+   (13×25, already a real harness token) instead of bare text. */
+.link[data-variant='button'] {
+  gap: var(--space-2);
+  padding: var(--padding-card-y) var(--padding-card-x);
+  border-radius: var(--radius-pill);
+  background: var(--accent-color);
+  color: var(--white);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+}
+
+/* size="lg" — Figma CTA (Client case): mono 22 / weight 500, no tracking */
+.link[data-size='lg'] {
+  gap: var(--space-2);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* button on dark backgrounds: the accent resolves to white there, so the CTA becomes a white pill with blue text. */
+.link[data-variant='button'][data-mode='invert-blue'],
+.link[data-variant='button'][data-mode='invert-navy'] {
+  background: var(--white);
+  color: var(--vivid-blue);
+}

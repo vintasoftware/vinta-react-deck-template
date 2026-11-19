@@ -1,0 +1,85 @@
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.head,
+.labelHead {
+  padding: var(--space-3) var(--space-3);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.labelHead {
+  text-align: left;
+}
+
+.head[data-highlight='true'] {
+  color: var(--color-text-accent);
+  background: var(--color-surface-alt);
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.rowLabel {
+  padding: var(--space-4) var(--space-3);
+  text-align: left;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cell {
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cell[data-highlight='true'] {
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+}
+
+.cell[data-highlight='true'][data-last='true'] {
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.yes {
+  color: var(--status-success);
+  vertical-align: middle;
+}
+
+.no {
+  color: var(--color-text-muted);
+  vertical-align: middle;
+}
+
+/* on navy the highlight surface equals the background: swap it for a white veil */
+.table[data-mode='invert-navy'] .head[data-highlight='true'],
+.table[data-mode='invert-navy'] .cell[data-highlight='true'] {
+  background: color-mix(in srgb, var(--white) 8%, transparent);
+}
+
+.table[data-mode='invert-navy'] .yes,
+.table[data-mode='invert-blue'] .yes {
+  color: var(--accent-mint);
+}
+
+.table[data-density='compact'] .rowLabel,
+.table[data-density='compact'] .cell {
+  padding-block: var(--space-3);
+}

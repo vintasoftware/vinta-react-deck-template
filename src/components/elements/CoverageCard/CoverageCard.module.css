@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 480px;
+  padding: 28.846px;
+  border: 1.697px solid var(--blue-100);
+  border-radius: 20.362px;
+  background: var(--white);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18.57px;
+}

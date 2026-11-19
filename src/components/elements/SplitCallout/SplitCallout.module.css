@@ -1,0 +1,80 @@
+/* Figma (Alt 03): 1792×133, borda 1px blue-100, raio 12, sombra curta */
+.callout {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 133px;
+  padding: 0 34px;
+  background: var(--surface-page);
+  border: 1px solid var(--blue-100);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(5, 5, 8, 0.08);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 290px;
+}
+
+.leftLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 2.2px;
+  line-height: 20px;
+  color: var(--slate-label-gray);
+}
+
+.leftValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: var(--font-weight-metric-label);
+  line-height: 44px;
+  color: var(--blue-600);
+}
+
+/* vertical divider (3×76) — color by configurable accent; orange uses the
+   exact Figma amber */
+.callout[data-accent='orange'] {
+  --callout-color: var(--accent-orange-amber);
+}
+
+.rule {
+  align-self: center;
+  flex: 0 0 3px;
+  height: 76px;
+  background: var(--callout-color, var(--accent-color));
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  margin-left: 25px;
+}
+
+.rightLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 3.3px;
+  line-height: 20px;
+  color: var(--callout-color, var(--accent-color));
+}
+
+.rightText {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 27px; /* Figma 28 in Roboto; DM Sans is ~12% wider */
+  font-weight: var(--font-weight-body);
+  line-height: 34px;
+  letter-spacing: -0.84px;
+  white-space: nowrap;
+  color: var(--ink-table-value);
+}

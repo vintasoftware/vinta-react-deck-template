@@ -1,0 +1,65 @@
+.plain {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-invert-blue);
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* Figma: 120 thin title at x164 / y101 */
+.title {
+  left: 164px;
+  top: 101px;
+  width: 484px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-display);
+  line-height: normal;
+  letter-spacing: -2.64px;
+  color: var(--surface-page);
+}
+
+/* Figma: summary 30 regular, line height 1.5, x164, baseline at y938, width 563 */
+.summary {
+  left: 164px;
+  bottom: 142px;
+  width: 563px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-body);
+  font-size: 30px;
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+  color: var(--white);
+}
+
+.summary strong {
+  font-weight: 700;
+}
+
+/* Figma: 425×452 cards at x960/1422, y78/549 */
+.card[data-slot='1'] {
+  left: 960px;
+  top: 78px;
+}
+.card[data-slot='2'] {
+  left: 1422px;
+  top: 78px;
+}
+.card[data-slot='3'] {
+  left: 960px;
+  top: 549px;
+}
+.card[data-slot='4'] {
+  left: 1422px;
+  top: 549px;
+}

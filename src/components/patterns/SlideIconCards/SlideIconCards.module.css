@@ -1,0 +1,49 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Per-card accent: the strong tone of the white tile's icon (same map as IconBadge white/pale). */
+.label {
+  --card-accent: var(--blue-600);
+}
+.label[data-accent='cyan'] {
+  --card-accent: var(--vivid-teal-deep);
+}
+.label[data-accent='purple'] {
+  --card-accent: var(--accent-purple);
+}
+.label[data-accent='mint'] {
+  --card-accent: var(--accent-green-ink);
+}
+.label[data-accent='rose'] {
+  --card-accent: var(--accent-rose-dark);
+}
+.label[data-accent='orange'] {
+  --card-accent: var(--accent-orange);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: normal;
+  letter-spacing: var(--tracking-mono-md);
+  color: var(--card-accent);
+}

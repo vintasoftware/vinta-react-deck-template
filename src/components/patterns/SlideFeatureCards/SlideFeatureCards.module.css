@@ -1,0 +1,28 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+}
+
+.cards[data-count='4'] {
+  gap: var(--space-3);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 8px;
+}
+
+.cardText {
+  padding: 0 8px;
+}

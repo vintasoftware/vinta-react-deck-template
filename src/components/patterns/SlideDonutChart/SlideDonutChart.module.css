@@ -1,0 +1,132 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* without the takeaways card, chart and legend sit together in the middle */
+.row[data-takeaways='false'] {
+  justify-content: center;
+  gap: var(--gap-columns);
+}
+
+.donut {
+  flex: none;
+}
+
+/* segment colors: SVG stroke for the arc, background for the legend swatch */
+[data-color='navy'] {
+  --segment: var(--vivid-navy);
+}
+[data-color='blue'] {
+  --segment: var(--vivid-blue);
+}
+[data-color='sky'] {
+  --segment: var(--vivid-sky);
+}
+[data-color='turquoise'] {
+  --segment: var(--vivid-turquoise);
+}
+[data-color='azure'] {
+  --segment: var(--vivid-azure);
+}
+[data-color='indigo'] {
+  --segment: var(--vivid-indigo);
+}
+
+.donut circle {
+  stroke: var(--segment);
+}
+
+.legend {
+  width: 480px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.swatch {
+  flex: none;
+  width: 12px;
+  height: 76px;
+  border-radius: var(--radius-pill);
+  background: var(--segment);
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h1);
+  line-height: 1;
+  color: var(--vivid-ink);
+}
+
+.label {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+}
+
+.detail {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--slate-500);
+}
+
+.cardTitle,
+.number {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--vivid-indigo);
+}
+
+.takeaway {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.number {
+  flex: none;
+  width: 48px;
+  line-height: var(--line-height-h4);
+}

@@ -1,0 +1,32 @@
+/* Figma measurements: 100px block, label 37.23 mono light / 50.26, gap 10,
+   1.7px divider inside a 12px box */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100px;
+  width: 100%;
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-size: 37.227px;
+  line-height: 50.256px;
+  letter-spacing: 0.1396px;
+  text-transform: uppercase;
+}
+
+.rule {
+  flex-shrink: 0;
+  height: 12px;
+  border-top: 1.697px solid var(--surface-footer);
+}
+
+.header[data-status='success'] .label {
+  color: var(--status-success);
+}
+.header[data-status='danger'] .label {
+  color: var(--status-danger);
+}

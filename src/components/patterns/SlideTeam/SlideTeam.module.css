@@ -1,0 +1,93 @@
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+}
+
+/* Accent pair per person: --from/--to for the ring, --on-dark for the role on dark. Default blue. */
+.ring,
+.role {
+  --from: var(--vivid-azure);
+  --to: var(--vivid-blue);
+  --on-dark: var(--vivid-sky);
+}
+.ring[data-accent='purple'],
+.role[data-accent='purple'],
+.ring[data-accent='rose'],
+.role[data-accent='rose'] {
+  --from: var(--vivid-violet-mid);
+  --to: var(--vivid-violet-deep);
+  --on-dark: var(--vivid-violet-glow);
+}
+.ring[data-accent='cyan'],
+.role[data-accent='cyan'],
+.ring[data-accent='mint'],
+.role[data-accent='mint'] {
+  --from: var(--vivid-teal-bright);
+  --to: var(--vivid-teal-deep);
+  --on-dark: var(--vivid-aqua);
+}
+.ring[data-accent='orange'],
+.role[data-accent='orange'] {
+  --from: var(--accent-orange-light);
+  --to: var(--accent-orange);
+  --on-dark: var(--accent-orange-light);
+}
+
+/* Portrait (or initials) inside an accent gradient ring. */
+.ring {
+  width: 240px;
+  height: 240px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--from), var(--to));
+  box-shadow: var(--shadow-lg);
+}
+
+.initials {
+  width: 224px;
+  height: 224px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  color: var(--to);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--to);
+}
+
+.body[data-dark] .role {
+  color: var(--on-dark);
+}
+

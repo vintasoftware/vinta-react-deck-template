@@ -1,5 +1,6 @@
-import type { ComponentType } from "react";
+import { Component as ReactComponent, type ComponentType, type ReactNode } from "react";
 import { CHART_PALETTE, Slide, mdText, parseMarkdownSlide, type DeckSlide, type MdContent, type MdDoc, type MdSection } from "@/lib";
+import { PATTERN_TEMPLATES, patternKey } from "@/components/markdown";
 import {
   Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09, Slide10,
   Slide11, Slide12, Slide13, Slide14, Slide15, Slide16, Slide17, Slide18, Slide19, Slide20,
@@ -8,8 +9,9 @@ import {
   Slide41, Slide42, Slide43, Slide44, Slide45, Slide46, Slide47, Slide48, Slide49, Slide50,
 } from "./index";
 
-// Markdown slides: a `.md` file picks one of the 50 layouts with `template: NN` in its
-// frontmatter, and its body is mapped onto that layout's props by the table below.
+// Markdown slides: a `.md` file picks one of the 50 classic layouts with `template: NN` in its
+// frontmatter (or a design-system pattern by name, `template: SlideCover` — see
+// @/components/markdown), and its body is mapped onto that layout's props by the table below.
 // Frontmatter `props:` override anything the body produced. See MARKDOWN.md.
 
 /** How one template turns a parsed markdown body into its props. */
@@ -225,6 +227,32 @@ function templateNumber(value: unknown): number | undefined {
 
 const optString = (v: unknown) => (typeof v === "string" && v.trim() !== "" ? v : undefined);
 
+/**
+ * The classic layouts predate `doc.accent` (a second `#` right after the title): there it opened
+ * a section holding everything after it. Rebuild that shape so these layouts read bodies as before.
+ */
+function classicDoc(doc: MdDoc): MdDoc {
+  if (doc.accent === undefined) return doc;
+  const { kicker, title, notes, accent, sections, ...content } = doc;
+  return {
+    kicker, title, notes,
+    paragraphs: [], list: [], ordered: false, images: [],
+    sections: [{ heading: accent, ...content }, ...sections],
+  };
+}
+
+/** Resolves `template:` to a classic layout (a number) or a design-system pattern (a name). */
+function resolveTemplate(value: unknown): MarkdownTemplate | undefined {
+  const n = templateNumber(value);
+  if (n !== undefined) {
+    const t = MARKDOWN_TEMPLATES[n];
+    return t && { Component: t.Component, fromMarkdown: (doc) => t.fromMarkdown(classicDoc(doc)) };
+  }
+  if (typeof value !== "string") return undefined;
+  const p = PATTERN_TEMPLATES[patternKey(value)];
+  return p && { Component: p.Component, fromMarkdown: p.fromMarkdown ?? none };
+}
+
 function withoutUndefined(props: Record<string, unknown>) {
   return Object.fromEntries(Object.entries(props).filter(([, v]) => v !== undefined));
 }
@@ -246,10 +274,16 @@ export function markdownSlide(id: string, source: string): DeckSlide {
       );
     }
 
-    const n = templateNumber(frontmatter.template);
-    if (frontmatter.template === undefined) throw new Error('Missing "template:" in frontmatter (e.g. template: 19).');
-    const template = n === undefined ? undefined : MARKDOWN_TEMPLATES[n];
-    if (!template) throw new Error(`Unknown template "${String(frontmatter.template)}" — use a layout number 1–50.`);
+    if (frontmatter.template === undefined) {
+      throw new Error('Missing "template:" in frontmatter (e.g. template: 19, or template: SlideCover).');
+    }
+    const template = resolveTemplate(frontmatter.template);
+    if (!template) {
+      throw new Error(
+        `Unknown template "${String(frontmatter.template)}" — use a classic layout number 1–50 ` +
+          `or a pattern name such as SlideCover (src/components/CATALOG.md).`,
+      );
+    }
 
     const overrides = frontmatter.props ?? {};
     if (typeof overrides !== "object" || Array.isArray(overrides)) {
@@ -258,7 +292,12 @@ export function markdownSlide(id: string, source: string): DeckSlide {
 
     const props = { ...withoutUndefined(template.fromMarkdown(doc)), ...(overrides as Record<string, unknown>) };
     const Layout = template.Component;
-    const Component = () => <Layout {...props} />;
+    // Patterns have required props a body may not supply; a render error shows the error slide, not a blank deck.
+    const Component = () => (
+      <SlideErrorBoundary file={`${id}.md`}>
+        <Layout {...props} />
+      </SlideErrorBoundary>
+    );
     Component.displayName = `Markdown(${id})`;
 
     return {
@@ -273,6 +312,27 @@ export function markdownSlide(id: string, source: string): DeckSlide {
     console.error(`[markdown slide] ${id}.md: ${message}`);
     const Component = () => <MarkdownErrorSlide file={`${id}.md`} message={message} />;
     return { id, Component, title: `⚠ ${id}.md` };
+  }
+}
+
+/** Renders the error slide when a markdown slide's layout throws while rendering. */
+class SlideErrorBoundary extends ReactComponent<{ file: string; children: ReactNode }, { error?: Error }> {
+  state: { error?: Error } = {};
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  componentDidCatch(error: Error) {
+    console.error(`[markdown slide] ${this.props.file}: ${error.message}`);
+  }
+  render() {
+    const { error } = this.state;
+    if (!error) return this.props.children;
+    return (
+      <MarkdownErrorSlide
+        file={this.props.file}
+        message={`The layout failed to render — usually a required part is missing (a list, sections or a table).\n${error.message}`}
+      />
+    );
   }
 }
 

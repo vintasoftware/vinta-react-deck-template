@@ -1,0 +1,86 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-columns);
+}
+
+.header {
+  width: 720px;
+  flex-shrink: 0;
+}
+
+.list {
+  flex: 1;
+  max-width: 820px;
+  max-height: 800px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  gap: 32px;
+}
+
+/* Three items would spread too far apart over the full height. */
+.body[data-count='3'] .list {
+  max-height: 620px;
+}
+
+/* The list fills the frame height: every item but the last stretches, so the rail runs to the bottom. */
+.item:not(:last-child) {
+  flex: 1;
+}
+
+/* Space between items lives in the text column, so the rail line runs unbroken from circle to circle. */
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) 0 var(--space-4);
+}
+
+.item:last-child .itemText {
+  padding-bottom: 0;
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  border: 1px solid color-mix(in srgb, var(--blue-600) 30%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  color: var(--blue-600);
+}
+
+.item[data-active='true'] .circle {
+  background: linear-gradient(135deg, var(--vivid-azure), var(--vivid-blue));
+  border-color: var(--vivid-blue);
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.line {
+  flex: 1;
+  width: 1px;
+  margin: var(--space-2) 0;
+  background: color-mix(in srgb, var(--blue-600) 25%, transparent);
+}

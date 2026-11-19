@@ -1,0 +1,105 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+}
+
+.funnel {
+  flex-shrink: 0;
+  display: block;
+}
+
+.slice {
+  stroke-linejoin: round;
+}
+
+.slice[data-variant='outline'] {
+  fill: var(--tint-blue-soft);
+  stroke: var(--accent-blue-light);
+  stroke-width: 2;
+  stroke-dasharray: 10 8;
+}
+
+.slice[data-variant='soft'] {
+  fill: var(--accent-blue-light);
+}
+
+.slice[data-variant='solid'] {
+  fill: var(--vivid-blue);
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* inside the VividCard (one per funnel slice, same height as the slice) */
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 var(--space-4);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Tag has no outline-dashed / soft / solid variants that match the funnel slices: local pill with tokens. */
+.pill {
+  padding: 8px 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-subtitle);
+  letter-spacing: var(--tracking-mono-label);
+  white-space: nowrap;
+}
+
+.pill[data-variant='outline'] {
+  background: var(--white);
+  border: 1px dashed var(--accent-blue-light);
+  color: var(--vivid-indigo);
+}
+
+.pill[data-variant='soft'] {
+  background: var(--accent-blue-light);
+  color: var(--vivid-ink);
+}
+
+.pill[data-variant='solid'] {
+  background: var(--vivid-blue);
+  color: var(--white);
+}
+
+.value {
+  margin: 0;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h1);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-h2);
+  color: var(--vivid-ink);
+}
+
+.description {
+  margin: 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--slate-500);
+}

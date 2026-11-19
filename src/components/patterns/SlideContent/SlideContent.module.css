@@ -1,0 +1,105 @@
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.text {
+  width: 760px;
+}
+
+/* The column takes the full height and the card stretches, so the points fill the frame. */
+.side {
+  --point-pad: 36px;
+  width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.side[data-photo] {
+  --point-pad: var(--space-3);
+}
+
+.points {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 44px;
+}
+
+.point {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: var(--point-pad) 0;
+}
+
+/* bulletVariant="number": small numbered circles joined by a line (the site's steps). */
+.points[data-numbered] .point {
+  align-items: flex-start;
+}
+
+/* bulletVariant="dot": a small blue dot, the quiet default. */
+.dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 13px;
+  border-radius: var(--radius-pill);
+  background: var(--vivid-blue);
+}
+
+.body[data-dark] .dot {
+  background: var(--vivid-turquoise);
+}
+
+.point:has(.dot) {
+  align-items: flex-start;
+}
+
+.step {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin-top: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-mono-md);
+  color: var(--vivid-blue);
+}
+
+.points[data-numbered] .point:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: calc(var(--point-pad) + 44px);
+  bottom: calc(-1 * var(--point-pad) - 4px);
+  width: 1px;
+  background: color-mix(in srgb, var(--vivid-blue) 24%, transparent);
+}
+
+.body[data-dark] .step {
+  background: color-mix(in srgb, var(--white) 14%, transparent);
+  border-color: color-mix(in srgb, var(--white) 38%, transparent);
+  box-shadow: none;
+  color: var(--white);
+}
+
+.body[data-dark] .points[data-numbered] .point:not(:last-child)::before {
+  background: color-mix(in srgb, var(--white) 32%, transparent);
+}

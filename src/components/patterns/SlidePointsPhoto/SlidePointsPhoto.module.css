@@ -1,0 +1,66 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.text {
+  width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.body[data-frame='card'] .text {
+  width: 820px;
+  gap: var(--gap-header);
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.body[data-frame='card'] .points {
+  gap: 44px;
+}
+
+.point {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.body[data-frame='card'] .point {
+  align-items: flex-start;
+}
+
+.pointText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 740px;
+}
+
+.media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoShadow {
+  position: relative;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.photoCard {
+  padding: 32px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}

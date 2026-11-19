@@ -1,0 +1,131 @@
+.card {
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.card[data-tone='light'] {
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  --pc-title: var(--blue-900);
+  --pc-description: var(--slate-400);
+  --pc-label: var(--slate-400);
+  --pc-value: var(--ink-table-value);
+  --pc-price: var(--blue-900);
+  --pc-rule: var(--blue-100);
+}
+
+.card[data-tone='accent'] {
+  background: linear-gradient(160deg, var(--accent-blue-gradient-start) 8%, var(--blue-600) 100%);
+  --pc-title: var(--white);
+  --pc-description: rgba(255, 255, 255, 0.9);
+  --pc-label: rgba(255, 255, 255, 0.86);
+  --pc-value: rgba(255, 255, 255, 0.96);
+  --pc-price: var(--white);
+  --pc-rule: rgba(255, 255, 255, 0.22);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 52px;
+  color: var(--pc-title);
+}
+
+.description {
+  margin-top: 14px;
+  font-family: var(--font-sans);
+  font-size: 25px;
+  line-height: 37.5px;
+  color: var(--pc-description);
+}
+
+.description p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--pc-rule);
+}
+
+.label {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--pc-label);
+}
+
+.value {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--pc-value);
+  white-space: nowrap;
+}
+
+.row[data-price] .value {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--pc-price);
+}
+
+/* md — Investment 01: card 781×685 (Spark/Forge) */
+.card[data-size='md'] {
+  width: 781px;
+  height: 685px;
+  padding: 33px 44px 0;
+}
+.card[data-size='md'][data-tone='accent'] {
+  width: 780px;
+  height: 684px;
+}
+.card[data-size='md'] .rows {
+  margin-top: 24px;
+}
+.card[data-size='md'] .row {
+  height: 80px;
+}
+.card[data-size='md'] .label {
+  width: 214px;
+  font-size: 22px;
+}
+.card[data-size='md'] .value {
+  font-size: 26px;
+  line-height: 36.4px;
+}
+.card[data-size='md'] .row[data-price] .value {
+  font-size: 36px;
+}
+
+/* lg — Investment 02: 1001×551 card, table only */
+.card[data-size='lg'] {
+  width: 1001px;
+  height: 551px;
+  padding: 83px 56px 0;
+}
+.card[data-size='lg'] .row {
+  height: 96px;
+}
+.card[data-size='lg'] .row:first-child {
+  border-top: none;
+}
+.card[data-size='lg'] .label {
+  width: 292px;
+  font-size: 24px;
+}
+.card[data-size='lg'] .value {
+  font-size: 28px;
+}
+.card[data-size='lg'] .row[data-price] .value {
+  font-size: 48px;
+  color: var(--blue-600);
+}

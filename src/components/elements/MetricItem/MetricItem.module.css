@@ -1,0 +1,21 @@
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-metric-label);
+  font-weight: var(--font-weight-metric-label);
+  color: var(--accent-color);
+}
+
+.description {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 24px; /* Figma (Who is Vinta) and layout.md: ~24 — above body (20) */
+  font-weight: var(--font-weight-body);
+  letter-spacing: -0.35px;
+  color: var(--color-text-primary);
+}

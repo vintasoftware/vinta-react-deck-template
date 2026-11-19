@@ -1,0 +1,50 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.cards {
+  display: flex;
+  gap: 32px;
+}
+
+.cards[data-count='4'] {
+  gap: var(--space-3);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0 4px;
+}
+
+/* Mono role label in the person's accent (no tick, as on the site). */
+.role {
+  --role-color: var(--blue-600);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: normal;
+  letter-spacing: var(--tracking-mono-md);
+  color: var(--role-color);
+}
+.role[data-accent='cyan'] {
+  --role-color: var(--vivid-teal-deep);
+}
+.role[data-accent='purple'] {
+  --role-color: var(--accent-purple);
+}
+.role[data-accent='mint'] {
+  --role-color: var(--accent-green-ink);
+}
+.role[data-accent='rose'] {
+  --role-color: var(--accent-rose-dark);
+}
+.role[data-accent='orange'] {
+  --role-color: var(--accent-orange);
+}

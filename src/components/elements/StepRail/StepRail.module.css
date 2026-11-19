@@ -1,0 +1,77 @@
+.rail {
+  position: relative;
+  width: 1792px;
+  height: 46px;
+}
+
+/* base rail: 1px var(--blue-100) (y=352 in Figma) */
+.base {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--blue-100);
+}
+
+/* gradient line: 2px, 44px below (y=396) */
+.line {
+  position: absolute;
+  left: 0;
+  top: 44px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-teal) 0%, var(--accent-blue-bright) 52%, var(--blue-deep) 100%);
+}
+
+.arrow {
+  position: absolute;
+  top: 35px;
+  right: -10px;
+  width: 18px;
+  height: 21px;
+  background: var(--blue-deep);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* dots: white ring 30 + core 18, centered on the cards (340.2 wide) */
+.dots {
+  position: absolute;
+  left: 155px;
+  right: 155px;
+  top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+}
+
+.ring[data-accent='teal'] .dot {
+  background: var(--accent-teal);
+}
+.ring[data-accent='aqua'] .dot {
+  background: var(--accent-aqua);
+}
+.ring[data-accent='sky'] .dot {
+  background: var(--accent-blue-bright);
+}
+.ring[data-accent='blue'] .dot {
+  background: var(--blue-600);
+}
+.ring[data-accent='navy'] .dot {
+  background: var(--blue-deep);
+}

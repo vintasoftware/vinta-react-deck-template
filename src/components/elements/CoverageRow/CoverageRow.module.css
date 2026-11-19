@@ -1,0 +1,33 @@
+.row {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5.431px 16.293px;
+  border-radius: 12.544px;
+  backdrop-filter: blur(0.935px);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.5431px;
+}
+
+.row[data-width='fill'] {
+  width: 100%;
+}
+
+.row[data-width='hug'] {
+  width: fit-content;
+  min-height: 39.374px;
+  white-space: nowrap;
+}
+
+.row[data-status='success'] {
+  background: var(--accent-mint);
+  color: var(--accent-mint-dark);
+}
+.row[data-status='danger'] {
+  background: var(--accent-rose);
+  color: var(--accent-rose-dark);
+}

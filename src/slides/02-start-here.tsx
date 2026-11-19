@@ -3,7 +3,7 @@ import { Slide19 } from "@/template";
 export const meta = {
   title: "Start here",
   notes:
-    "Three steps to a deck:\n1. Add a slide file under src/slides/.\n2. Pick a layout from /template.\n3. Check CATALOG.md and AUTHORING.md for props and tokens.",
+    "Three steps to a deck:\n1. Add a slide file under src/slides/.\n2. Pick a pattern from /patterns (or a classic layout from /template).\n3. Check the CATALOG.md files and AUTHORING.md for props and tokens.",
 };
 
 /** Onboarding — delete this once you're building. Layout: template Slide19 (see CATALOG.md). */
@@ -22,12 +22,12 @@ export default function StartHere() {
         {
           number: "02",
           title: "Pick a layout",
-          text: 'Browse /template (all 50) and\nimport { SlideNN } from "@/template".',
+          text: 'Browse /patterns (the site look) or\n/template (the classic 50) and import it.',
         },
         {
           number: "03",
           title: "Read the guide",
-          text: "Props live in src/template/CATALOG.md;\nAUTHORING.md covers tokens and recipes.",
+          text: "Props live in the two CATALOG.md files;\nAUTHORING.md covers tokens and recipes.",
         },
       ]}
     />

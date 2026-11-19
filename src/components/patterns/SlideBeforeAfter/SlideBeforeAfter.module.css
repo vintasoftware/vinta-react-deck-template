@@ -1,0 +1,106 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* row inside the VividCard: metric, paired bars, delta pill */
+.card {
+  height: 176px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+}
+
+.metric {
+  width: 340px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.label {
+  margin: 0;
+  font-size: var(--font-size-metric-label);
+  font-weight: var(--font-weight-metric-label);
+  line-height: normal;
+  color: var(--vivid-ink);
+}
+
+.bars {
+  width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.barName {
+  flex: none;
+  width: 96px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--slate-500);
+}
+
+.bar {
+  flex: none;
+  height: 52px;
+  border-radius: var(--radius-sm);
+}
+
+.bar[data-kind='before'] {
+  background: var(--accent-blue-light);
+}
+
+.bar[data-kind='after'] {
+  background: var(--vivid-blue);
+}
+
+.barValue {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+  white-space: nowrap;
+}
+
+.deltaCell {
+  width: 200px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delta {
+  padding: 12px 26px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-tint);
+  font-size: var(--font-size-subtitle-hero);
+  font-weight: var(--font-weight-h4);
+  line-height: normal;
+  color: var(--vivid-indigo);
+  white-space: nowrap;
+}
