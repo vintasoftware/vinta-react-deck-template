@@ -98,7 +98,10 @@ export function PresenterView({ slides, idx, jump, onGo, onPrev, onNext, onOverv
                 ) : (
                   <p className="text-sm text-white/40">
                     No notes for this slide. Add them in the slide file:{" "}
-                    <code className="font-mono text-white/60">export const meta = {"{ notes: \"…\" }"}</code>
+                    <code className="font-mono text-white/60">export const meta = {"{ notes: \"…\" }"}</code>{" "}
+                    in a <code className="font-mono text-white/60">.tsx</code> slide, or a closing{" "}
+                    <code className="font-mono text-white/60">{"<!-- … -->"}</code> comment in a{" "}
+                    <code className="font-mono text-white/60">.md</code> slide.
                   </p>
                 )}
               </div>

@@ -265,7 +265,8 @@ export function markdownSlide(id: string, source: string): DeckSlide {
       id,
       Component,
       title: optString(frontmatter.title) ?? doc.title ?? doc.kicker,
-      notes: optString(frontmatter.notes),
+      // Speaker notes for the presenter window: frontmatter `notes:` and/or the closing comment.
+      notes: [optString(frontmatter.notes), doc.notes].filter(Boolean).join("\n\n") || undefined,
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);

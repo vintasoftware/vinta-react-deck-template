@@ -38,7 +38,7 @@ Active users
 |---|---|---|
 | `template` | yes | Layout number `1`–`50` (`19`, `"19"` and `Slide19` all work). |
 | `title` | no | Label in the overview grid / HUD. Defaults to the `#` heading. **Not** the slide's title text. |
-| `notes` | no | Speaker notes (not rendered). |
+| `notes` | no | Speaker notes for the presenter window. Usually easier as a closing comment — see [Speaker notes](#speaker-notes). |
 | `props` | no | Raw layout props, exactly as in CATALOG.md. They **override** whatever the body produced. |
 
 Any other top-level key is reported as an error — layout props always go under `props:`.
@@ -68,7 +68,8 @@ The body is read as a small, predictable structure:
 | `![alt](img-….png)` on its own line | a **photo** (bare names resolve from `public/assets/`) |
 | ```` ```ts ```` fenced block | **code** + its language |
 | a `| pipe | table |` | **chart data** |
-| `<!-- comment -->` | ignored |
+| `<!-- comment -->` at the **end** of the file | **speaker notes** (see below) |
+| any other `<!-- comment -->` | ignored |
 
 Inline formatting (`**bold**`, `*italic*`, `` `code` ``, `[links](…)`) is flattened to plain text — the
 layouts style their own text. Anything the body can't express (a gauge's exact `percent`, a custom
@@ -76,6 +77,34 @@ chart color) goes under `props:`.
 
 **Section headings and numbers.** In numbered layouts, items are numbered `01`, `02`… automatically;
 start a heading with a number (`## 05 Plan`) to set that item's label yourself.
+
+---
+
+## Speaker notes
+
+End the slide with an HTML comment and it becomes the slide's speaker notes, shown only in the
+presenter window (press `p`), never on the slide:
+
+```md
+---
+template: 6
+---
+# Part two —
+
+the rollout
+
+<!--
+Pause here. Ask who has shipped with feature flags before.
+Then: three phases, one PR each.
+-->
+```
+
+- Only comments **after all the content** count; a comment followed by more content is just an author
+  comment (handy for commenting out a block). Several closing comments are joined with a blank line.
+- Notes read like markdown prose: wrapped lines join into one paragraph; blank lines, list items
+  (`-`, `1.`) and explicit breaks (two trailing spaces or a trailing `\`) stay as line breaks.
+  Other markdown is shown as written.
+- Frontmatter `notes:` works too; if both are present, the frontmatter notes come first.
 
 ---
 

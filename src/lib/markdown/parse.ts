@@ -47,6 +47,8 @@ export interface MdDoc extends MdContent {
   title?: string;
   /** Every `##`+ heading after the title, with its content. */
   sections: MdSection[];
+  /** Speaker notes: the `<!-- … -->` comment(s) that close the slide, with nothing after them. */
+  notes?: string;
 }
 
 /** A markdown slide file split into its YAML frontmatter and parsed body. */
@@ -98,7 +100,8 @@ function tableCells(line: string): string[] {
 /**
  * Parse a markdown slide body into an {@link MdDoc}. Supports the subset that
  * maps onto slide props: headings, paragraphs, flat lists, standalone images,
- * fenced code, pipe tables and `<!-- comments -->` (ignored).
+ * fenced code, pipe tables and `<!-- comments -->`. Comments at the very end of
+ * the slide become its speaker notes (`doc.notes`); any other comment is ignored.
  */
 export function parseMarkdownBody(body: string): MdDoc {
   const doc: MdDoc = { ...emptyContent(), sections: [] };
@@ -108,6 +111,8 @@ export function parseMarkdownBody(body: string): MdDoc {
   // Pending multi-line blocks.
   let para: string[] | null = null;
   let item: string[] | null = null;
+  // Comments seen since the last piece of content; whatever is left at the end are the notes.
+  let trailing: string[] = [];
 
   const flush = () => {
     if (para) cur.paragraphs.push(para.map(plain).join("\n"));
@@ -119,12 +124,17 @@ export function parseMarkdownBody(body: string): MdDoc {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // HTML comments (single or multi-line) are author notes — skip them.
+    // HTML comments (single or multi-line): kept aside as candidate speaker notes.
     if (/^\s*<!--/.test(line)) {
       flush();
-      while (i < lines.length && !lines[i].includes("-->")) i++;
+      const start = i;
+      while (i < lines.length - 1 && !lines[i].includes("-->")) i++;
+      const note = commentText(lines.slice(start, i + 1));
+      if (note) trailing.push(note);
       continue;
     }
+    // Any real content after a comment means that comment wasn't a closing note.
+    if (line.trim() !== "") trailing = [];
 
     // Fenced code.
     const fence = line.match(FENCE);
@@ -206,7 +216,42 @@ export function parseMarkdownBody(body: string): MdDoc {
     (para ??= []).push(line.trim().replace(/\\$/, ""));
   }
   flush();
+  if (trailing.length) doc.notes = trailing.join("\n\n");
   return doc;
+}
+
+/**
+ * The text of an `<!-- … -->` comment block, as speaker notes: delimiters and common
+ * indentation removed, then reflowed like markdown prose — wrapped lines join into one
+ * paragraph, while blank lines, list items and explicit breaks (two trailing spaces or
+ * a trailing `\`) are kept as line breaks.
+ */
+function commentText(block: string[]): string {
+  const raw = block.join("\n");
+  const inner = raw.slice(raw.indexOf("<!--") + 4, raw.includes("-->") ? raw.lastIndexOf("-->") : undefined);
+  const rows = inner.split("\n");
+  // The first row follows `<!--` on the same line, so it doesn't count towards the indentation.
+  const indent = Math.min(
+    ...rows.slice(1).filter((r) => r.trim()).map((r) => r.length - r.trimStart().length),
+    Infinity,
+  );
+  const dedented = rows.map((r, i) => (i === 0 ? r.trimStart() : r.slice(Number.isFinite(indent) ? indent : 0)));
+
+  const out: string[] = [];
+  let joinNext = false; // previous line was prose without an explicit break
+  for (const row of dedented) {
+    const hardBreak = / {2,}$|\\$/.test(row);
+    const text = row.replace(/\\$/, "").trimEnd();
+    if (!text.trim()) {
+      out.push("");
+      joinNext = false;
+      continue;
+    }
+    if (joinNext && !/^\s*([-*+]|\d+[.)])\s/.test(text)) out[out.length - 1] += " " + text.trim();
+    else out.push(text);
+    joinNext = !hardBreak;
+  }
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
 /**
