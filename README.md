@@ -22,6 +22,7 @@ npm run dev      # http://localhost:5173  → your deck
 - **`src/lib/`** — the UI library (single entrypoint `@/lib`): `Deck`, `Slide`, `Place`, typography,
   shapes, `Photo`, `CodeBlock`, layout and content blocks. Fully typed with JSDoc.
 - **[AUTHORING.md](AUTHORING.md)** — the guide: add-a-slide workflow, component catalog, tokens, recipes.
+- **[MARKDOWN.md](MARKDOWN.md)** — write slides as `.md` files that fill any of the 50 template layouts.
 - **[.agents/skills/create-deck/SKILL.md](.agents/skills/create-deck/SKILL.md)** — the agent brief for
   generating on-brand slides (workflow + brand rules). One canonical file, symlinked into each AI tool's
   expected path (see below).

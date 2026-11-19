@@ -38,6 +38,11 @@ catalogued in **`src/template/CATALOG.md`**. Library primitives import from the 
    ```
 
    Every prop is optional (omit → keeps the placeholder) and listed in CATALOG.md.
+
+   **Or write it in markdown:** `src/slides/NN-name.md` with `template: NN` in its frontmatter; the body
+   (`#` title, paragraphs, lists, `##` sections, images, code fences, tables) fills the layout, and
+   `props:` in the frontmatter sets anything else. The per-layout mapping is in **`MARKDOWN.md`**.
+   Prefer `.md` for plain content slides; use `.tsx` when you need logic or bespoke composition.
 4. **Only for structural surgery** (changing the layout itself, not just its content): copy `src/template/NN.tsx` into `src/slides/` and edit the copy. The `<Slide>` canvas is a fixed 1920×1080; prefer flow layout components over absolute `<Place>`.
 5. **Verify.** Screenshot at native size via `http://localhost:5173/?shot=N`, and run `npx tsc -b`.
 
@@ -103,4 +108,4 @@ Optional props: `fontSize` (px), `dots` (the window's traffic-light dots, on by 
 - **Reorder:** rename files (the `NN-` prefix drives order).
 - **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid, `p` for the presenter window (clock, timer, notes, previous/next slides; synced with the deck window).
 - **Speaker notes:** add `notes` to a slide's `meta` (`export const meta = { title: "…", notes: "…" }`). Plain text, `\n` for line breaks; shown only in the presenter window, never on the slide.
-- **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.tsx` per slide, then screenshot-check each with `?shot=N`.
+- **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.md` (or `.tsx`) per slide, then screenshot-check each with `?shot=N`.

@@ -22,3 +22,6 @@ export * from "./blocks/cards";
 export * from "./blocks/data";
 export * from "./blocks/people";
 export * from "./blocks/flow";
+
+// Markdown slide parsing (used by the markdown-slide loader in @/template)
+export * from "./markdown/parse";

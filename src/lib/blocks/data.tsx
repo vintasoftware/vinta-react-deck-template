@@ -214,14 +214,20 @@ export function BarChart({
   className = "",
   style,
 }: BarChartProps) {
-  const labelGutter = 92;
   const axisGutter = ticks > 0 ? 56 : 0;
-  const plotW = width - labelGutter;
   const plotH = height - axisGutter;
   const bound = max ?? niceMax(Math.max(0, ...data.map((d) => d.value)));
   const rowH = plotH / Math.max(1, data.length);
   const barH = rowH * barRatio;
   const fontSize = Math.min(30, rowH * 0.32);
+  // Widen the label column for long category names (min 92, max 40% of the chart)
+  // so labels aren't clipped at the SVG's left edge.
+  const longest = Math.max(
+    0,
+    ...data.map((d) => (typeof d.label === "string" || typeof d.label === "number" ? String(d.label).length : 0)),
+  );
+  const labelGutter = Math.min(width * 0.4, Math.max(92, Math.ceil(longest * fontSize * 0.6) + 32));
+  const plotW = width - labelGutter;
 
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className={className} style={style}>
