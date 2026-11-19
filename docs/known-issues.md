@@ -39,6 +39,9 @@ Carried over from vinta-slidedeck where they still apply, plus what is specific 
 
 - Ported without slidedeck's Vitest (`@storybook/addon-vitest`) and Chromatic addons, so stories aren't run as
   tests; the a11y addon reports in the Storybook UI only (`a11y.test: 'todo'`).
+- `npm run render-clip` records through Storybook's dev server with virtual time; it restarts a session that hangs
+  and keeps going from the last saved frame. Over 20 MB, Google Slides rejects the MP4 (raise `--crf` or lower
+  `--seconds`).
 - `npm run sync-harness` (regenerates the token reference in `docs/foundations.md` from `tokens.css`) isn't ported:
   update that section by hand when a token changes.
 - Storybook's dev server compiles each story on first open, so the first `npm run gallery` takes a few minutes;

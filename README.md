@@ -10,13 +10,18 @@ npm install
 npm run dev      # http://localhost:5173  → your deck
 ```
 
-## For non-technical users
+## Start a new deck
 
-See every slide template with `npm run gallery` (opens http://localhost:6007: templates grouped by what they're
-for, with a screenshot of each variant, when to use it and its limits). Then open Claude Code in this folder and ask
-for a deck (`/create-deck`): it asks what's missing, proposes an outline, builds the slides, checks them and
-publishes the deck as a private link when you approve. Ready-made prompts and rules:
+**One repository per deck.** On GitHub, use **"Use this template"** on `vintasoftware/vinta-react-deck-template` to
+create the deck's repository (a workflow renames the copy on its first push), clone it, `npm install`, then open
+Claude Code in it and ask for the deck (`/create-deck`): it asks what's missing, proposes an outline, builds the
+slides, checks them and publishes the deck as a private link when you approve. Ready-made prompts and rules:
 **[docs/team-guide.md](docs/team-guide.md)**.
+
+The slides are files in `src/slides/` (`.tsx` or `.md`). Storybook, the template gallery, `/patterns` and
+`/samples` are the reference to pick templates from — your slides never become stories. To see every template:
+`npm run gallery` (opens http://localhost:6007: templates grouped by what they're for, with a screenshot of each
+variant, when to use it and its limits).
 
 ## Decks (by URL)
 
@@ -40,6 +45,7 @@ timer, speaker notes, previous/next slides — synced with the deck window) · n
 | `npm run build` | Typecheck + production build |
 | `npm run build-deck [-- samples] [--shots] [--name "Title"]` | Your deck as one self-contained HTML in `output/exports/<name>/`, ready to publish as a Claude artifact (with `text.txt` to scan and `artifact.json`). See the publish-deck skill |
 | `npm run export` | PDF + editable PPTX of your deck in `export/` (`--format pdf\|pptx`, `--deck patterns\|samples`) |
+| `npm run render-clip -- <story-id> --out <name>` | Records an animated story as a looping MP4 + cover PNG in `output/exports/clips/`, for use outside the deck (email, Google Slides). Storybook must be running; needs `ffmpeg`. `--transparent` (WebM with alpha), `--selector`, `--seconds`, `--skip`… (header of `scripts/render-clip.mjs`) |
 | `npm run init -- <name>` | Rename a copy of this template (package, page title, this heading) |
 
 ## Where things are

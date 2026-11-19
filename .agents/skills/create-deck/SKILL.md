@@ -16,6 +16,13 @@ font, size or icon; if no pattern fits, say so instead of creating a style. Writ
 in whatever language the user asks for (ask if the brief doesn't say — Portuguese runs longer, so recheck limits).
 (Workflow ported from vinta-slidedeck's new-deck skill.)
 
+**One repository per deck.** Each deck is its own copy of the template repository
+`vintasoftware/vinta-react-deck-template` (GitHub's "Use this template"; a workflow renames the copy on its first
+push). The deck's slides are files in `src/slides/` (`.tsx` or `.md`) — never Storybook stories. Storybook, the
+template gallery, `/patterns` and `/samples` are references to pick patterns from. If the git remote is the template
+repository itself, don't build a client deck there: ask the user to create a repository from the template first
+(unless they say they are only trying things out or improving the template).
+
 | Where | What | Folder |
 |---|---|---|
 | `/` (`npm run dev`, :5173) | **The user's deck** — author here | `src/slides/` |
@@ -105,6 +112,10 @@ export default function Results() {
   edit the slides and run publish-deck again; it republishes to the same link.
 - **Present live:** `npm run dev`, open `/`, `f` for fullscreen, `p` for the presenter window.
 - **PDF / PowerPoint:** `npm run export` (editable PPTX, selectable PDF) into `export/`.
+- **An animation as a video** (e.g. the building-blocks map for an email or Google Slides):
+  `npm run render-clip -- <story-id> --out <name>` with Storybook running records a looping MP4 + cover PNG in
+  `output/exports/clips/` (`--transparent` for a WebM with alpha, `--selector` for one element; needs `ffmpeg`).
+  Story ids are in Storybook's URL (`?path=/story/<id>`), e.g. `patterns-slidebuildingblocks--animated`.
 - Tell the user what is still a fictitious placeholder and what depends on them (logos, photos, numbers).
 - Do not run git or push without an explicit request.
 
@@ -112,14 +123,19 @@ export default function Results() {
 
 When the user is done (deck published, or they say it's finished), ask once whether they'd like to contribute an
 anonymized version to the sample presentations. No → stop. Yes (this is the explicit request git needs) →
-1. Copy the deck to `src/samples/<Name>.stories.tsx` as stories, one per slide in order (`title: 'Samples/<Name>'`,
-   `name: '01 Cover'`…, each `render: () => <Pattern … />`; see the existing samples), with a generic name.
+the sample goes to the **template repository** (`vintasoftware/vinta-react-deck-template`), not this deck's
+repository: work in a checkout of the template (clone it next to this one if there isn't one).
+1. Copy the deck to the template's `src/samples/<Name>.stories.tsx` as stories, one per slide in order (`title:
+   'Samples/<Name>'`, `name: '01 Cover'`…, each `render: () => <Pattern … />`; see the existing samples), with a
+   generic name. (Samples are stories so they show in Storybook and the gallery; decks themselves never are.)
 2. Anonymize: client name, logos and client images, people, emails, phones, prices, real numbers, dates and
    internal project names become clearly fictional (Northwind-style). Never PHI. Team photos only as CATALOG.md
    allows. Keep the slide sequence and pattern choices: that is what the sample is for.
-3. `npx tsc -b`, then check the new slides at `/samples`.
+3. Copy any images the sample needs that the template doesn't have (anonymized ones only), then `npx tsc -b` and
+   check the new slides at `/samples` in the template.
 4. Show the user a short list of what was replaced and get an OK.
-5. New branch off `main`, commit only the sample, push and open a PR. Hand over the PR link.
+5. In the template checkout: new branch off `main`, commit only the sample (and its images), push and open a PR
+   against `vintasoftware/vinta-react-deck-template`. Hand over the PR link.
 
 ## Deck-level tasks
 

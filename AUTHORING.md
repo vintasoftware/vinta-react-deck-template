@@ -36,7 +36,8 @@ navigate in. It is the same deck at `?presenter`, so both windows must be in the
 
 **Sharing:** `npm run build-deck -- --shots` turns your deck into one self-contained HTML to publish as a
 private Claude artifact (the publish-deck skill walks through the scan and the publish); `npm run export`
-writes a PDF and an editable PPTX.
+writes a PDF and an editable PPTX; `npm run render-clip -- <story-id>` records an animated pattern as a looping
+video for use outside the deck (Storybook running, `ffmpeg` installed).
 
 ---
 

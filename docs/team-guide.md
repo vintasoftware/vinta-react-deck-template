@@ -11,25 +11,28 @@ presentation. You never edit code.
 - Visual catalog of every slide template: the gallery (`npm run gallery`, opens http://localhost:6007), grouped by
   what each template is for, with its limits. It also shows the sample presentations (complete decks with fictional
   data) and your own deck. Storybook (`npm run storybook`, port 6006) is the internal tool behind it.
-- Your deck lives in `src/slides/` on your copy of the repository; the published artifact is what you share.
+- **One repository per deck:** every new deck starts as a copy of the template repository
+  (`vintasoftware/vinta-react-deck-template`). Your slides live in `src/slides/` of that copy; the published
+  artifact is what you share.
 
 ## Set up your machine (once)
 
-1. Install Node.js (version 20 or newer) and Claude Code.
-2. In the repository folder, run:
+Install Node.js (version 20 or newer) and Claude Code.
+
+## Start a new deck
+
+1. On GitHub, open `vintasoftware/vinta-react-deck-template` and click **Use this template → Create a new
+   repository** (name it after the deck, e.g. `northwind-proposal`). Clone it and, in its folder, run:
 
 ```bash
 npm install
 ```
 
-3. To browse the templates: `npm run gallery` (the first build takes a few minutes). To look at your deck:
-   `npm run dev`, then open http://localhost:5173.
-
-## Start in 3 steps
-
-1. Open Claude Code in the repository folder and ask for a deck (or type `/create-deck`).
-2. Answer the briefing questions, or paste one of the prompts below with the client's details.
-3. Review the outline and the previews Claude shows you, ask for changes in the same chat and, when it looks right,
+2. Optional: browse the templates with `npm run gallery` (the first build takes a few minutes). To look at your deck
+   while it's built: `npm run dev`, then open http://localhost:5173.
+3. Open Claude Code in the deck's folder and ask for a deck (or type `/create-deck`).
+4. Answer the briefing questions, or paste one of the prompts below with the client's details.
+5. Review the outline and the previews Claude shows you, ask for changes in the same chat and, when it looks right,
    approve publishing. You get the artifact link to present or share.
 
 In the artifact: arrow keys or click to change slides, **O** for the overview, **F** for full screen.
@@ -80,6 +83,12 @@ Then rebuild the artifact and republish it at the same link.
 
 ```markdown
 Export the deck as a PDF (or: as an editable PowerPoint).
+```
+
+**An animation as a video** (for an email or Google Slides)
+
+```markdown
+Record the building blocks animation as a 20-second looping video.
 ```
 
 ## What the design system includes

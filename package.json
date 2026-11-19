@@ -18,6 +18,7 @@
     "build-storybook": "storybook build",
     "gallery": "node scripts/gallery.mjs --serve",
     "gallery:build": "node scripts/gallery.mjs",
+    "render-clip": "node scripts/render-clip.mjs",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
