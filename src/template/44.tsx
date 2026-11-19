@@ -20,12 +20,15 @@ export interface Slide44Props {
   people?: Slide44Person[];
 }
 
-/** Fixed 4-column member slots — left edge + role y, preserved from the original. */
+/** Fixed 4-column member slots — left edge + role y. The role sits in the white gap between
+ *  the photo (bottom 717.4) and the name (759.2); the original put it over the photo, where the
+ *  small blue text was unreadable. */
+const ROLE_Y = 724;
 const POS = [
-  { x: 96, ry: 654.1 },
-  { x: 533, ry: 654.1 },
-  { x: 970, ry: 654.1 },
-  { x: 1407, ry: 647.6 },
+  { x: 96, ry: ROLE_Y },
+  { x: 533, ry: ROLE_Y },
+  { x: 970, ry: ROLE_Y },
+  { x: 1407, ry: ROLE_Y },
 ];
 
 // Parametrized reproduction of the official template's Slide 44 (team grid).

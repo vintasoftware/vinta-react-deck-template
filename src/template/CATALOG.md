@@ -43,6 +43,9 @@ export default function Metrics() {
 - **Photos:** pass a bare `img-….png` (resolved from `public/assets/`) or any URL. Add your own images
   to `public/assets/` and reference them by filename. See AUTHORING.md § Design tokens for colors/fonts.
 
+- **Deliberate fixes vs. the original:** 38's title is blue (it was white on white, so invisible) and
+  44's role line sits in the gap under each photo (it was small blue text over the photo, unreadable).
+
 Prefer a layout close to your content over forcing content into the wrong one. When several fit, the
 `/template` overview grid (press `o`) is the fastest way to choose.
 
@@ -127,7 +130,7 @@ Blue kicker/title on the left; white heading + paragraph over a photo panel on t
 - `title?: string` · `heading?: string` · `body?: string` · `photo?: string`
 
 ### 09 · Heading + two paragraphs + side photo
-- `title?: string` (blue) · `body?: string[]` (two paragraphs) · `photo?: string` (large right panel)
+- `title?: string` (blue) · `body?: string` (separate paragraphs with a blank line) · `photo?: string` (large right panel)
 
 ### 30 · Blue title + paragraph + side portrait
 - `title?: string` (blue) · `body?: string` · `photo?: string` (large left portrait)

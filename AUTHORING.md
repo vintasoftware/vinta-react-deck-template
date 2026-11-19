@@ -31,6 +31,10 @@ npm run build          # typecheck + production build
 
 ## Add a slide
 
+**No-code path:** write `src/slides/NN-name.md` — frontmatter `template: NN` picks a layout and the
+markdown body fills it (`#` title, paragraphs, lists, `##` sections, images, code fences, tables).
+See **[MARKDOWN.md](MARKDOWN.md)**.
+
 **Fastest path:** import a ready layout from `@/template` and pass props —
 `import { Slide12 } from "@/template"` then `<Slide12 title=… stats={…} />`. All 50 are catalogued with
 their props in **`src/template/CATALOG.md`**. Build from the `@/lib` primitives below only for bespoke slides.

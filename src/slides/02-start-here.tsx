@@ -13,7 +13,7 @@ export default function StartHere() {
         {
           number: "01",
           title: "Add a slide",
-          text: "Drop src/slides/NN-name.tsx.\nIt auto-appears, ordered by filename.",
+          text: "Drop src/slides/NN-name.tsx or .md.\nIt auto-appears, ordered by filename.",
         },
         {
           number: "02",

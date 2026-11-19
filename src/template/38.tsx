@@ -57,7 +57,7 @@ export default function Slide38({
         <CodeBlock theme="dark" language={language} fontSize={fontSize} code={code} />
       </Place>
       <Place x={101} y={55.3}>
-        <Text size={51.6} weight={700} color="#FFFFFF" leading={1.14} maxWidth={832}>{title}</Text>
+        <Text size={51.6} weight={700} color="#0052FF" leading={1.14} maxWidth={832}>{title}</Text>
       </Place>
       <Place x={1440} y={TOPIC_TOP} w={312}>
         {topics.slice(0, 4).map((t, i, arr) => (
