@@ -1,0 +1,91 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+/* takes the rest of the height and centers the chart (no dead space at the bottom) */
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rows {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 340px 1fr 160px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.label,
+.valueLabel {
+  margin: 0;
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+}
+
+.label {
+  font-weight: var(--font-weight-body);
+}
+
+.valueLabel,
+.row[data-highlighted] .label {
+  font-weight: var(--font-weight-h4);
+}
+
+.track {
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--tint-blue-soft);
+}
+
+.bar {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  background: var(--accent-blue-light);
+}
+
+.row[data-highlighted] .bar {
+  background: var(--vivid-blue);
+}
+
+.callout {
+  flex-shrink: 0;
+  width: 384px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 44px var(--space-4);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(150deg, var(--vivid-feature-blue) 0%, var(--vivid-indigo) 100%);
+  box-shadow: var(--shadow-lg);
+}
+
+.calloutValue {
+  margin: 0;
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.03;
+  letter-spacing: var(--tracking-display);
+  color: var(--white);
+}

@@ -1,0 +1,81 @@
+.root,
+.base,
+.grid {
+  position: absolute;
+  inset: 0;
+}
+
+.root {
+  --grid-line: color-mix(in srgb, var(--vivid-blue) 7%, transparent);
+}
+
+.root[data-variant='mesh'],
+.root[data-variant='night'] {
+  --grid-line: color-mix(in srgb, var(--white) 6%, transparent);
+}
+
+.root[data-variant='wash'] .base {
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--vivid-wash-cyan) 90%, transparent) 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--tint-mint) 90%, transparent) 0%, transparent 42%),
+    linear-gradient(160deg, var(--surface-soft) 0%, var(--surface-tint) 100%);
+}
+
+.root[data-variant='mesh'] .base {
+  background:
+    linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--vivid-navy) 70%, transparent) 100%),
+    radial-gradient(ellipse at 90% 85%, color-mix(in srgb, var(--vivid-sky) 26%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 12% 18%, color-mix(in srgb, var(--vivid-azure) 38%, transparent) 0%, transparent 55%),
+    linear-gradient(160deg, var(--vivid-mesh-top) 0%, var(--vivid-blue) 45%, var(--vivid-indigo) 100%);
+}
+
+.root[data-variant='night'] .base {
+  background:
+    radial-gradient(ellipse at 8% 4%, color-mix(in srgb, var(--vivid-azure) 40%, transparent) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 78%, color-mix(in srgb, var(--vivid-blue) 45%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, var(--vivid-night-top) 0%, var(--vivid-navy) 62%, var(--vivid-ink) 100%);
+}
+
+.grid {
+  background:
+    repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 64px);
+}
+
+.strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14px;
+  background: linear-gradient(90deg, var(--vivid-blue) 0%, var(--vivid-sky) 55%, var(--vivid-aqua) 100%);
+}
+
+.root[data-variant='green'] .base,
+.root[data-variant='purple'] .base {
+  background:
+    linear-gradient(var(--panel-dim), var(--panel-dim)),
+    radial-gradient(ellipse at 12% 8%, color-mix(in srgb, var(--white) 30%, transparent) 0%, transparent 55%),
+    linear-gradient(150deg, var(--panel-top) 0%, var(--panel-top) 40%, var(--panel-bottom) 100%);
+}
+
+.root[data-variant='green'] {
+  --panel-top: var(--glass-green-top);
+  --panel-bottom: var(--glass-green-bottom);
+  --panel-dim: color-mix(in srgb, var(--vivid-teal-night) 30%, transparent);
+}
+
+.root[data-variant='purple'] {
+  --panel-top: var(--glass-purple-top);
+  --panel-bottom: var(--glass-purple-bottom);
+  --panel-dim: color-mix(in srgb, var(--vivid-ink) 28%, transparent);
+}
+
+.horizon {
+  position: absolute;
+  left: 160px;
+  top: 760px;
+  width: 1600px;
+  height: 420px;
+  background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--vivid-sky) 55%, transparent) 0%, transparent 70%);
+}

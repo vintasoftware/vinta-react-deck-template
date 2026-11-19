@@ -1,0 +1,38 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-page);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  height: 36px;
+  padding: 0 var(--space-2);
+  background: var(--surface-gray);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--border-color);
+}
+
+.body {
+  flex: 1;
+  display: flex;
+}
+
+/* default placeholder — harness §5: "Placeholder = surface-mist" */
+.placeholder {
+  flex: 1;
+  background: var(--surface-mist);
+}

@@ -1,0 +1,27 @@
+.root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glow,
+.ring {
+  position: absolute;
+  border-radius: var(--radius-pill);
+}
+
+.glow {
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in srgb, var(--vivid-turquoise) 45%, transparent) 0%,
+    transparent 62%
+  );
+}
+
+.ring[data-accent='white'] {
+  border: 2px solid color-mix(in srgb, var(--white) 24%, transparent);
+}
+
+.ring[data-accent='turquoise'] {
+  border: 2px solid color-mix(in srgb, var(--vivid-turquoise) 35%, transparent);
+}

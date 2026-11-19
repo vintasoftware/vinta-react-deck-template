@@ -1,0 +1,112 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+/* groups share one baseline */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 48px;
+}
+
+.group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.value {
+  margin: 0;
+  text-align: center;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+}
+
+.bar {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: linear-gradient(180deg, var(--vivid-feature-blue) 0%, var(--vivid-blue) 100%);
+}
+
+.bar[data-projected] {
+  background: var(--tint-blue-soft);
+  border: 2px dashed var(--accent-blue-light);
+  border-bottom: 0;
+}
+
+.barLabel,
+.groupLabel {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-subtitle);
+  letter-spacing: var(--tracking-mono-label);
+  white-space: nowrap;
+}
+
+.barLabel {
+  color: var(--slate-500);
+}
+
+.groupLabel {
+  color: var(--vivid-indigo);
+}
+
+.baseline {
+  height: 2px;
+  background: var(--accent-blue-light);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: calc(var(--radius-sm) / 2);
+  background: var(--vivid-blue);
+}
+
+.swatch[data-projected] {
+  background: var(--tint-blue-soft);
+  border: 2px dashed var(--accent-blue-light);
+}
+
+.legendText {
+  margin: 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--slate-500);
+}

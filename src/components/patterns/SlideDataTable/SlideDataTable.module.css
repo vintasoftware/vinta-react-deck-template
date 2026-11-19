@@ -1,0 +1,101 @@
+/* Frame of the site-look slides: 112 top · 144 sides (safe area) · 120 bottom, 40 between header and content. */
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.table {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.headRow,
+.row {
+  display: grid;
+  align-items: center;
+  padding: 0 var(--space-4);
+}
+
+.headCell {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: 30px;
+  letter-spacing: 0.06em;
+  color: var(--slate-500);
+  white-space: nowrap;
+}
+
+/* rows are 116 tall and shrink together when the header is taller (two-line title, lede) */
+.row {
+  flex: 0 1 116px;
+  min-height: 72px;
+  box-sizing: border-box;
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.cell {
+  display: flex;
+  min-width: 0;
+}
+
+.value {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-metric-label);
+  line-height: 42px;
+  color: var(--vivid-ink);
+}
+
+.value[data-style='strong'] {
+  font-weight: var(--font-weight-metric-label);
+}
+
+.value[data-style='text'] {
+  font-weight: var(--font-weight-body);
+}
+
+.value[data-style='muted'] {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  color: var(--slate-500);
+}
+
+.value[data-style='tag'],
+.value[data-style='tag-solid'] {
+  padding: var(--padding-tag-y) 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: 30px;
+}
+
+.value[data-style='tag'] {
+  background: var(--surface-tint);
+  color: var(--vivid-indigo);
+}
+
+.value[data-style='tag-solid'] {
+  background: var(--vivid-blue);
+  color: var(--white);
+}
+
+.value[data-style='badge'] {
+  padding: var(--padding-tag-y) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--vivid-indigo);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: 34px;
+  color: var(--white);
+}

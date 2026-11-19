@@ -1,0 +1,84 @@
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.body[data-media-side='left'] {
+  flex-direction: row-reverse;
+}
+
+.text {
+  width: 696px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bullet {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--vivid-blue);
+}
+
+.dot[data-dark] {
+  background: var(--vivid-turquoise);
+}
+
+.media {
+  position: relative;
+  width: 840px;
+  height: 760px;
+}
+
+/* Tilted azure → turquoise panel peeking out behind the photo. */
+.panel {
+  position: absolute;
+  left: 40px;
+  top: 10px;
+  width: 840px;
+  height: 760px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--vivid-azure) 0%, var(--vivid-turquoise) 100%);
+  transform: rotate(3deg);
+  opacity: 0.55;
+}
+
+.body[data-media-side='left'] .panel {
+  left: -40px;
+  transform: rotate(-3deg);
+}
+
+.frame {
+  position: relative;
+  width: 840px;
+  height: 760px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.frame > :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

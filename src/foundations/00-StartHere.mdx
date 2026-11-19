@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="00 Start here" />
+
+# Vinta Slidedeck
+
+Design system for Vinta's presentations. **1920×1080** slides, in three layers:
+
+**Tokens** (color, type, space) → **Elements** (the pieces) → **Patterns** (the slides).
+
+## How to use
+
+1. Pick the slide in **Patterns**. The *Docs* tab shows the fields it accepts.
+2. Swap the content. To change the slide's mood, change the `tone`: `light`, `tint`, `invert-blue` or `invert-navy`.
+3. If no pattern fits, compose elements inside `SlideShell` or ask for a new pattern.
+
+Full guide for the team: `docs/team-guide.md`. Catalog, rules and limits: `src/components/CATALOG.md`. These slides are also browsable as a deck at `/patterns` and `/samples` (`npm run dev`).
+
+## Color in three tiers
+
+| Tier | What it is | When to use |
+|---|---|---|
+| **1 · Primary** | blue ramp (`#0050ff` = brand), neutrals, surfaces, status | deck structure |
+| **2 · Secondary** | cyan, purple, mint, rose, orange | details, one accent per item |
+| **3 · Tertiary** | exact Figma values | only inside the slide that required them, never in new content |
+
+See **01 Foundations → 01 Color**.
+
+## Ready-made slides
+
+**Generic (accept `tone`):** Agenda · Content · TwoColumn · Quote · Team · Comparison · BigStat.
+
+**Figma screens (exact copy, fixed number of items):** Intro · Closing · Who is Vinta · What we heard (grid and cards) ·
+Proposed approach · Product timeline · Sprint steps · Journey (overall and single step) · Scope review ·
+Investment (plans and summary) · Maintenance services · Client case · Divider.
+
+## Golden rules
+
+- One slide, one idea: title + up to ~3 blocks; lists up to 5 items.
+- Title in H1, description in H4, CTA as a button.
+- Only DM Sans and DM Mono; only Lucide icons.
+- Fictitious data in examples; never PHI.

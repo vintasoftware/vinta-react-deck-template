@@ -1,0 +1,42 @@
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.title[data-ink='vivid'][data-mode='light'],
+.title[data-ink='vivid'][data-mode='light-tint'] {
+  color: var(--vivid-ink);
+}
+
+/* display — DM Sans (peso fino) 120 / auto / -2.2% (harness §4) */
+.title[data-scale='display'] {
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
+}
+
+/* cover — same family as display, larger scale (layout.md: "goes up to 150 on covers") */
+.title[data-scale='cover'] {
+  font-size: var(--font-size-display-cover);
+  font-weight: var(--font-weight-display);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
+}
+
+/* h1 — DM Sans Light 60 (harness §4). Default title of a content slide;
+   lh/tracking not specified in the harness, left at normal. */
+.title[data-scale='h1'] {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+}
+
+/* h2 — DM Sans Bold 50 / 60 / -0.8px (harness §4). Used for the smaller title of
+   Who is Vinta (~46 in layout.md, close enough to h2 to reuse the role). */
+.title[data-scale='h2'] {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--tracking-h2);
+}

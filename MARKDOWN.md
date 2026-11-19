@@ -1,34 +1,33 @@
 # Markdown slides
 
-Write a slide as a `.md` file instead of a `.tsx` component. The file picks one of the 50 template
-layouts and its markdown fills that layout's props — same brand, same pixel-faithful layouts, no JSX.
+Write a slide as a `.md` file instead of a `.tsx` component. The file names a pattern
+(`template: SlideAgenda`) and its markdown fills that pattern's props. Same brand, same patterns, no JSX.
 
 ```md
 <!-- src/slides/04-numbers.md -->
 ---
-template: 12
+template: SlideBigStat
+props:
+  tone: invert-navy
 ---
+RESULTS
 
-# Our year in numbers
+# What changed
+# in 90 days
 
-Two lines of
-supporting copy.
+## 42%
+Faster intake
 
-A second
-paragraph.
-
-## 200+
-Worldwide offices
-
-## 10M
-Active users
+## 3x
+More visits
 ```
 
 - Put it in `src/slides/` as `NN-name.md`. Markdown and `.tsx` slides are discovered together and
   **ordered by filename**, so you can mix them freely.
-- Browse `/template` to choose a layout, then look it up in the table below (props in `src/template/CATALOG.md`).
-- A mistake (bad YAML, unknown layout, misspelled key) never breaks the deck: that slide renders as an
-  error card naming the file and the problem.
+- Browse `/patterns` to choose a pattern, then look it up in the [table below](#per-pattern-mapping) (props and
+  limits in `src/components/CATALOG.md`).
+- A mistake (bad YAML, unknown pattern, misspelled key, a pattern missing a required part) never breaks the deck:
+  that slide renders as an error card naming the file and the problem.
 
 ---
 
@@ -36,19 +35,19 @@ Active users
 
 | Key | Required | Meaning |
 |---|---|---|
-| `template` | yes | Layout number `1`–`50` (`19`, `"19"` and `Slide19` all work). |
+| `template` | yes | A pattern name: `SlideAgenda`, `agenda`, `slide-agenda` and `Agenda` all work. |
 | `title` | no | Label in the overview grid / HUD. Defaults to the `#` heading. **Not** the slide's title text. |
 | `notes` | no | Speaker notes for the presenter window. Usually easier as a closing comment — see [Speaker notes](#speaker-notes). |
-| `props` | no | Raw layout props, exactly as in CATALOG.md. They **override** whatever the body produced. |
+| `props` | no | Raw pattern props, exactly as in the pattern's `.tsx`. They **override** whatever the body produced. |
 
-Any other top-level key is reported as an error — layout props always go under `props:`.
+Any other top-level key is reported as an error — pattern props always go under `props:`.
 
 ```md
 ---
-template: 39
+template: SlideCode
 props:
-  fontSize: 28
-  language: tsx
+  filename: src/intake.ts
+  density: compact
 ---
 ```
 
@@ -58,25 +57,23 @@ The body is read as a small, predictable structure:
 
 | Markdown | Becomes |
 |---|---|
-| a paragraph **above** the `#` heading | the **kicker** (eyebrow) |
-| `# Heading` | the **title** |
-| paragraphs | **body** text. Each line break is kept as a hard break (like `\n` in a prop); a blank line starts a new paragraph |
-| first paragraph, in layouts that have a lead/subtitle | the **lead** (the rest is body) |
+| a paragraph **above** the `#` heading | the **eyebrow** |
+| `# Heading` | the **title** (line 1) |
+| a second `# Heading` right after the first | the title's **accent line** (line 2, blue / turquoise) |
+| first paragraph | the **lede** (later paragraphs are body text, in patterns that have it) |
+| paragraphs | text. Each line break is kept as a hard break; a blank line starts a new paragraph |
 | `- item` / `1. item` | **list** items (indent a line to continue an item) |
-| `- Label: value` | **label/value pairs** (meta, contacts) |
-| `## Heading` + text | a **section** → one card / numbered item / stat / person |
-| `![alt](img-….png)` on its own line | a **photo** (bare names resolve from `public/assets/`) |
+| `- Label: value` | **label/value pairs** (chart data) |
+| `## Heading` + text | a **section** → one item / card / stat / person / question |
+| `![alt](team/two-column.webp)` on its own line | a **photo** (bare names resolve from `public/assets/`) |
 | ```` ```ts ```` fenced block | **code** + its language |
-| a `| pipe | table |` | **chart data** |
+| a `| pipe | table |` | **table / chart data** |
 | `<!-- comment -->` at the **end** of the file | **speaker notes** (see below) |
 | any other `<!-- comment -->` | ignored |
 
 Inline formatting (`**bold**`, `*italic*`, `` `code` ``, `[links](…)`) is flattened to plain text — the
-layouts style their own text. Anything the body can't express (a gauge's exact `percent`, a custom
-chart color) goes under `props:`.
-
-**Section headings and numbers.** In numbered layouts, items are numbered `01`, `02`… automatically;
-start a heading with a number (`## 05 Plan`) to set that item's label yourself.
+patterns style their own text. Anything the body can't express (`tone`, `variant`, a highlighted index) goes
+under `props:`.
 
 ---
 
@@ -87,11 +84,10 @@ presenter window (press `p`), never on the slide:
 
 ```md
 ---
-template: 6
+template: SlideStatement
 ---
 # Part two —
-
-the rollout
+# the rollout
 
 <!--
 Pause here. Ask who has shipped with feature flags before.
@@ -108,94 +104,90 @@ Then: three phases, one PR each.
 
 ---
 
-## Per-layout mapping
+## Per-pattern mapping
 
-Items beyond a layout's slot count are ignored, exactly as with props. Layouts 01–03 and 50 take no content.
+Every pattern reads the header above (eyebrow, title, accent, lede); then ("lines" are the lines of a section's
+text and list, in order):
 
-| Layout | Body → props |
+| Pattern | Body → props |
 |---|---|
-| 04 cover | `#` → `line1` · first paragraph → `line2` · `- Label: value` → `meta` |
-| 05, 07 cover | `#` → `title` · `- Label: value` → `meta` |
-| 06 divider | `#` → `line1` · first paragraph → `line2` |
-| 08 | `#` → `title` · first `##` → `heading`, its text → `body` · image → `photo` |
-| 09, 21, 29, 30 | `#` → `title` · paragraphs → `body` · image → `photo` |
-| 10 | `#` → `title` · paragraphs → `intro` · list → `items` (an ordered list gets `01. ` prefixes) |
-| 11 | `#` → `title` · first paragraph → `overlayTitle`, rest → `overlayBody` · `##` sections → `features` |
-| 12 | `#` → `title` · paragraphs → `body[]` · `## value` + caption → `stats` |
-| 13, 22 | `#` → `title` · paragraphs → `body` · `## value` + caption → `stats` |
-| 14 | list items (or `##` headings) → numbered `items` |
-| 15 | `##` sections → `cards` |
-| 16 | `#` → `title` · list → `items` |
-| 17 | `#` → `title` · paragraphs → `body` · `##` sections → `cards` |
-| 18 | `##` sections → numbered `items` |
-| 19 | `#` → `title` · first paragraph → `subtitle`, rest → `body` · `##` sections → numbered `items` |
-| 20 | kicker paragraph → `kicker` · `#` → `statement` |
-| 23 bar chart | `#` → `title` · paragraphs → `body` · `\| label \| value \|` table or `- label: value` → `data` (a non-numeric value like `$120,000 USD` becomes the bar's label) |
-| 24 pie chart | `#` → `title` · table or `- label: value` → `data` (brand colors assigned in order) |
-| 25 column chart | `#` → `title` · table: header cells after the first → `series`, rows → `groups` |
-| 26 gauges | `## stat` → `stat` (a `%` stat also sets the gauge), first line → `title`, rest → `caption` |
-| 27 | `#` → `title` · paragraphs → `body[]` |
-| 28 | `#` → `title` · images → `photos` |
-| 31 | images → `photos` |
-| 32 | `#` → `title` · list → `labels` · image → `graphic` |
-| 33 | `#` → `title` · `##` sections → `cards` |
-| 34 | `#` → `title` · list → `items` · image → `photo` |
-| 35, 36, 37 code | `#` → `title` · code fence → `code` + `language` |
-| 38 | as 35 · list → `topics` |
-| 39 | as 35 · first paragraph → `subtitle` |
-| 40, 41 | as 35 · paragraphs → `body[]` |
-| 42 team | `#` → `title` · paragraphs → `body` · `## Name` + role line → `people` |
-| 43 team | as 42, plus two more lines per person → `line1`, `line2` |
-| 44 team | `#` → `title` · `## Name` + role, line1, line2 → `people` |
-| 45, 48 closing | `#` → `title` · `- Label: value` → `contacts` |
-| 46 closing | `#` → `title` · list → `contacts` |
-| 47 closing | kicker paragraph → `title` (eyebrow) · `#` → `subtitle` (big title) · `- Label: value` → `contacts` |
-| 49 closing | `#` → `title` · paragraphs → `body` · first list item → `email` |
+| `SlideCover` | list → `tags` · image → `photo` (and `variant: split`) |
+| `SlideStatement` | paragraphs after the lede → `text` |
+| `SlideAgenda` | `## title` + lines `detail`, `meta` → `items` (or a plain list → item titles) · image → `photo` |
+| `SlideContent` | list → `bullets` · image → `photo` |
+| `SlideTwoColumn` | paragraphs after the lede → `body` · list → `bullets` · image → `photo` |
+| `SlideQuote` | first paragraph → `quote` · second paragraph's lines → `author`, `role` · image → `photo` |
+| `SlideBigStat` | `## value` + text → `stats` (`label`) · image → `photo` |
+| `SlideFaq` | `## question` + text → `items` (`answer`) |
+| `SlideNumberedList` | `## title` + text → `items` |
+| `SlideNumberedGrid` | `## title` + list → `cards` (`bullets`) |
+| `SlideStatRows` | `## value` + lines `title`, `text…` → `rows` |
+| `SlideVersus` | first `##` + list → `left`, second → `right` |
+| `SlideComparison` | table: header row → `columns` (first cell → `labelHeader`), rows → `rows` (`✓`/`yes` = check, `—`/`no` = dash) · paragraphs after the lede → `note` |
+| `SlideDataTable` | table: header → `columns`, rows → `rows` |
+| `SlideTeam` | `## name` + lines `role`, `bio…` (+ an image → `src`) → `people` |
+| `SlideRankingBars` | `\| label \| value \|` table or `- label: value` → `rows` (a value like `28% · 10` keeps its text) |
+| `SlideDonutChart` | table or `- label: value` → `segments` · a list next to a table → `takeaways` |
+| `SlideProgressRings` | `## 92%` + lines `label`, `description…` → `rings` |
+| `SlideHeroNumber` | first `##` → `value` (`## 37 → 17` also sets `previous`), its text → `caption` · list → `points` |
+| `SlideFunnel` | `## label` + lines `value`, `description…` → `stages` |
+| `SlideBarChart` | table: header cells after the first → bar labels, each row → a group |
+| `SlideLineChart` | table: first column → `labels`, second → `primary`, third (optional) → `reference` |
+| `SlideCode` | the first fenced block → `code`, its tag → `language` (`filename`, `density`, `layout` under `props:`) |
+
+**Every other pattern** (`SlideStepPath`, `SlideIconCards`, `SlideCaseStudy`, `SlideClosing`…) takes its content
+from `props:` only — and patterns built on icons need a `.tsx` slide, since an icon is a component, not text.
+Images: a bare `photo.webp` resolves from `public/assets/`; the team photos are `team/<key>.webp`.
 
 ## Examples
 
-**Numbered items (19)**
+**Agenda**
 ```md
 ---
-template: 19
+template: SlideAgenda
 ---
-# How we work
+NORTHWIND HEALTH · KICKOFF
 
-**Small teams, short loops.**
+# Today's
+# agenda
 
-We ship weekly and
-measure everything.
+What we'll cover in the next hour.
 
-## Discover
-Interview-driven specs.
+## Where we are today
+The product, the team and the constraints
+10 MIN
 
-## Plan
-Phased delivery.
-
-## Ship
-Stacked branches.
+## What we heard from you
+Goals, risks and open questions
+15 MIN
 ```
 
-**Bar chart (23)**
+**One number that matters**
 ```md
 ---
-template: 23
+template: SlideHeroNumber
+props:
+  background: night
 ---
-# Revenue by region
-Bars scale to the data.
+# Less, but
+# better
 
-| Region | Revenue |
-|---|---|
-| Brazil | $120,000 USD |
-| USA | 80000 |
+## 37 → 17
+articles published, 2025 vs 2026 so far
+
+- Two editors instead of five
+- Every piece reviewed by a clinician
 ```
 
-**Code (39)**
+**Code**
 ````md
 ---
-template: 39
+template: SlideCode
+props:
+  filename: src/compose.ts
 ---
-# Compose functions
+# Compose
+# functions
 
 Right to left, like math.
 
@@ -205,17 +197,18 @@ const compose = (...fns) => (x) =>
 ```
 ````
 
-**Closing (47)**
+**Bar chart**
 ```md
 ---
-template: 47
+template: SlideBarChart
 ---
-Questions?
+# Revenue
+# by quarter
 
-# Thank you!
-
-- Email: hello@vinta.com.br
-- Site: vinta.com.br
+| Year | Q1 | Q2 | Q3 |
+|---|---|---|---|
+| 2025 | 10 | 12 | 15 |
+| 2026 | 14 | 18 | 21 |
 ```
 
 ---
@@ -223,9 +216,10 @@ Questions?
 ## How it works
 
 - `src/lib/markdown/parse.ts` — parses frontmatter (YAML) and the body into a generic structure
-  (`MdDoc`: kicker, title, paragraphs, list, sections, images, code, table). Exported from `@/lib`.
-- `src/template/markdown.tsx` — `MARKDOWN_TEMPLATES`, the per-layout mapping table above (each entry is
-  type-checked against that layout's props), and `markdownSlide()`, which turns a file into a deck slide.
+  (`MdDoc`: kicker, title, accent, paragraphs, list, sections, images, code, table). Exported from `@/lib`.
+- `src/components/markdown.tsx` — `PATTERN_TEMPLATES`: every `Slide*` pattern by name, with the body mappers
+  of the table above (each type-checked against its pattern's props).
+- `src/components/markdownSlide.tsx` — `markdownSlide()`, which turns a file into a deck slide (and the error card).
 - `src/slides/registry.ts` — globs `NN-*.md` alongside `NN-*.tsx`.
 
-Need something a layout can't do? Write that slide as `.tsx` (see AUTHORING.md).
+Need something a pattern can't do from markdown? Write that slide as `.tsx` (see AUTHORING.md).

@@ -1,0 +1,96 @@
+.body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  position: relative;
+  height: 440px;
+  flex-shrink: 0;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  left: 144px;
+  top: 96px;
+  display: flex;
+  align-items: center;
+  padding: 20px 32px;
+  border: 1px solid color-mix(in srgb, var(--white) 28%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--vivid-ink) 62%, transparent);
+}
+
+.badge[data-tone='dark'] {
+  background: color-mix(in srgb, var(--white) 94%, transparent);
+}
+
+.logo {
+  display: block;
+  height: 44px;
+  max-width: 320px;
+  object-fit: contain;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 144px;
+}
+
+.main {
+  width: 1040px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tags {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.highlights {
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* inside the VividCard: number over its mono label */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 22px 32px;
+}
+
+.value {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--vivid-blue);
+  white-space: nowrap;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 0.04em;
+  color: var(--slate-500);
+  white-space: nowrap;
+}

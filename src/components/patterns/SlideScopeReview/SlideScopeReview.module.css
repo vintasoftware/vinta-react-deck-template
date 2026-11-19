@@ -1,0 +1,87 @@
+.plain {
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+}
+
+/* everything in coordinates of the Figma frame "Scope Review | 01" */
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas > * {
+  position: absolute;
+}
+
+/* Figma: "Scope review" at x69/y67 — 60px thin, line height 0.68 */
+.title {
+  left: 69px;
+  top: 67px;
+  width: 470px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-display);
+  font-size: var(--font-size-h1);
+  line-height: 0.68;
+  letter-spacing: -1.32px;
+  color: var(--blue-600);
+}
+
+.coverageLabel {
+  left: 75px;
+  top: 178px;
+}
+.concernsLabel {
+  left: 772px;
+  top: 178.8px;
+}
+.approachLabel {
+  left: 772.7px;
+  top: 667.4px;
+}
+
+.group[data-slot='must'] {
+  left: 69px;
+  top: 248.35px;
+  width: 601.8px;
+  height: 313.6px;
+}
+.group[data-slot='nice'] {
+  left: 70px;
+  top: 580px;
+  width: 601.8px;
+  height: 253.9px;
+}
+.group[data-slot='integrations'] {
+  left: 70px;
+  top: 853px;
+  width: 601.8px;
+  height: 118.6px;
+}
+
+.insight[data-slot='concern-1'] {
+  left: 772.1px;
+  top: 249.2px;
+  width: 524.4px;
+  height: 369.6px;
+}
+.insight[data-slot='concern-2'] {
+  left: 1313.9px;
+  top: 248.4px;
+  width: 524.4px;
+  height: 369.6px;
+}
+.insight[data-slot='approach-1'] {
+  left: 772.8px;
+  top: 728.8px;
+  width: 524.4px;
+  height: 253.5px;
+}
+.insight[data-slot='approach-2'] {
+  left: 1314.6px;
+  top: 728px;
+  width: 524.4px;
+  height: 253.5px;
+}

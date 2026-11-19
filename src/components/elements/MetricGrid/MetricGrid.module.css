@@ -1,0 +1,10 @@
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--space-4);
+  /* layout.md gives the real row positions (y≈482/606, 124px apart);
+     minus each MetricItem's height, the gap is ~64 — there is no
+     such step in the 6/14/24/40 scale, so I compose it from two tokens
+     (space-4 + space-3) instead of inventing a loose value. */
+  row-gap: calc(var(--space-4) + var(--space-3));
+}

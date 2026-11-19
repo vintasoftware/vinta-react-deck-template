@@ -1,0 +1,22 @@
+.logo {
+  position: absolute;
+  left: var(--shell-safe-area);
+  top: 96px;
+  width: 192px;
+  height: auto;
+  z-index: 1;
+}
+
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-header);
+}
+
+.pills {
+  display: flex;
+  gap: 20px;
+}

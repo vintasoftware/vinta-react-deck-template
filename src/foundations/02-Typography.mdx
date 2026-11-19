@@ -1,0 +1,50 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { TypeSpecimen } from './live'
+
+<Meta title="01 Foundations/02 Typography" />
+
+# Typography
+
+**Decision (Farias):** Moderat leaves the deck, stays only on the website. Official font = **DM Sans**
+(Google Font). Mono = **DM Mono**. Mandatory migration: Roboto → DM Sans · JetBrains Mono →
+DM Mono · Inter → removed.
+
+**DM Sans vs DM Mono — when to use each:** DM Sans carries title, body and subtitle — it is the voice
+of the content. DM Mono is the **deck's signature** (harness: "it's not decoration") — reserved for
+eyebrow, label, value/stat and anything that looks like data (not titles, not paragraphs).
+
+## Scale — DM Sans
+
+Live specimen: rendered with the real tokens; the numbers below the role name are read
+back from the element (size · weight · line-height · tracking).
+
+<TypeSpecimen role="stat-mega" sample="42%" family="--font-sans" size="--font-size-stat-mega" weight="--font-weight-stat-mega" lineHeight="--line-height-stat-mega" />
+<TypeSpecimen role="display" sample="Vinta Slidedeck" family="--font-sans" size="--font-size-display" weight="--font-weight-display" tracking="--tracking-display" />
+<TypeSpecimen role="display (cover)" sample="Vinta Slidedeck" family="--font-sans" size="--font-size-display-cover" weight="--font-weight-display" tracking="--tracking-display" />
+<TypeSpecimen role="h1" sample="Vinta Slidedeck" family="--font-sans" size="--font-size-h1" weight="--font-weight-h1" />
+<TypeSpecimen role="h2" sample="Vinta Slidedeck" family="--font-sans" size="--font-size-h2" weight="--font-weight-h2" lineHeight="--line-height-h2" tracking="--tracking-h2" />
+<TypeSpecimen role="h4" sample="Vinta Slidedeck" family="--font-sans" size="--font-size-h4" weight="--font-weight-h4" lineHeight="--line-height-h4" />
+<TypeSpecimen role="subtitle" sample="A focused path to a production-ready V1" family="--font-sans" size="--font-size-subtitle" weight="--font-weight-subtitle" lineHeight="--line-height-subtitle" />
+<TypeSpecimen role="subtitle (hero)" sample="From idea to working MVP" family="--font-sans" size="--font-size-subtitle-hero" weight="--font-weight-subtitle-hero" />
+<TypeSpecimen role="body" sample="Running text of the deck." family="--font-sans" size="--font-size-body" weight="--font-weight-body" />
+<TypeSpecimen role="caption/label" sample="ANNUAL GROWTH" family="--font-sans" size="--font-size-caption" weight="--font-weight-caption" lineHeight="--line-height-caption" tracking="--tracking-caption" />
+<TypeSpecimen role="overline" sample="SECTION" family="--font-sans" size="--font-size-overline" weight="--font-weight-overline" tracking="--tracking-overline" />
+<TypeSpecimen role="quote" sample="A client quote." family="--font-sans" size="--font-size-quote" weight="--font-weight-quote" fontStyle="--font-style-quote" />
+
+## Scale — DM Mono
+
+<TypeSpecimen role="mono-xl" sample="01" family="--font-mono" size="--font-size-mono-xl" weight="--font-weight-mono-xl" lineHeight="--line-height-mono-xl" mono />
+<TypeSpecimen role="mono-md" sample="00 / 03" family="--font-mono" size="--font-size-mono-md" weight="--font-weight-mono-md" lineHeight="--line-height-mono-md" mono />
+<TypeSpecimen role="mono-label" sample="TRUSTED BY" family="--font-mono" size="--font-size-mono-label" weight="--font-weight-mono-label" tracking="--tracking-mono-label" mono />
+<TypeSpecimen role="metric-label" sample="13+ years" family="--font-mono" size="--font-size-metric-label" weight="--font-weight-metric-label" mono />
+
+## Do / Don't
+
+**Do**
+- Use the right role for the content: mono for eyebrow/label/value, sans for title/body.
+- When a role doesn't exist in the scale (e.g. ~36, ~42), reuse the closest neighbor and
+  document it — don't invent a new size without recording it in tokens.css.
+
+**Don't**
+- Use Roboto, JetBrains Mono or Inter — all migrated.
+- Use DM Mono for title or body — it's a data signature, not decoration.

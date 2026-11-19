@@ -1,0 +1,31 @@
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: var(--font-weight-mono-label);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.eyebrow[data-size='md'] {
+  gap: 10px;
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+}
+
+.tick {
+  display: block;
+  width: 3px;
+  height: 1em;
+  border-radius: var(--radius-pill);
+  background: var(--accent-color);
+}
+
+/* Site look: no tick, the label itself is the quiet secondary color. */
+.eyebrow[data-tick='false'] {
+  color: var(--color-text-secondary);
+}

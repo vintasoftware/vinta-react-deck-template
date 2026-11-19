@@ -1,0 +1,6 @@
+.tagGroup {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap ~16 in layout.md — reuses space-2 (14), the dominant gap of harness §1.7 */
+  gap: var(--space-2);
+}

@@ -1,0 +1,172 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { Swatch, Row, ModePanel, AccentPanel } from './live'
+
+<Meta title="01 Foundations/01 Color" />
+
+# Color
+
+**Decision:** blue `#0050ff` is the **primary structural** color — used as the deck's main color.
+The palette has **three tiers**, and the choice always follows this order:
+
+| Tier | What it is | When to use |
+|---|---|---|
+| **1 · Primary** | blue ramp, neutrals, surfaces, status, white | everything structural: background, text, border, main highlight |
+| **2 · Secondary** | cyan, purple, mint, rose, orange (+ light/dark pairs and tints) | specific moments: tick, underline, label, card tint, one color per phase/step |
+| **3 · Tertiary** | exact Figma values with no match in the DS | only inside the element/pattern that required them. Never for new content |
+
+A color within ΔE 3 of a Tier 1/2 token does not become a tertiary: use the existing token.
+Extracted from the *Auditoria Business Proposal* screens (VWDS.fig) — docs/foundations.md.
+
+# Tier 1 · Primary
+
+## Blue ramp
+
+<Row>
+  <Swatch name="--blue-050" label="050" />
+  <Swatch name="--blue-100" label="100" />
+  <Swatch name="--blue-300" label="300" />
+  <Swatch name="--blue-400" label="400" />
+  <Swatch name="--blue-500" label="500" />
+  <Swatch name="--blue-600" label="600 (brand)" />
+  <Swatch name="--blue-700" label="700" />
+  <Swatch name="--blue-800" label="800" />
+  <Swatch name="--blue-900" label="900" />
+</Row>
+
+## Semantic roles, by mode
+
+Always pick by role (`--color-text-primary`, `--color-surface`…), never by raw hex.
+Contrast targets AA — ink/slate on light, white on invert.
+
+<Row>
+  <ModePanel mode="light" label="light" />
+  <ModePanel mode="invert-blue" label="invert-blue" />
+  <ModePanel mode="invert-navy" label="invert-navy" />
+</Row>
+
+# Tier 2 · Secondary
+
+## Accents — one per item
+
+Rule: **one accent per phase/step/card** (never mix two in the same element). Each accent
+resolves to the right shade automatically based on the background — light uses the darker/more saturated shade,
+dark uses the pastel. `cyan` and `blue` fall back to white on `invert-blue` (same family as the background,
+poor contrast); `cyan` only works as text on `invert-navy`.
+
+<Row>
+  <AccentPanel mode="light" accent="blue" />
+  <AccentPanel mode="light" accent="cyan" />
+  <AccentPanel mode="light" accent="purple" />
+  <AccentPanel mode="light" accent="mint" />
+  <AccentPanel mode="light" accent="rose" />
+  <AccentPanel mode="light" accent="orange" />
+</Row>
+<Row>
+  <AccentPanel mode="invert-navy" accent="blue" dark />
+  <AccentPanel mode="invert-navy" accent="cyan" dark />
+  <AccentPanel mode="invert-navy" accent="purple" dark />
+  <AccentPanel mode="invert-navy" accent="mint" dark />
+  <AccentPanel mode="invert-navy" accent="rose" dark />
+  <AccentPanel mode="invert-navy" accent="orange" dark />
+</Row>
+
+## Neutrals and surfaces
+
+<Row>
+  <Swatch name="--white" label="white" />
+  <Swatch name="--ink" label="ink" />
+  <Swatch name="--slate-700" label="slate-700" />
+  <Swatch name="--slate-500" label="slate-500" />
+  <Swatch name="--slate-400" label="slate-400" />
+  <Swatch name="--border-color" label="border" />
+</Row>
+<Row>
+  <Swatch name="--surface-page" label="surface-page" />
+  <Swatch name="--surface-soft" label="surface-soft" />
+  <Swatch name="--surface-tint" label="surface-tint" />
+  <Swatch name="--surface-mist" label="surface-mist" />
+  <Swatch name="--surface-gray" label="surface-gray" />
+  <Swatch name="--surface-footer" label="surface-footer" />
+  <Swatch name="--surface-invert-blue" label="invert-blue" />
+  <Swatch name="--surface-invert-blue-alt" label="invert-blue-alt" />
+  <Swatch name="--surface-invert-navy" label="invert-navy" />
+</Row>
+
+## Status (success / danger)
+
+Outside the accent palette — they are semantic state (ok/alert), not a "brand moment".
+
+<Row>
+  <Swatch name="--status-success" label="success" />
+  <Swatch name="--status-danger" label="danger" />
+</Row>
+
+## Light/dark pairs and tints
+
+<Row>
+  <Swatch name="--accent-cyan" label="cyan" />
+  <Swatch name="--accent-purple" label="purple" />
+  <Swatch name="--accent-purple-light" label="purple-light" />
+  <Swatch name="--accent-mint" label="mint" />
+  <Swatch name="--accent-mint-dark" label="mint-dark" />
+  <Swatch name="--accent-rose" label="rose" />
+  <Swatch name="--accent-rose-dark" label="rose-dark" />
+  <Swatch name="--accent-orange" label="orange" />
+  <Swatch name="--accent-orange-light" label="orange-light" />
+</Row>
+<Row>
+  <Swatch name="--tint-purple" label="tint-purple" />
+  <Swatch name="--tint-mint" label="tint-mint" />
+  <Swatch name="--tint-blue" label="tint-blue" />
+</Row>
+
+# Tier 3 · Tertiary
+
+Exact values the Figma screens ask for that have no match in the DS. Each one lives inside the
+element/pattern it came from (the comment in `tokens.css` says which). **Do not use in new
+content.** If a new slide needs color, it's Tier 1 and, after that, Tier 2.
+
+<Row>
+  <Swatch name="--accent-purple-vivid" label="purple-vivid" />
+  <Swatch name="--accent-purple-deep" label="purple-deep" />
+  <Swatch name="--accent-indigo" label="indigo" />
+  <Swatch name="--accent-lilac" label="lilac" />
+  <Swatch name="--accent-lilac-chip" label="lilac-chip" />
+  <Swatch name="--accent-blue-bright" label="blue-bright" />
+  <Swatch name="--accent-blue-light" label="blue-light" />
+  <Swatch name="--accent-blue-card-text" label="blue-card-text" />
+  <Swatch name="--accent-blue-navy-text" label="blue-navy-text" />
+  <Swatch name="--accent-blue-gradient-start" label="gradient-start" />
+  <Swatch name="--accent-blue-section-dark" label="section-dark" />
+  <Swatch name="--accent-blue-section-light" label="section-light" />
+  <Swatch name="--accent-blue-section-bright" label="section-bright" />
+  <Swatch name="--blue-deep" label="blue-deep" />
+  <Swatch name="--blue-logo" label="blue-logo" />
+  <Swatch name="--blue-contact-ink" label="blue-contact-ink" />
+  <Swatch name="--accent-mint-vivid" label="mint-vivid" />
+  <Swatch name="--accent-teal" label="teal" />
+  <Swatch name="--accent-aqua" label="aqua" />
+  <Swatch name="--accent-orange-sand" label="orange-sand" />
+  <Swatch name="--accent-orange-heading" label="orange-heading" />
+  <Swatch name="--ink-card" label="ink-card" />
+  <Swatch name="--ink-soft" label="ink-soft" />
+  <Swatch name="--ink-blue-soft" label="ink-blue-soft" />
+  <Swatch name="--ink-table-value" label="ink-table-value" />
+  <Swatch name="--slate-heading" label="slate-heading" />
+  <Swatch name="--slate-caption" label="slate-caption" />
+  <Swatch name="--slate-contact" label="slate-contact" />
+  <Swatch name="--border-card-concern" label="border-card-concern" />
+</Row>
+
+## Do / Don't
+
+**Do**
+- Pick color by semantic role (`--color-text-primary`, `--color-surface`) — never by hex.
+- Use accents on small elements: tick, underline, label, card tint.
+- One accent per item in a row (phase 01 = purple, 02 = mint, 03 = blue — never two on the same one).
+
+**Don't**
+- Use an accent as a title color or main background color.
+- Use `cyan` as text on a light background or on `invert-blue` (fails contrast — only works on navy).
+- Invent a color outside the three tiers — if one is missing, it should become a token (Tier 3), not a loose hex.
+- Use a tertiary in new content, or promote a tertiary to primary without a team decision.

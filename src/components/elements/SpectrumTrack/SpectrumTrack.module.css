@@ -1,0 +1,32 @@
+.track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Figma (Alt 03): wedge-shaped bar — 26px on the left, ~5px on the right —
+   with a mint → light blue gradient */
+.bar {
+  flex: 1;
+  height: 26px;
+  background: linear-gradient(90deg, var(--accent-track-start), var(--accent-track-end));
+  clip-path: polygon(0 0, 100% 42%, 100% 60%, 0 100%);
+}
+
+.label {
+  margin: 0;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 2.2px;
+  white-space: nowrap;
+}
+
+.left {
+  color: var(--slate-label-gray);
+}
+
+.right {
+  color: var(--blue-deep);
+}

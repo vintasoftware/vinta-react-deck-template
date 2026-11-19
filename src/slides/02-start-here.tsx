@@ -1,33 +1,37 @@
-import { Slide19 } from "@/template";
+import { FilePlus2, LayoutTemplate, Presentation } from "lucide-react";
+import { SlideStepPath } from "@/components";
 
 export const meta = {
   title: "Start here",
   notes:
-    "Three steps to a deck:\n1. Add a slide file under src/slides/.\n2. Pick a layout from /template.\n3. Check CATALOG.md and AUTHORING.md for props and tokens.",
+    "Three steps to a deck:\n1. Add a slide file under src/slides/.\n2. Pick a pattern from /patterns (CATALOG.md has props and limits).\n3. Present with P for the presenter window, or publish it as an artifact.",
 };
 
-/** Onboarding — delete this once you're building. Layout: template Slide19 (see CATALOG.md). */
+/** Onboarding — delete this once you're building. Pattern: SlideStepPath (see src/components/CATALOG.md). */
 export default function StartHere() {
   return (
-    <Slide19
+    <SlideStepPath
+      eyebrow="THIS DECK LIVES IN SRC/SLIDES/"
       title="Build your deck"
-      subtitle="This deck lives at / (src/slides/)."
-      body="Import a ready layout and pass your content as props, or compose from the @/lib primitives for a bespoke slide."
-      items={[
+      accent="in three steps"
+      steps={[
         {
-          number: "01",
+          icon: FilePlus2,
+          label: "STEP 1",
           title: "Add a slide",
-          text: "Drop src/slides/NN-name.tsx or .md.\nIt auto-appears, ordered by filename.",
+          text: "Drop src/slides/NN-name.tsx or .md. It shows up on its own, ordered by filename.",
         },
         {
-          number: "02",
-          title: "Pick a layout",
-          text: 'Browse /template (all 50) and\nimport { SlideNN } from "@/template".',
+          icon: LayoutTemplate,
+          label: "STEP 2",
+          title: "Pick a pattern",
+          text: "Browse /patterns and /samples, then import it from @/components and pass your content.",
         },
         {
-          number: "03",
-          title: "Read the guide",
-          text: "Props live in src/template/CATALOG.md;\nAUTHORING.md covers tokens and recipes.",
+          icon: Presentation,
+          label: "STEP 3",
+          title: "Present or share",
+          text: "Press P for the presenter window, or publish the deck as a Claude artifact link.",
         },
       ]}
     />

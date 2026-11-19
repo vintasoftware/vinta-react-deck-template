@@ -1,0 +1,39 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cards {
+  display: flex;
+  gap: 32px;
+  height: 460px;
+}
+
+.fill {
+  flex: 1;
+}
+
+.value {
+  margin: 0;
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+  color: var(--vivid-turquoise);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: normal;
+  letter-spacing: var(--tracking-mono-md);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white);
+}

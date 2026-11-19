@@ -1,0 +1,34 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--surface-gray);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: var(--font-weight-mono-label);
+  color: var(--slate-500);
+  padding: 0 var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* real logo: without the placeholder's gray box */
+.logo[data-image] {
+  background: none;
+  border: none;
+  border-radius: 0;
+}

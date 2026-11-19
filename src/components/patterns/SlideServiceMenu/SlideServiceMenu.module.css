@@ -1,0 +1,142 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.groups {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.groups[data-count='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Every row carries the same padding, so the highlighted one can take a tint without shifting the column.
+   The negative margin keeps the icons aligned with the group label. */
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+  margin-inline: calc(-1 * var(--space-2));
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  --item-ink: var(--vivid-ink);
+}
+
+.text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Same type as Body h4 primary (card title); a local class only so the highlighted row can take the accent ink. */
+.name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--item-ink);
+}
+
+/* Chips run under the icon and the text, so two of them fit on one line in a narrow column. */
+.chips {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Highlighted row: soft tint of the item's accent, title in the accent's strong tone (site: Product Framing). */
+.item[data-highlight='true'] {
+  background: var(--item-tint);
+}
+.item[data-highlight='true'][data-accent='blue'] {
+  --item-tint: var(--tint-blue);
+  --item-ink: var(--blue-600);
+}
+.item[data-highlight='true'][data-accent='cyan'] {
+  --item-tint: color-mix(in srgb, var(--vivid-teal-glow) 45%, transparent);
+  --item-ink: var(--vivid-teal-deep);
+}
+.item[data-highlight='true'][data-accent='purple'] {
+  --item-tint: var(--tint-purple);
+  --item-ink: var(--accent-purple);
+}
+.item[data-highlight='true'][data-accent='mint'] {
+  --item-tint: var(--tint-mint);
+  --item-ink: var(--accent-green-ink);
+}
+.item[data-highlight='true'][data-accent='rose'] {
+  --item-tint: var(--tint-purple);
+  --item-ink: var(--accent-rose-dark);
+}
+.item[data-highlight='true'][data-accent='orange'] {
+  --item-tint: var(--tint-peach);
+  --item-ink: var(--accent-orange);
+}
+
+/* Side card: the site's teal "Not only healthcare" panel. */
+.side {
+  position: relative;
+  flex: 0 0 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--vivid-aqua) 45%, transparent) 0%, transparent 40%),
+    linear-gradient(160deg, var(--vivid-teal-night) 0%, var(--vivid-teal-deep) 50%, var(--vivid-teal-bright) 100%);
+}
+
+.side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--white) 7%, transparent) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--white) 7%, transparent) 0 1px, transparent 1px 48px);
+  pointer-events: none;
+}
+
+.sideText {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cta {
+  position: relative;
+  white-space: nowrap;
+}

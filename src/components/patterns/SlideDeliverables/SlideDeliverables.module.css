@@ -1,0 +1,39 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Ends ≥ 48px before the photo. */
+.text {
+  width: 820px;
+}
+
+.items {
+  width: 100%;
+  display: flex;
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.item + .item {
+  border-left: 1px solid color-mix(in srgb, var(--white) 25%, transparent);
+}
+
+.label {
+  width: 230px;
+}

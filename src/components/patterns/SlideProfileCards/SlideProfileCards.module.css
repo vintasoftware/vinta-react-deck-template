@@ -1,0 +1,144 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* "Persona · value" chip under the title. */
+.persona {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  padding: var(--space-1) var(--padding-tag-x) var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--tint-blue);
+  color: var(--vivid-blue);
+}
+
+.personaLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  text-transform: uppercase;
+}
+
+.personaValue {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-subtitle);
+  color: var(--vivid-ink);
+}
+
+.lede {
+  max-width: 1632px;
+}
+
+.cards {
+  flex: 1;
+  margin-top: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3);
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.cardValue {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+}
+
+.cardValue[data-big] {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: 1;
+  letter-spacing: var(--tracking-h2);
+  color: var(--vivid-blue);
+}
+
+.cardDetail {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-subtitle);
+  color: var(--color-text-secondary);
+}
+
+/* Bottom block: mono label and 2–3 columns split by hairlines. */
+.pains {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.painsLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  text-transform: uppercase;
+  color: var(--vivid-blue);
+}
+
+.painsRow {
+  display: grid;
+  grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+}
+
+.pain {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4) var(--space-1) 0;
+  color: var(--vivid-blue);
+}
+
+.pain + .pain {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--blue-100);
+}
+
+.pain svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.painText {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-h4);
+  color: var(--vivid-ink);
+}

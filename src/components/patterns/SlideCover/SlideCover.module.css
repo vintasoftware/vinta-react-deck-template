@@ -1,0 +1,83 @@
+.top {
+  position: absolute;
+  left: var(--shell-safe-area);
+  right: var(--shell-safe-area);
+  top: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.logo {
+  width: 192px;
+  height: auto;
+}
+
+.prepared {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  color: var(--vivid-teal-glow);
+}
+
+.body {
+  position: relative;
+  height: 100%;
+  padding: 0 var(--shell-safe-area);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.body[data-variant='mesh'] .text {
+  width: 700px;
+}
+
+.body[data-variant='split'] .text {
+  width: 880px;
+}
+
+.body[data-variant='night'] {
+  align-items: center;
+  text-align: center;
+}
+
+.body[data-variant='night'] .text {
+  width: 1500px;
+  align-items: center;
+}
+
+.tags {
+  display: flex;
+  gap: 16px;
+}
+
+/* UI slot: 1000×844 at x 900, y 111. */
+.ui {
+  position: absolute;
+  left: 900px;
+  top: 111px;
+  width: 1000px;
+  height: 844px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Photo: the right side, top to bottom. */
+.photo {
+  position: absolute;
+  left: 1128px;
+  top: 0;
+  border-top-left-radius: var(--radius-lg);
+  overflow: hidden;
+}

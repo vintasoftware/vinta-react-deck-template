@@ -1,0 +1,167 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--white);
+}
+
+.badge[data-shape='circle'] {
+  border-radius: var(--radius-pill);
+}
+
+.badge[data-shape='square'] {
+  border-radius: var(--radius-sm);
+}
+
+/* The vivid tiles are bigger and rounder than the Figma badges. */
+.badge[data-shape='square']:not([data-variant='solid']) {
+  border-radius: var(--radius-md);
+}
+
+/* solid — accent fill + white icon (same "mid" tone as ChevronStage). */
+.badge[data-variant='solid'][data-accent='blue'] {
+  background: var(--blue-600);
+}
+.badge[data-variant='solid'][data-accent='cyan'] {
+  background: var(--accent-cyan);
+}
+.badge[data-variant='solid'][data-accent='purple'] {
+  background: var(--accent-purple);
+}
+.badge[data-variant='solid'][data-accent='mint'] {
+  background: var(--accent-mint-dark);
+}
+.badge[data-variant='solid'][data-accent='rose'] {
+  background: var(--accent-rose-dark);
+}
+.badge[data-variant='solid'][data-accent='orange'] {
+  background: var(--accent-orange);
+}
+
+/* gradient — the homepage icon tiles: 135° accent gradient, white icon. */
+.badge[data-variant='gradient'] {
+  background: linear-gradient(135deg, var(--tile-from), var(--tile-to));
+  box-shadow: var(--shadow-lg);
+}
+.badge[data-variant='gradient'][data-accent='blue'] {
+  --tile-from: var(--vivid-azure);
+  --tile-to: var(--vivid-blue);
+}
+.badge[data-variant='gradient'][data-accent='cyan'],
+.badge[data-variant='gradient'][data-accent='mint'] {
+  --tile-from: var(--vivid-teal-bright);
+  --tile-to: var(--vivid-teal-deep);
+}
+.badge[data-variant='gradient'][data-accent='purple'] {
+  --tile-from: var(--vivid-violet-mid);
+  --tile-to: var(--vivid-violet-deep);
+}
+.badge[data-variant='gradient'][data-accent='rose'] {
+  --tile-from: var(--vivid-violet-glow);
+  --tile-to: var(--vivid-violet-mid);
+}
+.badge[data-variant='gradient'][data-accent='orange'] {
+  --tile-from: var(--accent-orange-light);
+  --tile-to: var(--accent-orange);
+}
+
+/* glass — on mesh/night/colored panels. Accent tints the icon (blue/purple stay white). */
+.badge[data-variant='glass'] {
+  background: color-mix(in srgb, var(--white) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--white) 38%, transparent);
+}
+.badge[data-variant='glass'][data-accent='cyan'] {
+  color: var(--vivid-turquoise);
+}
+.badge[data-variant='glass'][data-accent='mint'] {
+  color: var(--vivid-aqua);
+}
+
+/* pale — soft tint of the accent, icon in the strong tone. */
+.badge[data-variant='pale'][data-accent='blue'] {
+  background: var(--tint-blue-soft);
+  color: var(--blue-600);
+}
+.badge[data-variant='pale'][data-accent='cyan'] {
+  background: var(--vivid-teal-glow);
+  color: var(--vivid-teal-deep);
+}
+.badge[data-variant='pale'][data-accent='purple'] {
+  background: var(--tint-purple);
+  color: var(--accent-purple);
+}
+.badge[data-variant='pale'][data-accent='mint'] {
+  background: var(--tint-mint-soft);
+  color: var(--accent-green-ink);
+}
+.badge[data-variant='pale'][data-accent='rose'] {
+  background: var(--tint-purple);
+  color: var(--accent-rose-dark);
+}
+.badge[data-variant='pale'][data-accent='orange'] {
+  background: var(--tint-peach);
+  color: var(--accent-orange);
+}
+
+/* white — white tile with a thin border, for tinted panels. */
+.badge[data-variant='white'] {
+  background: var(--white);
+  border: 1px solid var(--border-card-concern);
+  box-shadow: var(--shadow-sm);
+  color: var(--blue-600);
+}
+.badge[data-variant='white'][data-accent='cyan'] {
+  color: var(--vivid-teal-deep);
+}
+.badge[data-variant='white'][data-accent='purple'] {
+  color: var(--accent-purple);
+}
+.badge[data-variant='white'][data-accent='mint'] {
+  color: var(--accent-green-ink);
+}
+.badge[data-variant='white'][data-accent='rose'] {
+  color: var(--accent-rose-dark);
+}
+.badge[data-variant='white'][data-accent='orange'] {
+  color: var(--accent-orange);
+}
+
+/* ring — white circle inside an accent gradient ring (step path). */
+.badge[data-variant='ring'] {
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--ring-from), var(--ring-to));
+  box-shadow: var(--shadow-md);
+  color: var(--ring-to);
+}
+.badge[data-variant='ring'][data-accent='blue'] {
+  --ring-from: var(--accent-blue-bright);
+  --ring-to: var(--blue-600);
+}
+.badge[data-variant='ring'][data-accent='cyan'] {
+  --ring-from: var(--accent-aqua);
+  --ring-to: var(--vivid-teal-deep);
+}
+.badge[data-variant='ring'][data-accent='mint'] {
+  --ring-from: var(--accent-teal);
+  --ring-to: var(--accent-teal-label);
+}
+.badge[data-variant='ring'][data-accent='purple'],
+.badge[data-variant='ring'][data-accent='rose'] {
+  --ring-from: var(--vivid-violet-mid);
+  --ring-to: var(--vivid-violet-deep);
+}
+.badge[data-variant='ring'][data-accent='orange'] {
+  --ring-from: var(--accent-orange-light);
+  --ring-to: var(--accent-orange);
+}
+
+.ringInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+}

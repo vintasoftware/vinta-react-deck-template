@@ -1,15 +1,16 @@
 import type { ComponentType } from "react";
 import type { DeckSlide, SlideMeta } from "@/lib/deck";
-import { markdownSlide } from "@/template/markdown";
+import { markdownSlide } from "@/components/markdownSlide";
 
 /**
  * Your main deck (served at `/`). Author it here, one file per slide:
- *   - `NN-name.tsx` — `export default` a component (and optionally
- *     `export const meta = { title }`). See AUTHORING.md.
- *   - `NN-name.md`  — markdown that fills one of the 50 template layouts
- *     (`template: NN` in its frontmatter). See MARKDOWN.md.
+ *   - `NN-name.tsx` — `export default` a component rendering a pattern from
+ *     @/components (and optionally `export const meta = { title, notes }`).
+ *     See AUTHORING.md.
+ *   - `NN-name.md`  — markdown that fills a pattern (`template: SlideAgenda`
+ *     in its frontmatter). See MARKDOWN.md.
  * Both kinds are auto-discovered and ordered together by filename — no
- * registry edit needed. Browse `/template` for all 50 layouts.
+ * registry edit needed. Browse `/patterns` for every pattern.
  */
 const modules = import.meta.glob<{ default: ComponentType; meta?: SlideMeta }>(
   "./[0-9]*.tsx",

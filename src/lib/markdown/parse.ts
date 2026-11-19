@@ -45,6 +45,11 @@ export interface MdDoc extends MdContent {
   kicker?: string;
   /** The first `#` heading. */
   title?: string;
+  /**
+   * A second `#` heading written right after the first (blank lines between them are fine): the
+   * title's second line — the accent-colored half of the patterns' two-tone titles.
+   */
+  accent?: string;
   /** Every `##`+ heading after the title, with its content. */
   sections: MdSection[];
   /** Speaker notes: the `<!-- … -->` comment(s) that close the slide, with nothing after them. */
@@ -113,6 +118,8 @@ export function parseMarkdownBody(body: string): MdDoc {
   let item: string[] | null = null;
   // Comments seen since the last piece of content; whatever is left at the end are the notes.
   let trailing: string[] = [];
+  // True from the title heading until the next piece of content: a `#` heading there is `doc.accent`.
+  let afterTitle = false;
 
   const flush = () => {
     if (para) cur.paragraphs.push(para.map(plain).join("\n"));
@@ -135,6 +142,8 @@ export function parseMarkdownBody(body: string): MdDoc {
     }
     // Any real content after a comment means that comment wasn't a closing note.
     if (line.trim() !== "") trailing = [];
+    const followsTitle = afterTitle;
+    if (line.trim() !== "") afterTitle = false;
 
     // Fenced code.
     const fence = line.match(FENCE);
@@ -169,6 +178,9 @@ export function parseMarkdownBody(body: string): MdDoc {
         }
         doc.title = text;
         cur = doc;
+        afterTitle = true;
+      } else if (h[1].length === 1 && followsTitle && doc.accent === undefined) {
+        doc.accent = text;
       } else {
         const section: MdSection = { heading: text, ...emptyContent() };
         doc.sections.push(section);

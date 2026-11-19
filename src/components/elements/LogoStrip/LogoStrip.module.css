@@ -1,0 +1,33 @@
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--surface-footer);
+  box-sizing: border-box;
+  /* layout.md/Figma: 222px strip; label ~40px from the top, side margin =
+     the slide's safe area (falls back to padding-block outside a SlideShell) */
+  min-height: 222px;
+  padding: var(--space-4) var(--shell-safe-area, var(--padding-block)) var(--space-3);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: var(--font-weight-mono-label);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--color-text-muted);
+}
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* client logos always in grayscale (team request) */
+.logos :global(img) {
+  filter: grayscale(1);
+}

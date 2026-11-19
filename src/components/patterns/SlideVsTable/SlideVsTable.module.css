@@ -1,0 +1,117 @@
+.body {
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* One grid for the three columns, so every row lines up across label / them / us.
+   The two column panels sit behind the cells and span all rows. */
+.table {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: var(--space-3);
+}
+
+.themPanel,
+.usPanel {
+  grid-row: 1 / -1;
+  border-radius: var(--radius-lg);
+}
+
+.themPanel {
+  grid-column: 2;
+  background: color-mix(in srgb, var(--blue-100) 70%, var(--white));
+}
+
+/* Raised: deeper blue column, pulled up and down past the muted one. */
+.usPanel {
+  grid-column: 3;
+  margin-block: calc(-1 * var(--space-2));
+  background: linear-gradient(180deg, var(--vivid-blue) 0%, var(--vivid-navy) 100%);
+  box-shadow: var(--shadow-lg);
+}
+
+.captionCell,
+.themHead,
+.usHead {
+  grid-row: 1;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-3) var(--space-4);
+}
+
+.captionCell {
+  grid-column: 1;
+  padding-inline: 0;
+}
+
+.themHead {
+  grid-column: 2;
+}
+
+.usHead {
+  grid-column: 3;
+}
+
+.labelCell,
+.themCell,
+.usCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-top: 1px solid var(--cell-line);
+}
+
+.labelCell {
+  grid-column: 1;
+  --cell-line: var(--border-card-concern);
+}
+
+.labelIcon {
+  display: inline-flex;
+  color: var(--blue-600);
+}
+
+.row {
+  display: contents;
+}
+
+.themCell,
+.usCell {
+  padding: var(--space-2) var(--space-4);
+}
+
+/* The block is centered in the row; the mark stays on the text's first line. */
+.cellInner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.themCell {
+  grid-column: 2;
+  --cell-line: var(--border-card-concern);
+}
+
+.usCell {
+  grid-column: 3;
+  --cell-line: color-mix(in srgb, var(--white) 18%, transparent);
+}
+
+.themMark,
+.usMark {
+  flex: none;
+  margin-top: var(--space-1);
+}
+
+.themMark {
+  color: var(--color-text-muted);
+}
+
+.usMark {
+  color: var(--white);
+}

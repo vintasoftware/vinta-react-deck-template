@@ -1,0 +1,124 @@
+/* chevron clipping — geometry, not color/token. 43px notch/point,
+   measured in Figma (Alt 03: 313px tall, point at 50%). */
+.chevron {
+  --notch: 43px;
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 220px;
+  white-space: nowrap;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--notch)) 0,
+    100% 50%,
+    calc(100% - var(--notch)) 100%,
+    0 100%,
+    var(--notch) 50%
+  );
+  padding: 39px 0 0 calc(var(--notch) + 33px);
+}
+
+.chevron[data-edge='first'] {
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, 0 100%);
+  padding-left: 40px;
+}
+
+.chevron[data-edge='last'] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--notch) 50%);
+  padding-left: calc(var(--notch) + 37px);
+}
+
+/* Figma: mono label 18 with wide tracking, title 36 / 500, description 24 /
+   34.6. Positions measured from the top of the stage (+42 / +85 / +142). */
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: 3.3px;
+  line-height: 20px;
+}
+
+.title {
+  margin: 17px 0 0;
+  font-family: var(--font-sans);
+  font-size: 34px; /* Figma 36 in Roboto Medium; DM Sans is ~14% wider */
+  font-weight: 500;
+  line-height: 44px;
+  letter-spacing: -1px;
+}
+
+.description {
+  margin: 17px 0 0;
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: var(--font-weight-body);
+  line-height: 34.6px;
+  letter-spacing: -0.72px;
+}
+
+/* ---------------------------------------------------------------------
+ * tint — light accent bg, dark text. mid — the accent's own "saturated"
+ * tone as bg, white text. solid — brand blue →
+ * blue-deep gradient, white text (the final stage, fixed, does not vary by accent).
+ * ------------------------------------------------------------------- */
+.chevron[data-saturation='tint'] {
+  color: var(--blue-900);
+}
+.chevron[data-saturation='tint'] .description {
+  color: var(--slate-500);
+}
+.chevron[data-saturation='tint'][data-accent='mint'] {
+  background: var(--tint-mint-soft);
+}
+.chevron[data-saturation='tint'][data-accent='mint'] .label {
+  color: var(--accent-teal-label);
+}
+.chevron[data-saturation='tint'][data-accent='blue'] {
+  background: var(--tint-blue-soft);
+}
+.chevron[data-saturation='tint'][data-accent='blue'] .label {
+  color: var(--blue-600);
+}
+.chevron[data-saturation='tint'][data-accent='purple'] {
+  background: var(--tint-purple);
+}
+.chevron[data-saturation='tint'][data-accent='purple'] .label {
+  color: var(--accent-purple);
+}
+
+.chevron[data-saturation='mid'] {
+  color: var(--white);
+}
+.chevron[data-saturation='mid'] .label {
+  color: var(--white);
+}
+.chevron[data-saturation='mid'] .description {
+  color: color-mix(in srgb, var(--white) 88%, transparent);
+}
+.chevron[data-saturation='mid'][data-accent='mint'] {
+  background: var(--accent-mint-dark);
+}
+.chevron[data-saturation='mid'][data-accent='blue'] {
+  background: var(--blue-500);
+}
+.chevron[data-saturation='mid'][data-accent='purple'] {
+  background: var(--accent-purple);
+}
+
+.chevron[data-saturation='solid'] {
+  background: linear-gradient(90deg, var(--blue-600), var(--blue-deep));
+  color: var(--white);
+}
+.chevron[data-saturation='solid'] .label {
+  color: color-mix(in srgb, var(--white) 78%, transparent);
+}
+.chevron[data-saturation='solid'] .title {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1.14px;
+}
+.chevron[data-saturation='solid'] .description {
+  margin-top: 22px;
+  color: color-mix(in srgb, var(--white) 88%, transparent);
+}

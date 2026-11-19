@@ -1,0 +1,120 @@
+.body {
+  --head-height: 96px;
+  --row-height: 80px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+/* 5–6 rows: tighter rows so a 2-line title still fits. */
+.body[data-dense] {
+  --head-height: 84px;
+  --row-height: 72px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.headRow,
+.row {
+  display: grid;
+}
+
+.headLabel,
+.head {
+  height: var(--head-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  text-transform: uppercase;
+  color: var(--slate-500);
+}
+
+.headLabel {
+  justify-content: flex-start;
+  padding: 0 40px;
+}
+
+.head[data-highlight] {
+  color: var(--white);
+  background: linear-gradient(160deg, var(--vivid-blue), var(--vivid-indigo));
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.label,
+.cell {
+  height: var(--row-height);
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  line-height: var(--line-height-h4);
+  border-bottom: 1px solid var(--blue-100);
+}
+
+.row[data-last] > * {
+  border-bottom: none;
+}
+
+.label {
+  padding: 0 40px;
+  color: var(--vivid-ink);
+}
+
+.cell {
+  justify-content: center;
+  white-space: nowrap;
+  color: var(--slate-500);
+}
+
+.cell[data-highlight] {
+  background: color-mix(in srgb, var(--vivid-blue) 7%, transparent);
+  color: var(--vivid-blue);
+}
+
+.no {
+  color: var(--color-text-muted);
+}
+
+/* Dark (mesh/night): glass card, white text, turquoise highlight. */
+.body[data-dark] .headLabel,
+.body[data-dark] .head {
+  color: color-mix(in srgb, var(--white) 72%, transparent);
+}
+
+.body[data-dark] .head[data-highlight] {
+  color: var(--vivid-navy);
+  background: linear-gradient(160deg, var(--vivid-aqua), var(--vivid-turquoise));
+}
+
+.body[data-dark] .label,
+.body[data-dark] .cell {
+  border-bottom-color: color-mix(in srgb, var(--white) 16%, transparent);
+}
+
+.body[data-dark] .label {
+  color: var(--white);
+}
+
+.body[data-dark] .cell {
+  color: color-mix(in srgb, var(--white) 80%, transparent);
+}
+
+.body[data-dark] .cell[data-highlight] {
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+  color: var(--vivid-turquoise);
+}
+
+.body[data-dark] .no {
+  color: color-mix(in srgb, var(--white) 45%, transparent);
+}

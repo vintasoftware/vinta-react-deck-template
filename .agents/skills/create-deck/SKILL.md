@@ -1,111 +1,145 @@
 ---
 name: create-deck
 description: >-
-  Build or extend a Vinta-branded slide deck using the React + Tailwind template
-  in vinta-react-deck-template/. Use whenever the user wants to create a
-  presentation, add or design slides, turn notes/outline/content into slides, or
-  restyle content to the Vinta 2023 brand. Covers layouts, colors, fonts, photos
-  and code blocks. Adapts the official template's "Dicas para melhor uso".
+  Build or extend a Vinta deck (sales, planning, partnership, internal) with this
+  repo's design-system patterns, then deliver it as a Claude artifact. Use whenever
+  the user wants a new presentation, proposal, deck or slides, to add or change
+  slides, or to turn notes/outline/content into on-brand Vinta slides.
 ---
 
 # Create a Vinta deck
 
-The presentation system lives in **`vinta-react-deck-template/`** (a React + Tailwind app). Three
-decks by URL:
+The deck is built from the **design-system patterns** in `src/components/` (`@/components`): ~70 whole-slide
+patterns in the Vinta site look. **Read `src/components/CATALOG.md` before starting** — the rules that never
+change, the pattern catalog with props and limits, the elements, and the content/asset limits. Do not invent color,
+font, size or icon; if no pattern fits, say so instead of creating a style. Write code and docs in English; slide copy
+in whatever language the user asks for (ask if the brief doesn't say — Portuguese runs longer, so recheck limits).
+(Workflow ported from vinta-slidedeck's new-deck skill.)
 
-| URL | Deck | Folder | Role |
-|---|---|---|---|
-| `/` | **Your deck** — author here | `src/slides/` | what you build |
-| `/template` | 50 official Vinta layouts | `src/template/` | reference / copy from |
+**One repository per deck.** Each deck is its own copy of the template repository
+`vintasoftware/vinta-react-deck-template` (GitHub's "Use this template"; a workflow renames the copy on its first
+push). The deck's slides are files in `src/slides/` (`.tsx` or `.md`) — never Storybook stories. Storybook, the
+template gallery, `/patterns` and `/samples` are references to pick patterns from. If the git remote is the template
+repository itself, don't build a client deck there: ask the user to create a repository from the template first
+(unless they say they are only trying things out or improving the template).
 
-Build a deck by **importing a ready layout and passing your content as props** — never by inventing a new
-visual style. The 50 official layouts live in `src/template/` as parametrized components (`Slide01`–`Slide50`,
-whose defaults reproduce the official slide exactly); their per-slide props and copy-paste examples are
-catalogued in **`src/template/CATALOG.md`**. Library primitives import from the single entrypoint **`@/lib`**.
+| Where | What | Folder |
+|---|---|---|
+| `/` (`npm run dev`, :5173) | **The user's deck** — author here | `src/slides/` |
+| `/patterns` | Every pattern, one slide per example | `src/components/patterns/` |
+| `/samples` | Sample presentations with fictional data | `src/samples/` |
+| `npm run gallery` (:6007) | Template gallery for non-technical users: templates by use, limits, samples, the deck | `scripts/gallery*.mjs` |
+| `npm run storybook` (:6006) | Every pattern and element with props (*Docs* tab), foundations | `.storybook/` |
 
-## Workflow
+`npm install` once, then `npm run dev` (→ http://localhost:5173).
 
-1. `cd vinta-react-deck-template` — run `npm install` once, then `npm run dev` (→ http://localhost:5173, your deck at `/`).
-2. **Pick a layout.** Browse `/template` (all 50; press `o` for the grid) and skim **`src/template/CATALOG.md`** to find the closest archetype. Note its number.
-3. **Add the slide.** Create `src/slides/NN-name.tsx` (two-digit prefix sets the order; auto-discovered, no registry edit). `export default` a component that renders the layout with your content:
+## Working style: ask early, write less
 
-   ```tsx
-   import { Slide12 } from "@/template";
-   export const meta = { title: "Our numbers" };
-   export default function Metrics() {
-     return <Slide12 title="Our year" stats={[{ value: "10M", caption: "Users" }]} />;
-   }
-   ```
+- **Move with what you have.** Reuse patterns, the samples' structure and the client logos in
+  `src/components/elements/Logo/clients.ts`; fill gaps with **clearly fictitious** placeholders instead of blocking.
+- **Ask only questions whose answers change the work**, before writing, in **one** round, with options and a
+  recommended default. Skip what you can infer.
+- **Confirm cheaply before building:** propose the outline and get an OK; then fix only what fails, never
+  regenerate whole slides or decks.
+- **Short status updates**; no recaps of what the user already said; no new docs or files nobody asked for.
 
-   Every prop is optional (omit → keeps the placeholder) and listed in CATALOG.md.
+## 1. Gather the brief (only what's missing)
 
-   **Or write it in markdown:** `src/slides/NN-name.md` with `template: NN` in its frontmatter; the body
-   (`#` title, paragraphs, lists, `##` sections, images, code fences, tables) fills the layout, and
-   `props:` in the frontmatter sets anything else. The per-layout mapping is in **`MARKDOWN.md`**.
-   Prefer `.md` for plain content slides; use `.tsx` when you need logic or bespoke composition.
-4. **Only for structural surgery** (changing the layout itself, not just its content): copy `src/template/NN.tsx` into `src/slides/` and edit the copy. The `<Slide>` canvas is a fixed 1920×1080; prefer flow layout components over absolute `<Place>`.
-5. **Verify.** Screenshot at native size via `http://localhost:5173/?shot=N`, and run `npx tsc -b`.
+- Client and industry; who will be watching; goal (proposal, results, kickoff, planning…).
+- Deck language.
+- Which sections. If the user doesn't say, propose the typical sequence (CATALOG.md): Cover → Agenda → Who we are
+  → What we heard → Why us → Approach / phases → Investment → Case → FAQ → Book a call.
+- Real content: copy, numbers, prices, phase names, contact. Whatever is missing becomes a clearly fictitious example.
+- Images: client logo, photos, screenshots — ask for the files; without them, use the patterns' placeholders.
+- Real patient data (PHI) never goes in.
 
-Reach for a parametrized layout first (**`src/template/CATALOG.md`** — per-slide props + examples); drop to
-raw `@/lib` primitives only for bespoke slides. The slide anatomy, full component catalog, design tokens and
-archetype recipes live in **`vinta-react-deck-template/AUTHORING.md`** — read it for anything beyond the brand rules below.
+## 2. Pick the patterns and propose the outline
 
----
+Use the CATALOG.md tables (and the gallery for a visual pick, if the user wants to see options); prefer the
+site-look, vivid and generic patterns for new content; use the Figma
+"Classic" screens only when the user asks for the original approved screens (fixed number of items). Code goes in
+`SlideCode`. Write titles two-tone: `title` (line 1) + `accent` (line 2). Respect the text and item limits.
 
-## Brand rules — adapted from the official template's "Dicas para melhor uso deste Template"
+Show the outline (one line per slide: number, pattern, gist) and get an OK before writing slides. If the user already
+gave a full sequence and content, skip the confirmation and build.
 
-**01 · The slides — reuse layouts, don't reinvent.** There is an extensive set of ready layouts
-(`/template`, all 50 parametrized as `Slide01`–`Slide50`); import the closest one and pass your content as
-props (**`src/template/CATALOG.md`** lists every slide's props and an example) rather than designing
-something new. Change only the *content* (text, photos, code), never the visual system.
+## 3. Build the slides
 
-**02 · Default font — fonts are already wired.** DM Sans (body) and JetBrains Mono (code) load
-automatically. Use the typography components (AUTHORING.md § Typography) or `font-sans`/`font-mono`.
-Never hardcode another font or paste inline font styles.
-
-**03 · Hexadecimals — use the brand tokens, not raw hex.** The palette is exposed as Tailwind tokens
-(`vinta-blue`, `vinta-blue-section`, `vinta-gray`, `vinta-gray-light`, `vinta-ink`, …) — write
-`text-vinta-blue`, `bg-vinta-blue`, `border-vinta-gray`, never the raw value. Canonical hex lives in
-`src/index.css`; AUTHORING.md § Design tokens lists them. `<Slide bg="white|blue|blue-section|gray|ink">`
-sets the background **and** the correct default text color (white on blue, ink on white) for you.
-
-**04 · Our pictures — use the Vinta photo bank.** `public/assets/` holds the Vinta/Contraponto photos.
-Place one with `<Photo src="img-….png" />` inside a sized `<Place>` box (cover-cropped by default; pass
-`inner` for a pixel-exact window). Add your own photos to `public/assets/` and reference them the same
-way. Decoration tiles: `<Shape n={1..24} />` (24 tiles) and `<ShapeCluster corner="tr" shapes={[…]} />`;
-the vector wordmark is `<Logo tone="blue|white" />`.
-
-**05 · Make a copy — build your own deck, keep the patterns.** Author only in `src/slides/` (the `/`
-deck). Do **not** edit `src/template/` — it is the shared, pixel-faithful reference everyone imports from;
-`import` its layouts and pass props, or (for structural changes) copy a slide into `src/slides/` and edit
-the copy. Even in custom slides, respect the defined patterns — spacing (~96px slide padding), the type
-scale, and the color tokens.
-
-**06 · Codes — use the built-in `<CodeBlock>`.** Code is a real, editable, syntax-highlighted
-component (via `prism-react-renderer`) — no external tools or pasted screenshots. Do not render
-more than 60 characthers per line. Choose the theme by background, set the `language`, and pass 
-the source as `code`; size and position it with `<Place>`:
-- **Blue / dark background** → `theme="dark"`
-- **White background** → `theme="light"`
-
-Optional props: `fontSize` (px), `dots` (the window's traffic-light dots, on by default).
+One file per slide in `src/slides/` (two-digit prefix = order; auto-discovered). Remove the starter slides
+(`01-cover`…`05-thanks`) or rewrite them for the deck.
 
 ```tsx
-<Place x={780} y={150} w={1044} h={780}>
-  <CodeBlock
-    language="ts"
-    theme="dark"
-    code={`const compose = (...fns) => (x) => fns.reduceRight((v, f) => f(v), x);`}
-  />
-</Place>
+// src/slides/04-results.tsx
+import { SlideBigStat } from "@/components";
+
+export const meta = { title: "Results", notes: "Pause on the 42%." };
+
+export default function Results() {
+  return (
+    <SlideBigStat
+      tone="invert-navy"
+      eyebrow="RESULTS"
+      title="What changed"
+      accent="in 90 days"
+      stats={[{ value: "42%", label: "Faster intake" }, { value: "3x", label: "More visits" }]}
+    />
+  );
+}
 ```
 
----
+- Copy props from the pattern's examples in `patterns/<Name>/<Name>.stories.tsx`; types and JSDoc in `<Name>.tsx`.
+- **Markdown** for plain content slides: `src/slides/NN-name.md` with `template: SlideBigStat` — paragraph above `#` =
+  eyebrow, `#` title, second `#` = accent, `##` sections = items, tables = data, closing comment = notes, `props:`
+  for the rest. Mapping per pattern in **MARKDOWN.md**. Use `.tsx` for icons, logic or bespoke slides.
+- **Speaker notes** in `meta.notes` (or the closing comment): shown only in the presenter window (`p`).
+- **Client images** in `public/assets/clients/<client>/`, passed as `/assets/clients/<client>/file.webp`.
+- **Team photos** (`/assets/team/<key>.webp`) are real Vinta people: team slides only, never next to a client's
+  name (quotes, cases) — see CATALOG.md.
+- **Bespoke slide** only when the user agrees no pattern fits: elements inside `<SlideShell>` with `SlideHeader`,
+  tokens only (AUTHORING.md). Never per-deck CSS; a missing capability is a gap to report.
+
+## 4. Verify
+
+1. `npx tsc -b` clean.
+2. Look at every slide at native size: `http://localhost:5173/?shot=N` (or `?print` for all). Check text cut off
+   or overflowing its box, dead space, wrong logo, color outside the palette, leftover starter or SAMPLE text.
+3. Fix and repeat only what failed.
+
+## 5. Deliver
+
+- **Share as a link (default):** follow the **publish-deck** skill — `npm run build-deck -- --shots --name "<Deck>"`,
+  scan `text.txt`, check the previews, ask for the OK, publish the artifact and hand over the link. Later changes:
+  edit the slides and run publish-deck again; it republishes to the same link.
+- **Present live:** `npm run dev`, open `/`, `f` for fullscreen, `p` for the presenter window.
+- **PDF / PowerPoint:** `npm run export` (editable PPTX, selectable PDF) into `export/`.
+- **An animation as a video** (e.g. the building-blocks map for an email or Google Slides):
+  `npm run render-clip -- <story-id> --out <name>` with Storybook running records a looping MP4 + cover PNG in
+  `output/exports/clips/` (`--transparent` for a WebM with alpha, `--selector` for one element; needs `ffmpeg`).
+  Story ids are in Storybook's URL (`?path=/story/<id>`), e.g. `patterns-slidebuildingblocks--animated`.
+- Tell the user what is still a fictitious placeholder and what depends on them (logos, photos, numbers).
+- Do not run git or push without an explicit request.
+
+## 6. Offer an anonymized sample
+
+When the user is done (deck published, or they say it's finished), ask once whether they'd like to contribute an
+anonymized version to the sample presentations. No → stop. Yes (this is the explicit request git needs) →
+the sample goes to the **template repository** (`vintasoftware/vinta-react-deck-template`), not this deck's
+repository: work in a checkout of the template (clone it next to this one if there isn't one).
+1. Copy the deck to the template's `src/samples/<Name>.stories.tsx` as stories, one per slide in order (`title:
+   'Samples/<Name>'`, `name: '01 Cover'`…, each `render: () => <Pattern … />`; see the existing samples), with a
+   generic name. (Samples are stories so they show in Storybook and the gallery; decks themselves never are.)
+2. Anonymize: client name, logos and client images, people, emails, phones, prices, real numbers, dates and
+   internal project names become clearly fictional (Northwind-style). Never PHI. Team photos only as CATALOG.md
+   allows. Keep the slide sequence and pattern choices: that is what the sample is for.
+3. Copy any images the sample needs that the template doesn't have (anonymized ones only), then `npx tsc -b` and
+   check the new slides at `/samples` in the template.
+4. Show the user a short list of what was replaced and get an OK.
+5. In the template checkout: new branch off `main`, commit only the sample (and its images), push and open a PR
+   against `vintasoftware/vinta-react-deck-template`. Hand over the PR link.
 
 ## Deck-level tasks
 
-- **Set the cover/closing:** edit `src/slides/01-cover.tsx` and the closing slide (title, `MetaRow`, contact).
 - **Reorder:** rename files (the `NN-` prefix drives order).
-- **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid, `p` for the presenter window (clock, timer, notes, previous/next slides; synced with the deck window).
-- **Speaker notes:** add `notes` to a slide's `meta` (`export const meta = { title: "…", notes: "…" }`). Plain text, `\n` for line breaks; shown only in the presenter window, never on the slide.
-- **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.md` (or `.tsx`) per slide, then screenshot-check each with `?shot=N`.
+- **Change a slide:** edit only that file; keep its pattern unless the user asks for another.
+- **Controls:** `←/→` or a click move (left third of the window goes back), `o` overview grid, `f` fullscreen, `p` presenter window (clock, timer, notes,
+  previous/next slides; synced with the deck window), number + `Enter` to jump.

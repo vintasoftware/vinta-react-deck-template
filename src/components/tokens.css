@@ -1,0 +1,499 @@
+/*
+  Vinta Slidedeck — Tokens
+  Source of truth: docs/foundations.md. Mirrors the values 1:1 — nothing was
+  invented or rounded. Where the harness leaves a value open (line-height/tracking
+  unspecified), the matching property is left out (inherits the browser
+  default) instead of assuming a number.
+
+  Scoped to `.vds` (the root of every SlideShell / Divider) instead of :root, so these tokens
+  (--font-sans, --font-mono, --radius-*, --shadow-*…) and the Tailwind theme of the deck chrome
+  (src/lib/deck) never leak into each other. See src/index.css.
+*/
+
+.vds {
+  /* =====================================================================
+   * TIER 1 — PRIMARY  (the deck's structure; always pick from here first)
+   * blue ramp · neutrals · surfaces · status · white
+   * ===================================================================== */
+
+  /* ---------------------------------------------------------------------
+   * 1.1 Color — blue ramp (primary)
+   * ------------------------------------------------------------------- */
+  --blue-050: #f1f6ff;
+  --blue-100: #e5ecf6;
+  --blue-300: #5fb7ff;
+  --blue-400: #3083ff;
+  --blue-500: #0d8cfe;
+  --blue-600: #0050ff; /* Vinta primary/brand */
+  --blue-700: #005acf;
+  --blue-800: #0026ff;
+  --blue-900: #0d2645;
+  --white: #ffffff; /* text/icon on dark or colored background */
+
+  /* ---------------------------------------------------------------------
+   * Status (success/danger) — layout.md/"Maintenance services": outside the
+   * accent palette (not brand "specific moments", they are semantic
+   * state green=ok/red=alert). Confirmed as token — CardHeader
+   * and CoverageRow use these instead of a loose hex in the component.
+   * ------------------------------------------------------------------- */
+  --status-success: #1e9f74;
+  --status-danger: #c23535;
+
+  /* ---------------------------------------------------------------------
+   * 1.3 Neutrals / slate
+   * ------------------------------------------------------------------- */
+  --ink: #050508;
+  --slate-700: #2a4059;
+  --slate-500: #4c5564;
+  --slate-400: #5b738d;
+  --border-color: #cdd8e5;
+
+  /* ---------------------------------------------------------------------
+   * 1.4 Real surfaces, by mode
+   * ------------------------------------------------------------------- */
+  --surface-page: #ffffff;
+  --surface-soft: #fafcff;
+  --surface-tint: #f1f6ff;
+  --surface-mist: #edf6fd;
+  --surface-gray: #f8f8f8;
+  --surface-invert-blue: #0058e9;
+  --surface-invert-blue-alt: #2c63f1;
+  --surface-invert-navy: #1e304c;
+  /* "trusted by" footer of Who is Vinta (layout.md) — close to surface-tint
+     but a distinct hex, used in that specific band. */
+  --surface-footer: #f5f8ff;
+
+  /* =====================================================================
+   * TIER 2 — SECONDARY  (supporting accents; specific moments, never the
+   * slide's main color). cyan · purple · mint · rose · orange
+   * ===================================================================== */
+  --accent-cyan: #02effe;
+  --accent-purple: #6146c7;
+  --accent-purple-light: #dabcff;
+  --accent-mint: #a2e6d8;
+  --accent-mint-dark: #2a594c;
+  --accent-rose: #f7cacf;
+  --accent-rose-dark: #592a35;
+  --accent-orange: #f26a1c;
+  --accent-orange-light: #fdb58f;
+
+  /* ---------------------------------------------------------------------
+   * Accent tints (layout.md — "Accent tint surfaces", new).
+   * Only these 3 exist in the screens; don't invent tints for cyan/rose/orange.
+   * ------------------------------------------------------------------- */
+  --tint-purple: #f5ecff;
+  --tint-mint: #ecfff4;
+  --tint-blue: #ecf7ff;
+
+  /* ---------------------------------------------------------------------
+   * Vivid (new homepage, website.vinta.studio): vivid colors for mesh
+   * backgrounds, gradient panels and accents. Exact values from the site CSS;
+   * added as Tier 2 (approved by the user on 2026-11-04) so that
+   * slides stop coming out "plain white". Usage: one "vivid" background every
+   * 2–3 slides; title phrase accent; panels and tiles.
+   * ------------------------------------------------------------------- */
+  --vivid-blue: #005ff8; /* blue mesh background base */
+  --vivid-feature-blue: #186dff; /* highlight word in title (light background) */
+  --vivid-indigo: #000ab7; /* dark corners of the blue mesh */
+  --vivid-navy: #071a5c; /* dark base (block field), chips */
+  --vivid-ink: #050842; /* title on light "vivid" background */
+  --vivid-azure: #3095ff; /* blue glow */
+  --vivid-sky: #55bcff; /* light glow / icon on blue */
+  --vivid-turquoise: #7fe6f5; /* highlight word on blue */
+  --vivid-aqua: #b1fffd; /* light blob */
+  --vivid-teal-deep: #0a7d99; /* teal panel (base) */
+  --vivid-teal-bright: #13a9c8; /* teal panel (shine) */
+  --vivid-teal-night: #04334a; /* teal panel (dark corner) */
+  --vivid-teal-glow: #c2eef6; /* teal panel (light) and end of the counter gradient */
+  --vivid-violet-deep: #4741d9; /* violet panel (base) */
+  --vivid-violet-mid: #9051dd; /* violet panel (middle) */
+  --vivid-violet-glow: #f3b8f2; /* violet panel (light) */
+  --vivid-wash-light: #f3fbff; /* light background with flavor (start) */
+  --vivid-wash-cyan: #dcf2fc; /* light background with flavor (cyan blob) */
+  --vivid-wash-lilac: #e8ecfd; /* light background with flavor (lilac blob) */
+  --vivid-highlight: #c0f0ff; /* highlighted row/card on light background */
+
+  /* =====================================================================
+   * TIER 3 — TERTIARY  (exact Figma values with no match in the DS)
+   * Rules:
+   *  - Only added when a Figma screen requires the exact value (faithful copy).
+   *  - Live INSIDE the element/pattern they came from. Never pick a
+   *    tertiary for new content: use Tier 1, then Tier 2.
+   *  - A color within ΔE 3 of a Tier 1/2 token does NOT become tertiary: use the
+   *    existing token (done on 2026-10-29 for 10 colors + 17 literals).
+   * ===================================================================== */
+  --accent-purple-vivid: #9452ff; /* phase title (Journey | Single Step) */
+  --accent-indigo: #5432ff; /* solid "Integrations" card */
+  --accent-lilac: #d5d4ff; /* soft "Nice-to-have" card */
+  --accent-purple-deep: #5919ba; /* label/dot of the lilac card */
+  --accent-blue-bright: #0099ff; /* solid "Must-have" card */
+  --accent-blue-navy-text: #00409d; /* pill text on blue card */
+  --accent-orange-sand: #e09f59; /* orange section bar */
+  --accent-orange-heading: #d78e49; /* concern card title */
+  --ink-card: #1e3354; /* main phrase in card */
+  --slate-heading: #3a506b; /* secondary label/phrase */
+  --slate-caption: #7a8fab; /* subtle note in card */
+  --accent-blue-card-text: #287dde; /* mono title of What we heard cards */
+  --ink-blue-soft: #3c6696; /* description of What we heard cards */
+  --accent-mint-vivid: #44b99c; /* phase 02 title (Timeline) */
+  --accent-blue-light: #9ebdff; /* Timeline blue bar (used at 85%) */
+  --ink-soft: #303030; /* Timeline phase/week labels */
+  --accent-teal: #32b7a2; /* rail step 01 (Timeline Alt 02) */
+  --accent-aqua: #13b8c9; /* rail step 02 */
+  --blue-deep: #0047b8; /* rail step 05 / gradient end */
+  --accent-blue-gradient-start: #4a76fb; /* gradient start of the featured plan */
+  --ink-table-value: #1c3353; /* pricing row values */
+  --border-card-concern: #d6e2f0;
+  --card-shadow-ink: 30, 90, 168; /* rgb of the card shadow blue (use in rgba()) */
+  /* new tertiaries (previously loose hex in components) */
+  --blue-logo: #115ae5; /* Vinta wordmark blue and ContactCard links */
+  --accent-lilac-chip: #decdf1; /* TagCard lilac chip */
+  --accent-blue-section-dark: #1e5aa8; /* blue section bar (gradient start) */
+  --accent-blue-section-light: #4a8fe7; /* blue section bar (gradient end) */
+  --accent-blue-section-bright: #006eff; /* section bar dot */
+  --slate-contact: #4c6691; /* role in ContactCard */
+  --blue-contact-ink: #1e4991; /* name in ContactCard */
+  /* Alt 03 (Our proposed approach) and Journey | Overall — exact Figma copy */
+  --tint-mint-soft: #e8f5f2; /* stage 01 background (Alt 03) */
+  --tint-blue-soft: #e0edfd; /* stage 02 background (Alt 03) */
+  --accent-teal-label: #1c8b78; /* "01 · VALIDATE" label */
+  --slate-label-gray: #8c96a0; /* UNKNOWNS / ROUGH ESTIMATE labels */
+  --accent-track-start: #89d3c9; /* confidence track gradient start */
+  --accent-track-end: #7aacfb; /* confidence track gradient end */
+  --accent-orange-amber: #f5871f; /* milestone divider and label */
+  --accent-orange-coral: #ff8052; /* phase 01 title (Journey | Overall) */
+  --accent-emerald: #2bb986; /* phase 02 title (Journey | Overall) */
+  --accent-violet-electric: #5e00ff; /* phase 04 title (Journey | Overall) */
+  --ink-violet-deep: #2e1890; /* phase 04 label (Journey | Overall) */
+
+  /* Building blocks (website.vinta.studio, "50+ building blocks" section):
+     exact site values, only inside the SlideBuildingBlocks pattern. */
+  --field-turquoise: #7fe6f5; /* "patient" cubes/chip, 50+ counter */
+  --field-teal-glow: #c2eef6; /* counter gradient end */
+  --field-sky: #55bcff; /* "practice" cubes (mixed with white) */
+  --field-azure: #3095ff; /* background glow */
+  --field-blue: #005ff8; /* section background base */
+  --field-indigo: #000ab7; /* cube face shadows and background blobs */
+  --field-navy: #071a5c; /* dark field base, chips, filter pill */
+  --field-ink: #050842; /* text on the white/turquoise pill */
+  --field-aqua: #b1fffd; /* light blob in the background corner */
+
+  /* Vivid slides (case library and data slides): exact values from the
+     approved templates, only inside the VividBackground element. */
+  --vivid-mesh-top: #0b45e6; /* top-left of the blue mesh background */
+  --vivid-night-top: #0a2a9c; /* top of the night background */
+
+  /* Vivid layouts (the "rich" Claude Design templates): exact values with no
+     DS match, only inside the element/pattern named in each comment. */
+  --glass-green-top: #2f7560; /* SlideGlassRows green background (start) */
+  --glass-green-bottom: #1f5a49; /* SlideGlassRows green background (end) */
+  --glass-purple-top: #6038b0; /* SlideGlassRows purple background (start) */
+  --glass-purple-bottom: #46288a; /* SlideGlassRows purple background (end) */
+  --tint-peach: #fff1e8; /* IconBadge pale tile, orange accent */
+  --accent-green-ink: #1e7f68; /* IconBadge pale/white tile icon, mint accent */
+
+  /* =====================================================================
+   * NON-COLOR — radius, shadow, spacing, grid, typography, modes
+   * ===================================================================== */
+
+  /* ---------------------------------------------------------------------
+   * 1.5 Radius
+   * ------------------------------------------------------------------- */
+  --radius-none: 0px;
+  --radius-sm: 13px;
+  --radius-md: 24px;
+  --radius-lg: 36px;
+  --radius-pill: 9999px;
+
+  /* ---------------------------------------------------------------------
+   * 1.6 Shadow
+   * ------------------------------------------------------------------- */
+  --shadow-sm: 0 6px 24px rgba(5, 5, 8, 0.04);
+  --shadow-md: 0 9px 36px rgba(5, 5, 8, 0.06);
+  --shadow-lg: 0 15px 48px rgba(5, 5, 8, 0.08);
+
+  /* ---------------------------------------------------------------------
+   * 1.7 Spacing — base scale (dominant gap = space-2 / 14)
+   * ------------------------------------------------------------------- */
+  --space-1: 6px;
+  --space-2: 14px;
+  --space-3: 24px;
+  --space-4: 40px;
+  /* slide composition: header → content (stacked) and between side-by-side columns */
+  --gap-header: 56px;
+  --gap-columns: 96px;
+  /* real component paddings, quoted literally in the harness (not a scale) */
+  --padding-tag-y: 6px;
+  --padding-tag-x: 17px;
+  --padding-card-y: 13px;
+  --padding-card-x: 25px;
+  --padding-block: 27px;
+
+  /* ---------------------------------------------------------------------
+   * Slide grid (§3)
+   * ------------------------------------------------------------------- */
+  --slide-width: 1920px;
+  --slide-height: 1080px;
+  --slide-safe-area: 160px;
+  /* larger hero/Divider margin — layout.md §"Global layout rules" */
+  --slide-safe-area-hero: 200px;
+
+  /* ---------------------------------------------------------------------
+   * Chip/pill on inverted surface (layout.md — Divider anatomy)
+   * Literal value taken from the real screens, not yet part of the ramp
+   * in docs/foundations.md; added as a token instead of hardcoded in the component
+   * (harness core rule: "a value that is not here... becomes a token").
+   * ------------------------------------------------------------------- */
+  --chip-invert-bg: #d2e7ff;
+
+  /* ---------------------------------------------------------------------
+   * Divider — color schemes (layout.md). 4 bg/title combinations;
+   * 01 and 04 are the "spelled out" bases, 02 is the inverse of 01 and 03 the
+   * inverse of 04 (bg ↔ title swap light/dark). Where the exact value
+   * already matches an existing token (surfaces/white), the scheme
+   * reuses that token instead of duplicating — only new tokens enter here
+   * for the hex values the layout.md table actually introduces.
+   * Blobs are left out on purpose: they are decorative and use loose color
+   * (including cyan/green), per explicit layout.md instruction.
+   * ------------------------------------------------------------------- */
+  --scheme-01-pill-text: #0d1f79;
+  --scheme-02-bg: #fbfdff;
+  --scheme-02-title: #478dff;
+  --scheme-03-title: #0059e9;
+
+  /* ---------------------------------------------------------------------
+   * §4 Typography — families
+   * ------------------------------------------------------------------- */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* stat-mega — DM Sans Regular 206 / solid */
+  --font-size-stat-mega: 206px;
+  --font-weight-stat-mega: 400;
+  --line-height-stat-mega: 1; /* "solid" */
+
+  /* stat-hero — the single big number of the vivid hero slide (SlideHeroNumber): 300 / solid */
+  --font-size-stat-hero: 300px;
+
+  /* display — DM Sans (thin weight) 120 / auto / -2.2% */
+  --font-size-display: 120px;
+  --font-weight-display: 300; /* thin weight */
+  --line-height-display: normal; /* "auto" */
+  --tracking-display: -2.2%;
+  /* layout.md — Elements: "scale goes up to 150 on covers". Same weight/tracking
+     as the base display, only the size changes for this "cover" variant. */
+  --font-size-display-cover: 150px;
+
+  /* h1 — DM Sans Thin·Light 60 (lh/tracking unspecified in the harness) */
+  --font-size-h1: 60px;
+  --font-weight-h1: 300; /* Thin·Light — Light (300) chosen as base weight */
+
+  /* h2 — DM Sans Bold 50 / 60 / -0.8px */
+  --font-size-h2: 50px;
+  --font-weight-h2: 700;
+  --line-height-h2: 60px;
+  --tracking-h2: -0.8px;
+
+  /* h4 — DM Sans Medium 30 / 40 (tracking unspecified) */
+  --font-size-h4: 30px;
+  --font-weight-h4: 500;
+  --line-height-h4: 40px;
+
+  /* subtitle — DM Sans Regular·Light 22-28 / 30. Harness gives a range;
+     the token takes the floor (22) as default value — see harness §4. */
+  --font-size-subtitle: 22px;
+  --font-weight-subtitle: 400;
+  --line-height-subtitle: 30px;
+
+  /* "hero" subtitle — layout.md/Elements: "Subtitle: DM Sans ~40". Much
+     larger than the 22-28 range in the table above (not the same role, it is the
+     large supporting text of Intro/Who-is-Vinta), so it gets its own token. */
+  --font-size-subtitle-hero: 40px;
+  --font-weight-subtitle-hero: 300; /* Regular·Light, same as base subtitle */
+
+  /* body — DM Sans Regular 20 (migrated from Roboto, lh/tracking unspecified) */
+  --font-size-body: 20px;
+  --font-weight-body: 400;
+
+  /* caption/label — DM Sans Bold 18 / 26 / +0.6px */
+  --font-size-caption: 18px;
+  --font-weight-caption: 700;
+  --line-height-caption: 26px;
+  --tracking-caption: 0.6px;
+
+  /* overline — DM Sans Bold 30 / +2.9% tracked (lh unspecified) */
+  --font-size-overline: 30px;
+  --font-weight-overline: 700;
+  --tracking-overline: 2.9%;
+
+  /* quote — DM Sans Italic 22 (lh/tracking unspecified) */
+  --font-size-quote: 22px;
+  --font-weight-quote: 400;
+  --font-style-quote: italic;
+
+  /* mono-xl — DM Mono 500 · 57 / 61 */
+  --font-size-mono-xl: 57px;
+  --font-weight-mono-xl: 500;
+  --line-height-mono-xl: 61px;
+
+  /* mono-md — DM Mono Medium 24-27 / solid. Floor (24) as default — see harness §4. */
+  --font-size-mono-md: 24px;
+  --font-weight-mono-md: 500;
+  --line-height-mono-md: 1; /* "solid" */
+  --tracking-mono-md: 0.06em; /* eyebrow size md (vivid slides) */
+
+  /* mono-label — DM Mono Regular 18 / +3% (lh unspecified) */
+  --font-size-mono-label: 18px;
+  --font-weight-mono-label: 400;
+  --tracking-mono-label: 3%;
+
+  /* metric-label — layout.md/Who is Vinta: "mono label in accent ~34". Not an
+     approximation of mono-md(24-27) or mono-xl(57) — it is far from both,
+     so it gets its own role instead of rounding to a neighbor. */
+  --font-size-metric-label: 34px;
+  --font-weight-metric-label: 500;
+}
+
+/* =========================================================================
+ * §2 Semantics + modes
+ * Slide is light by default; covers/dividers use invert-blue or invert-navy.
+ * Always pick by semantic role (--color-text-primary, --color-surface…),
+ * never by the raw hex of the primitives above.
+ * ======================================================================= */
+
+:root,
+[data-mode='light'] {
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--slate-500);
+  --color-text-muted: var(--slate-400);
+  /* harness §2 recorded #0061fe here; layout.md says to migrate every #0061fe
+     → #0050ff (brand), so this role now reuses the --blue-600 primitive. */
+  --color-text-accent: var(--blue-600);
+  --color-surface: var(--surface-page);
+  --color-surface-alt: var(--surface-tint);
+  --color-border: var(--border-color);
+}
+
+[data-mode='invert-blue'] {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: var(--surface-soft);
+  --color-text-muted: rgba(255, 255, 255, 0.7);
+  /* Guardrail §7/§2: cyan as text "never... on blue (no contrast)".
+     Instead of using --accent-cyan here, the text accent falls back to white. */
+  --color-text-accent: #ffffff;
+  --color-surface: var(--surface-invert-blue);
+  --color-surface-alt: var(--surface-invert-blue-alt);
+  --color-border: rgba(255, 255, 255, 0.16);
+}
+
+[data-mode='invert-navy'] {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: var(--surface-soft);
+  --color-text-muted: rgba(255, 255, 255, 0.7);
+  /* Guardrail §7/§2: cyan "as text, only on dark navy" — the only mode where
+     the accent actually becomes cyan. */
+  --color-text-accent: var(--accent-cyan);
+  --color-surface: var(--surface-invert-navy);
+  --color-surface-alt: var(--surface-invert-navy);
+  --color-border: rgba(255, 255, 255, 0.16);
+}
+
+/* "light-tint" — light mode variant where content sits directly on
+   the tint surface (#f1f6ff), not on pure white. Harness §2 lists
+   light text-primary as "ink #050508 / #0d2645" (two values) — the
+   layout.md confirms the second (blue-900) is used when the background is the
+   tint, e.g. Who is Vinta (Title and MetricItem, both #0d2645 explicitly).
+   Same text/border as the others, only primary changes. */
+[data-mode='light-tint'] {
+  --color-text-primary: var(--blue-900);
+  --color-text-secondary: var(--slate-500);
+  --color-text-muted: var(--slate-400);
+  --color-text-accent: var(--blue-600);
+  --color-surface: var(--surface-tint);
+  --color-surface-alt: var(--surface-page);
+  --color-border: var(--border-color);
+}
+
+/* =========================================================================
+ * Configurable accent (Eyebrow, Subtitle/keyword, MetricItem, Tag "filled"…)
+ * layout.md: "configurable accent color" — 1 prop, 6 options (blue = structural
+ * primary; cyan/purple/mint/rose/orange = secondary, equivalent use).
+ * Each element sets [data-mode] (the same value as above) + [data-accent] on
+ * its own node; --accent-color resolves to the right tone for the background:
+ *   - light (light/light-tint): darker/more saturated tone of the pair (contrast
+ *     on white/tint).
+ *   - dark (invert-blue/invert-navy): lighter/pastel tone (contrast on
+ *     blue/navy) — mint/rose/purple/orange already have both tones in
+ *     harness §1.2 for this.
+ * cyan and blue are the exception on invert-blue: same color family as the background →
+ * poor contrast (measured: cyan 1.4:1, blue-300 2.7:1) — fall back to white, the
+ * same adjustment the guardrail already sets for the general text-accent (§2).
+ * orange on light is borderline (~3:1) — ok for marker/tick, avoid in
+ * small body text.
+ * ======================================================================= */
+[data-mode='light'][data-accent='blue'],
+[data-mode='light-tint'][data-accent='blue'] {
+  --accent-color: var(--blue-600);
+}
+[data-mode='light'][data-accent='cyan'],
+[data-mode='light-tint'][data-accent='cyan'] {
+  /* cyan has no dark tone in the harness and fails contrast on light (~1.4:1,
+     guardrail §2/§7) — falls back to primary blue instead of raw cyan. */
+  --accent-color: var(--blue-600);
+}
+[data-mode='light'][data-accent='purple'],
+[data-mode='light-tint'][data-accent='purple'] {
+  --accent-color: var(--accent-purple);
+}
+[data-mode='light'][data-accent='mint'],
+[data-mode='light-tint'][data-accent='mint'] {
+  --accent-color: var(--accent-mint-dark);
+}
+[data-mode='light'][data-accent='rose'],
+[data-mode='light-tint'][data-accent='rose'] {
+  --accent-color: var(--accent-rose-dark);
+}
+[data-mode='light'][data-accent='orange'],
+[data-mode='light-tint'][data-accent='orange'] {
+  --accent-color: var(--accent-orange);
+}
+
+[data-mode='invert-navy'][data-accent='blue'] {
+  --accent-color: var(--blue-300);
+}
+[data-mode='invert-navy'][data-accent='cyan'] {
+  --accent-color: var(--accent-cyan);
+}
+[data-mode='invert-navy'][data-accent='purple'] {
+  --accent-color: var(--accent-purple-light);
+}
+[data-mode='invert-navy'][data-accent='mint'] {
+  --accent-color: var(--accent-mint);
+}
+[data-mode='invert-navy'][data-accent='rose'] {
+  --accent-color: var(--accent-rose);
+}
+[data-mode='invert-navy'][data-accent='orange'] {
+  --accent-color: var(--accent-orange-light);
+}
+
+[data-mode='invert-blue'][data-accent='blue'] {
+  /* blue-on-blue measures 2.7:1 — falls back to white, like cyan below. */
+  --accent-color: #ffffff;
+}
+[data-mode='invert-blue'][data-accent='cyan'] {
+  /* guardrail §2/§7: cyan never on blue (no contrast, measured 1.9:1). */
+  --accent-color: #ffffff;
+}
+[data-mode='invert-blue'][data-accent='purple'] {
+  --accent-color: var(--accent-purple-light);
+}
+[data-mode='invert-blue'][data-accent='mint'] {
+  --accent-color: var(--accent-mint);
+}
+[data-mode='invert-blue'][data-accent='rose'] {
+  --accent-color: var(--accent-rose);
+}
+[data-mode='invert-blue'][data-accent='orange'] {
+  --accent-color: var(--accent-orange-light);
+}

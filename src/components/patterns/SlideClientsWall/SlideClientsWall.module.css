@@ -1,0 +1,55 @@
+/* Frame of the site-look slides: 112 top · 144 sides (safe area) · 120 bottom, 40 between header and content. */
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+/* takes the rest of the height and centers the wall (no dead space at the bottom) */
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 4 cards of 384 × 160 per row (4 × 384 + 3 × 32 = the 1632 content width) */
+.wall {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4) 32px;
+}
+
+.cell {
+  width: 384px;
+  height: 160px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--white) 30%, transparent);
+  border-radius: var(--radius-md);
+}
+
+/* fits the logo in 264 × 56 (the catalog files are cropped tighter than the original PNGs) and turns it white, whatever tone the catalog file has */
+.logo {
+  width: 264px;
+  height: 56px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-h4);
+  color: var(--white);
+}

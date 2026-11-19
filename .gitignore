@@ -5,3 +5,11 @@ dist-ssr
 *.local
 .DS_Store
 scratchpad
+# Artifacts built by npm run build-deck
+output
+# npm run build-storybook / npm run gallery
+storybook-static
+gallery
+*storybook.log
+# npm run test-storybook -- --coverage
+coverage

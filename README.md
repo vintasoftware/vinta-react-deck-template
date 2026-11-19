@@ -1,50 +1,83 @@
-# Vinta 2023 — slide-deck library
+# Vinta Slides
 
-The official *Vinta 2023* presentation template, migrated from a static HTML mock into a
-**reusable React + Tailwind component library** and a **controllable slideshow**. Authoring a new
-slide is composing a handful of documented components — easy to generate with AI.
-
-This app lives in `vinta-react-deck-template/` at the repo root; the legacy static deck and the
-original source material stay in the parent directory.
+Vinta's presentation design system (the vintasoftware.com site look, from vinta-slidedeck) as a
+**React slide deck**: ~70 ready slide patterns, slides written as `.tsx` or plain **markdown**, a
+**presenter window** with speaker notes, **PDF/PPTX export**, and one-command **Claude artifacts** to share a
+deck as a link. Building a deck is picking patterns and passing your content — easy to do with an AI agent.
 
 ```bash
-cd vinta-react-deck-template
 npm install
 npm run dev      # http://localhost:5173  → your deck
 ```
 
-### Three decks (by URL)
+## Start a new deck
+
+**One repository per deck.** On GitHub, use **"Use this template"** on `vintasoftware/vinta-react-deck-template` to
+create the deck's repository (a workflow renames the copy on its first push), clone it, `npm install`, then open
+Claude Code in it and ask for the deck (`/create-deck`): it asks what's missing, proposes an outline, builds the
+slides, checks them and publishes the deck as a private link when you approve. Ready-made prompts and rules:
+**[docs/team-guide.md](docs/team-guide.md)**.
+
+The slides are files in `src/slides/` (`.tsx` or `.md`). Storybook, the template gallery, `/patterns` and
+`/samples` are the reference to pick templates from — your slides never become stories. To see every template:
+`npm run gallery` (opens http://localhost:6007: templates grouped by what they're for, with a screenshot of each
+variant, when to use it and its limits).
+
+## Decks (by URL)
+
 | URL | Deck | Folder |
 |---|---|---|
-| `/` | **Your main slides** — build your presentation here | `src/slides/` |
-| `/template` | The 50 official Vinta template slides (reference/starter) | `src/template/` |
+| `/` | **Your slides** — build your presentation here | `src/slides/` |
+| `/patterns` | Every pattern, with examples — pick from here | `src/components/patterns/` |
+| `/samples` | Sample presentations built from the patterns (fictional data) | `src/samples/` |
 
-- **`src/lib/`** — the UI library (single entrypoint `@/lib`): `Deck`, `Slide`, `Place`, typography,
-  shapes, `Photo`, `CodeBlock`, layout and content blocks. Fully typed with JSDoc.
-- **[AUTHORING.md](AUTHORING.md)** — the guide: add-a-slide workflow, component catalog, tokens, recipes.
-- **[MARKDOWN.md](MARKDOWN.md)** — write slides as `.md` files that fill any of the 50 template layouts.
-- **[.agents/skills/create-deck/SKILL.md](.agents/skills/create-deck/SKILL.md)** — the agent brief for
-  generating on-brand slides (workflow + brand rules). One canonical file, symlinked into each AI tool's
-  expected path (see below).
-
-#### AI agent instructions (single source, many tools)
-The brief above is an [Agent Skill](https://agentsmd.net/) authored **once** at the vendor-neutral
-`.agents/skills/create-deck/SKILL.md`, and each tool reads it from its expected path:
-
-| Tool | Path it reads | Kind |
-|---|---|---|
-| **Cursor**, **GitHub Copilot** | `.agents/skills/create-deck/SKILL.md` | canonical file (read natively) |
-| **Claude Code** | `.claude/skills/create-deck/SKILL.md` | → symlink to canonical |
-| **OpenAI Codex** | `.codex/skills/create-deck/SKILL.md` | → symlink to canonical |
-
-Edit only `.agents/skills/create-deck/SKILL.md`; the other two are symlinks, so there's nothing to keep
-in sync. (Symlinks need `git config core.symlinks true` on Windows checkouts.)
-
-**Controls:** `←/→`/`Space` navigate · `o` overview · `f` fullscreen · `p` presenter window (clock,
+**Controls:** `←/→`/`Space` or a click navigate (left third of the window goes back) · `o` overview · `f` fullscreen · `p` presenter window (clock,
 timer, speaker notes, previous/next slides — synced with the deck window) · number + `Enter` to jump ·
 `#/N` deep-links a slide within the current deck.
 
-### Self-contained
-The app bundles its own copies of the shapes, photos and logo under `public/`, so it runs with no
-external dependencies. `src/template/` (the 50-slide reference deck) is now hand-owned source — the
-one-time script that first generated it from the original Figma export has been retired.
+## Commands
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | The decks at http://localhost:5173 |
+| `npm run gallery` | Builds the template gallery (`gallery/`) and serves it on port 6007; `gallery:build` only builds (`--skip-existing` reshoots only new stories). Categories and labels live in `scripts/gallery-catalog.mjs` |
+| `npm run storybook` | Storybook on port 6006: every pattern and element with its props, plus the foundations pages (for whoever edits the design system); `build-storybook` builds it statically |
+| `npm run build` | Typecheck + production build |
+| `npm run build-deck [-- samples] [--shots] [--name "Title"]` | Your deck as one self-contained HTML in `output/exports/<name>/`, ready to publish as a Claude artifact (with `text.txt` to scan and `artifact.json`). See the publish-deck skill |
+| `npm run export` | PDF + editable PPTX of your deck in `export/` (`--format pdf\|pptx`, `--deck patterns\|samples`) |
+| `npm run render-clip -- <story-id> --out <name>` | Records an animated story as a looping MP4 + cover PNG in `output/exports/clips/`, for use outside the deck (email, Google Slides). Storybook must be running; needs `ffmpeg`. `--transparent` (WebM with alpha), `--selector`, `--seconds`, `--skip`… (header of `scripts/render-clip.mjs`) |
+| `npm run test-storybook` | Renders every Storybook story in headless Chromium (Vitest); a11y issues are reported |
+| `npm run sync-harness` | Regenerates the token reference in `docs/foundations.md` from `src/components/tokens.css` |
+| `npm run team-photos -- crops` | Re-cuts the team photos in `public/assets/team/` from `assets/team-photos/` per `crops.json` (`library <dir>` adds originals; needs `cwebp`) |
+| `npm run init -- <name>` | Rename a copy of this template (package, page title, this heading) |
+
+## Where things are
+
+- **[src/components/CATALOG.md](src/components/CATALOG.md)** — every pattern: when to use it, its props, item
+  and character limits, plus the design rules and how to add a pattern. Patterns and their elements import from
+  `@/components`; each has a Storybook story next to it.
+- **[AUTHORING.md](AUTHORING.md)** — writing slides in `.tsx`: the workflow, bespoke slides, code slides.
+- **[MARKDOWN.md](MARKDOWN.md)** — writing slides as `.md` files that fill a pattern.
+- **`src/lib/`** — the deck runtime (`@/lib`): navigation, overview, presenter window, capture modes, markdown parser.
+- **[docs/](docs/)** — `team-guide.md` (no-code guide), `foundations.md` (tokens, palette), `layout.md` (slide
+  anatomy), `known-issues.md`.
+- **Agent skills** — `create-deck` (build a deck) and `publish-deck` (share it as an artifact).
+
+### AI agent instructions (single source, many tools)
+
+The skills are [Agent Skills](https://agentsmd.net/) authored **once** at the vendor-neutral
+`.agents/skills/<name>/SKILL.md`, and each tool reads them from its expected path:
+
+| Tool | Path it reads | Kind |
+|---|---|---|
+| **Cursor**, **GitHub Copilot** | `.agents/skills/<name>/SKILL.md` | canonical file (read natively) |
+| **Claude Code** | `.claude/skills/<name>/SKILL.md` | → symlink to canonical |
+| **OpenAI Codex** | `.codex/skills/<name>/SKILL.md` | → symlink to canonical |
+
+Edit only the files under `.agents/skills/`; the others are symlinks, so there's nothing to keep in sync.
+(Symlinks need `git config core.symlinks true` on Windows checkouts.)
+
+## Self-contained
+
+Fonts (DM Sans, DM Mono), icons and every image the patterns use are bundled (`public/assets/<pattern>/`), so the
+app, its exports and its artifacts run with no external requests.

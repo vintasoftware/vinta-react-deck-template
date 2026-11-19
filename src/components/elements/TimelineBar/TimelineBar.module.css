@@ -1,0 +1,26 @@
+.bar {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 41.06px;
+  padding: 5.66px 16.99px;
+  border-radius: 13.08px;
+  backdrop-filter: blur(0.975px);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.5664px;
+  color: var(--slate-700);
+  white-space: nowrap;
+}
+
+.bar[data-accent='purple'] {
+  background: color-mix(in srgb, var(--accent-purple-light) 85%, transparent);
+}
+.bar[data-accent='mint'] {
+  background: color-mix(in srgb, var(--accent-mint) 85%, transparent);
+}
+.bar[data-accent='blue'] {
+  background: color-mix(in srgb, var(--accent-blue-light) 85%, transparent);
+}

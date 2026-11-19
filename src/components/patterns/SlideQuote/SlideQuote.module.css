@@ -1,0 +1,44 @@
+.body {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.quote {
+  width: 1560px;
+}
+
+.quote[data-photo] {
+  width: 1000px;
+}
+
+/* Violet gradient panel behind the portrait, with vertical stripes and a turquoise glow. */
+.panel {
+  position: absolute;
+  left: 1216px;
+  top: 160px;
+  width: 560px;
+  height: 760px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background:
+    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--vivid-turquoise) 55%, transparent) 0%, transparent 60%),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--white) 8%, transparent) 0 1px, transparent 1px 40px),
+    linear-gradient(160deg, var(--vivid-violet-mid) 0%, var(--vivid-violet-deep) 55%, var(--vivid-indigo) 100%);
+}
+
+.photo {
+  position: absolute;
+  left: 1256px;
+  top: 200px;
+}
+
+/* Client logo right under the author, not floating at the bottom of the frame. */
+.logo {
+  display: flex;
+}

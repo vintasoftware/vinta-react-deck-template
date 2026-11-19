@@ -1,0 +1,67 @@
+.slot {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.slot[data-radius='sm'] {
+  border-radius: var(--radius-sm);
+}
+.slot[data-radius='md'] {
+  border-radius: var(--radius-md);
+}
+.slot[data-radius='lg'] {
+  border-radius: var(--radius-lg);
+}
+.slot[data-radius='circle'] {
+  border-radius: var(--radius-pill);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.slot[data-overlay='blue'] .overlay {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--blue-600) 35%, transparent) 0%,
+    color-mix(in srgb, var(--blue-600) 8%, transparent) 100%
+  );
+}
+
+.slot[data-overlay='veil'] .overlay {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--vivid-ink) 92%, transparent) 0%,
+    color-mix(in srgb, var(--vivid-navy) 80%, transparent) 48%,
+    color-mix(in srgb, var(--vivid-blue) 15%, transparent) 100%
+  );
+}
+
+.slot[data-overlay='fade'] .overlay {
+  background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--vivid-navy) 70%, transparent) 100%);
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.placeholder[data-tone='light'] {
+  background: var(--tint-blue-soft);
+  border: 2px dashed var(--accent-blue-light);
+}
+
+.placeholder[data-tone='dark'] {
+  background: color-mix(in srgb, var(--white) 14%, transparent);
+  border: 2px dashed color-mix(in srgb, var(--white) 55%, transparent);
+}

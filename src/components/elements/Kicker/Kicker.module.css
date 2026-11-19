@@ -1,0 +1,13 @@
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: normal;
+  color: var(--blue-600);
+  white-space: nowrap;
+}
+
+.kicker[data-align='center'] {
+  text-align: center;
+}

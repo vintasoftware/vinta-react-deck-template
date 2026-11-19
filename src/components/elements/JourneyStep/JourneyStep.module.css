@@ -1,0 +1,101 @@
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: var(--font-weight-mono-label);
+  letter-spacing: var(--tracking-mono-label);
+  color: var(--slate-400);
+}
+
+/* layout.md asks for ~42 — closer to h2 (50) than to h4 (30), without inventing
+   tamanho novo. */
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-h2);
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--tracking-h2);
+  color: var(--accent-color);
+}
+
+/* size="lg" — full-slide version: title at H1 size (rule "main
+   heading always H1"), keeping h2's bold weight so the accent color reads
+   well), label in mono-md. */
+.step[data-size='lg'] {
+  gap: var(--space-4);
+}
+
+.step[data-size='lg'] .label {
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: 1.3;
+}
+
+.step[data-size='lg'] .title {
+  font-size: var(--font-size-h1);
+  line-height: 1.15;
+}
+
+/* size="xl" — featured phase (Figma: Journey | Single Step). Seal 155,
+   uppercase mono label 20 (phase regular, the rest thin), bold mono title 40
+   / 48 uppercase. */
+.step[data-size='xl'],
+.step[data-size='xxl'] {
+  gap: 40px;
+}
+
+.step[data-size='xl'] .content,
+.step[data-size='xxl'] .content {
+  gap: 0;
+}
+
+.step[data-size='xl'] .label,
+.step[data-size='xxl'] .label {
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.21px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--step-label-color, var(--slate-700));
+}
+
+.step[data-size='xl'] .phase,
+.step[data-size='xxl'] .phase {
+  font-weight: 400;
+}
+
+.step[data-size='xl'] .title,
+.step[data-size='xxl'] .title {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0.21px;
+  text-transform: uppercase;
+  color: var(--step-title-color, var(--accent-color));
+}
+
+.step[data-size='xl'] .title[data-accent='purple'] {
+  color: var(--step-title-color, var(--accent-purple-vivid));
+}
+
+/* Figma — Journey | Overall: title 41.792 / 55.723, label and title wide
+   enough for 'DEVELOPMENT' on one line */
+.step[data-size='xxl'] .title {
+  font-size: 41.792px;
+  line-height: 55.723px;
+  white-space: nowrap;
+}

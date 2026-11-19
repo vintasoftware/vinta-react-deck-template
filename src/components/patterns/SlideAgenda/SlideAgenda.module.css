@@ -1,0 +1,71 @@
+.body {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 112px var(--shell-safe-area) 120px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.side {
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.photo {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.list {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.list[data-dense] {
+  gap: var(--space-2);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 0 36px;
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.number {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  line-height: normal;
+  color: var(--vivid-blue);
+}
+.number[data-accent='cyan'],
+.number[data-accent='mint'] {
+  color: var(--vivid-teal-deep);
+}
+.number[data-accent='purple'],
+.number[data-accent='rose'] {
+  color: var(--vivid-violet-deep);
+}
+.number[data-accent='orange'] {
+  color: var(--accent-orange);
+}
+
+/* Dark (mesh/night): numbers in turquoise, the site's accent on dark. */
+.body[data-dark] .number {
+  color: var(--vivid-turquoise);
+}

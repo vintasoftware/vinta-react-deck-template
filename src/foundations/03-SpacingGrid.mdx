@@ -1,0 +1,56 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { ScaleBar, LiveValue } from './live'
+
+<Meta title="01 Foundations/03 Spacing & Grid" />
+
+# Spacing & Grid
+
+**Decision:** short, coarse scale — 4 steps (6/14/24/40). `space-2` (14) is the deck's **dominant
+gap**; use it as the default before going up to 24 or 40.
+
+## Scale
+
+<ScaleBar name="--space-1" label="space-1" />
+<ScaleBar name="--space-2" label="space-2 (dominant)" />
+<ScaleBar name="--space-3" label="space-3" />
+<ScaleBar name="--space-4" label="space-4" />
+
+## Component paddings (real, not scale)
+
+Quoted literally in the harness — they are not part of the 6/14/24/40 progression, they are
+component-specific measurements.
+
+<ScaleBar name="--padding-tag-y" label="padding-tag-y" max={80} />
+<ScaleBar name="--padding-tag-x" label="padding-tag-x" max={80} />
+<ScaleBar name="--padding-card-y" label="padding-card-y" max={80} />
+<ScaleBar name="--padding-card-x" label="padding-card-x" max={80} />
+<ScaleBar name="--padding-block" label="padding-block" max={80} />
+
+## Slide grid
+
+Fixed frame <LiveValue name="--slide-width" /> × <LiveValue name="--slide-height" />. Every screen starts
+at this size — no fluid layout.
+
+## Safe-area — by archetype
+
+It's not a single value: the harness extracted a generic average (`--slide-safe-area`, 160), but
+layout.md refined it by screen type — dense slides use less margin than covers/hero.
+
+<ScaleBar name="--slide-safe-area" label="generic (harness)" max={260} />
+<ScaleBar name="--slide-safe-area-hero" label="hero / Divider" max={260} />
+
+Dense slides (Who is Vinta, Client-case) use a **64px** margin — narrower than the two
+tokens above; it doesn't have its own token yet (it stays as a composition value in the pattern, not a
+global token) because no dense archetype measured exactly 160.
+
+## Do / Don't
+
+**Do**
+- Use `space-2` (14) as the default gap; go up to `space-3`/`space-4` only when the layout calls for
+  more breathing room (e.g. section separation).
+- Use `--slide-safe-area-hero` on covers/Divider; ~64 margin on dense content slides.
+
+**Don't**
+- Invent a gap value outside the scale without recording why (see Divider/MetricGrid, which
+  compose a `calc()` of two tokens instead of using a loose number when the real gap falls between
+  two steps).

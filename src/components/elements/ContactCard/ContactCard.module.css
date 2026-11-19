@@ -1,0 +1,77 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 39.7px;
+}
+
+/* Figma: 159×159 portrait, 5px below the top of the name */
+.avatar {
+  flex-shrink: 0;
+  width: 159px;
+  height: 159px;
+  margin-top: 5px;
+}
+
+.avatar :global(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* nome: 40px fino, azul */
+.name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-subtitle-hero);
+  font-weight: var(--font-weight-display);
+  line-height: 45.4px;
+  color: var(--blue-logo);
+  white-space: nowrap;
+}
+
+/* role: uppercase mono 20, 3px tracking */
+.role {
+  margin: 10.1px 0 0;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--slate-contact);
+  white-space: nowrap;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 12.3px;
+  margin: 25.5px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-label);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.54px;
+  color: var(--blue-contact-ink);
+  white-space: nowrap;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 26px;
+  justify-content: flex-start;
+}

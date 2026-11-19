@@ -1,0 +1,37 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { MessageSquare } from 'lucide-react'
+import { IconBadge } from '../components/elements/IconBadge'
+import { Row } from './live'
+
+<Meta title="01 Foundations/06 Iconography" />
+
+# Iconography
+
+**Decision:** a single library — **Lucide**, always `stroke-width` **1.5** on a **24×24** grid.
+This is not a CSS token (there is no `--icon-*` in tokens.css): it's a convention applied in
+code every time an icon is rendered — the examples below are the real component
+(`IconBadge`), not a visual reproduction.
+
+<Row>
+  <div style={{ marginRight: 24, textAlign: 'center' }}>
+    <IconBadge shape="circle" accent="blue" icon={MessageSquare} />
+    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, marginTop: 8 }}>circle</div>
+  </div>
+  <div style={{ marginRight: 24, textAlign: 'center' }}>
+    <IconBadge shape="square" accent="purple" icon={MessageSquare} />
+    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, marginTop: 8 }}>square</div>
+  </div>
+</Row>
+
+`IconBadge` is the only place in the DS that decides the icon's shape + color — everything else (IconCard,
+JourneyStep) composes on top of it instead of drawing a loose icon.
+
+## Do / Don't
+
+**Do**
+- Use only Lucide icons, always with `strokeWidth={1.5}`.
+- Let `IconBadge` decide the shape's color — never color a loose icon outside it.
+
+**Don't**
+- Mix in another icon library (Font Awesome, Heroicons…) in the deck.
+- Use a `strokeWidth` other than 1.5 or an icon outside the 24×24 grid.

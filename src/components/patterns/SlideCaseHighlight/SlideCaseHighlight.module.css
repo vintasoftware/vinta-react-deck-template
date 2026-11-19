@@ -1,0 +1,142 @@
+/* ---- split: photo 840×1066 at the left, text column at the right ---- */
+
+.photo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.split {
+  position: absolute;
+  left: 840px;
+  top: 0;
+  width: 1080px;
+  height: 100%;
+  padding: 112px var(--shell-safe-area) 120px 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Header, numbers and logo anchored at the bottom; the wordmark stays at the top. */
+.splitContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.splitWordmark {
+  width: 192px;
+  height: auto;
+}
+
+.numbers {
+  width: 100%;
+  display: flex;
+  gap: var(--space-3);
+}
+
+.number {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 28px 32px;
+}
+
+.numberValue {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--vivid-blue);
+  white-space: nowrap;
+}
+
+.numberValue[data-index='1'] {
+  color: var(--vivid-teal-deep);
+}
+
+.numberLabel,
+.chipLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-mono-md);
+  font-weight: var(--font-weight-mono-md);
+  line-height: var(--line-height-mono-md);
+  letter-spacing: var(--tracking-mono-md);
+  color: var(--slate-500);
+}
+
+/* ---- band: blue mesh, header + chips on top, photo band along the bottom ---- */
+
+.band {
+  position: absolute;
+  left: 0;
+  top: 700px;
+}
+
+.bandShade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 24px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--vivid-navy) 45%, transparent) 0%, transparent 100%);
+}
+
+.wordmark {
+  position: absolute;
+  left: var(--shell-safe-area);
+  top: 96px;
+  width: 192px;
+  height: auto;
+}
+
+.bandBody {
+  position: absolute;
+  left: var(--shell-safe-area);
+  right: var(--shell-safe-area);
+  top: 206px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.chips {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 24px 32px;
+}
+
+.chipText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.chipValue {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-h1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.chipLabel {
+  color: var(--white);
+  white-space: nowrap;
+}
