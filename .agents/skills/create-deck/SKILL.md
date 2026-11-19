@@ -18,7 +18,8 @@ in whatever language the user asks for (ask if the brief doesn't say — Portugu
 
 **One repository per deck.** Each deck is its own copy of the template repository
 `vintasoftware/vinta-react-deck-template` (GitHub's "Use this template"; a workflow renames the copy on its first
-push). The deck's slides are files in `src/slides/` (`.tsx` or `.md`) — never Storybook stories. Storybook, the
+push). The deck's slides are files in `src/slides/` — markdown (`.md`) by default, `.tsx` only when markdown can't
+express a slide — never Storybook stories. Storybook, the
 template gallery, `/patterns` and `/samples` are references to pick patterns from. If the git remote is the template
 repository itself, don't build a client deck there: ask the user to create a repository from the template first
 (unless they say they are only trying things out or improving the template).
@@ -58,7 +59,9 @@ repository itself, don't build a client deck there: ask the user to create a rep
 Use the CATALOG.md tables (and the gallery for a visual pick, if the user wants to see options); prefer the
 site-look, vivid and generic patterns for new content; use the Figma
 "Classic" screens only when the user asks for the original approved screens (fixed number of items). Code goes in
-`SlideCode`. Write titles two-tone: `title` (line 1) + `accent` (line 2). Respect the text and item limits.
+`SlideCode`. Write titles two-tone: `title` (line 1) + `accent` (line 2). Respect the text and item limits. When two
+patterns fit equally, pick the one markdown can fill (step 3) — e.g. `SlideNumberedList` over `SlideStepPath`, which
+needs icons — unless the user asks for the other.
 
 Show the outline (one line per slide: number, pattern, gist) and get an OK before writing slides. If the user already
 gave a full sequence and content, skip the confirmation and build.
@@ -68,30 +71,44 @@ gave a full sequence and content, skip the confirmation and build.
 One file per slide in `src/slides/` (two-digit prefix = order; auto-discovered). Remove the starter slides
 (`01-cover`…`05-thanks`) or rewrite them for the deck.
 
-```tsx
-// src/slides/04-results.tsx
-import { SlideBigStat } from "@/components";
+**Always write slides in markdown** — `src/slides/NN-name.md` — so the user can read and edit their deck without
+touching code. The frontmatter names the pattern; the body fills it (paragraph above `#` = eyebrow, `#` title, second
+`#` = accent, first paragraph = lede, `##` sections = items, lists, tables = data, a fenced block = code, closing
+comment = speaker notes); anything else goes under `props:`. Mapping per pattern in **MARKDOWN.md**.
 
-export const meta = { title: "Results", notes: "Pause on the 42%." };
+```md
+<!-- src/slides/04-results.md -->
+---
+template: SlideBigStat
+props:
+  tone: invert-navy
+---
+RESULTS
 
-export default function Results() {
-  return (
-    <SlideBigStat
-      tone="invert-navy"
-      eyebrow="RESULTS"
-      title="What changed"
-      accent="in 90 days"
-      stats={[{ value: "42%", label: "Faster intake" }, { value: "3x", label: "More visits" }]}
-    />
-  );
-}
+# What changed
+# in 90 days
+
+## 42%
+Faster intake
+
+## 3x
+More visits
+
+<!--
+Pause on the 42%.
+-->
 ```
 
-- Copy props from the pattern's examples in `patterns/<Name>/<Name>.stories.tsx`; types and JSDoc in `<Name>.tsx`.
-- **Markdown** for plain content slides: `src/slides/NN-name.md` with `template: SlideBigStat` — paragraph above `#` =
-  eyebrow, `#` title, second `#` = accent, `##` sections = items, tables = data, closing comment = notes, `props:`
-  for the rest. Mapping per pattern in **MARKDOWN.md**. Use `.tsx` for icons, logic or bespoke slides.
-- **Speaker notes** in `meta.notes` (or the closing comment): shown only in the presenter window (`p`).
+- **Patterns without a body mapping** (CATALOG.md patterns not in MARKDOWN.md's table) are still markdown: the
+  header (eyebrow, `#` title, accent, lede) comes from the body and the rest goes under `props:` as YAML, copying
+  the shape from the pattern's examples in `patterns/<Name>/<Name>.stories.tsx` (types and JSDoc in `<Name>.tsx`).
+- **Use `.tsx` only when markdown can't express the slide:** the pattern needs a component as a prop (Lucide
+  icons — `SlideStepPath`, `SlideIconCards`, `SlideStatement` pills…; a `media` node; `<Highlight>` inside a title),
+  the slide needs logic, or it is a bespoke composition. Then `export default` a component rendering the pattern from
+  `@/components` and put speaker notes in `export const meta = { title, notes }`. Say in one line why that slide
+  isn't markdown.
+- **Speaker notes** go in the closing `<!-- … -->` comment (`meta.notes` in the rare `.tsx` slide): shown only in the
+  presenter window (`p`).
 - **Client images** in `public/assets/clients/<client>/`, passed as `/assets/clients/<client>/file.webp`.
 - **Team photos** (`/assets/team/<key>.webp`) are real Vinta people: team slides only, never next to a client's
   name (quotes, cases) — see CATALOG.md.
@@ -100,9 +117,10 @@ export default function Results() {
 
 ## 4. Verify
 
-1. `npx tsc -b` clean.
-2. Look at every slide at native size: `http://localhost:5173/?shot=N` (or `?print` for all). Check text cut off
-   or overflowing its box, dead space, wrong logo, color outside the palette, leftover starter or SAMPLE text.
+1. `npx tsc -b` clean (it checks `.tsx` slides only).
+2. Look at every slide at native size: `http://localhost:5173/?shot=N` (or `?print` for all). Check that no
+   markdown slide shows the "couldn't be rendered" error card (it names the file and the problem), and look for text
+   cut off or overflowing its box, dead space, wrong logo, color outside the palette, leftover starter or SAMPLE text.
 3. Fix and repeat only what failed.
 
 ## 5. Deliver
@@ -140,6 +158,7 @@ repository: work in a checkout of the template (clone it next to this one if the
 ## Deck-level tasks
 
 - **Reorder:** rename files (the `NN-` prefix drives order).
-- **Change a slide:** edit only that file; keep its pattern unless the user asks for another.
+- **Change a slide:** edit only that file; keep its pattern unless the user asks for another. A `.tsx` slide that
+  markdown could now express (e.g. after a pattern swap) becomes a `.md` file.
 - **Controls:** `←/→` or a click move (left third of the window goes back), `o` overview grid, `f` fullscreen, `p` presenter window (clock, timer, notes,
   previous/next slides; synced with the deck window), number + `Enter` to jump.

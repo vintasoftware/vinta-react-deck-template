@@ -135,8 +135,28 @@ text and list, in order):
 | `SlideLineChart` | table: first column → `labels`, second → `primary`, third (optional) → `reference` |
 | `SlideCode` | the first fenced block → `code`, its tag → `language` (`filename`, `density`, `layout` under `props:`) |
 
-**Every other pattern** (`SlideStepPath`, `SlideIconCards`, `SlideCaseStudy`, `SlideClosing`…) takes its content
-from `props:` only — and patterns built on icons need a `.tsx` slide, since an icon is a component, not text.
+**Every other pattern** (`SlideStackedBars`, `SlideCaseStudy`, `SlideClosing`…) reads the header from the body
+(eyebrow, `#` title, accent, lede) and takes the rest from `props:` as YAML — copy the shape from the pattern's
+stories. Patterns that need a component as a prop (Lucide icons in `SlideStepPath`, `SlideIconCards`…) need a
+`.tsx` slide, since a component isn't text.
+
+```md
+---
+template: SlideStackedBars
+props:
+  columns:
+    - { label: "2024", caption: 34 deals }
+    - { label: "2025", caption: 46 deals }
+  series:
+    - { label: Referral, values: [56, 62] }
+    - { label: Inbound, values: [44, 38] }
+---
+SAMPLE DATA | PIPELINE
+
+# Where projects come from
+# share of deals by year
+```
+
 Images: a bare `photo.webp` resolves from `public/assets/`; the team photos are `team/<key>.webp`.
 
 ## Examples

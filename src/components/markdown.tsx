@@ -3,14 +3,15 @@ import { mdText, type MdContent, type MdDoc, type MdSection } from "@/lib";
 import * as DS from "./index";
 
 // Markdown slides on the design-system patterns: `template: SlideCover` (or `cover`, `slide-cover`…)
-// in a `.md` slide's frontmatter. Every pattern can be picked this way and filled through `props:`;
-// the ones below also read the markdown body. Icons and other components can't be written in
-// markdown — patterns that need them (StepPath, IconCards…) are for `.tsx` slides. See MARKDOWN.md.
+// in a `.md` slide's frontmatter. Every pattern can be picked this way: the ones in MAPPERS read their content from
+// the markdown body; every other pattern reads the shared site-look header (eyebrow, two-tone title, lede) from the
+// body and the rest through `props:`. Icons and other components can't be written in markdown — patterns that need
+// them (StepPath, IconCards…) are for `.tsx` slides. See MARKDOWN.md.
 
 export interface PatternTemplate {
   Component: ComponentType<Record<string, unknown>>;
-  /** Maps the body onto props; absent for patterns filled only through `props:`. */
-  fromMarkdown?: (doc: MdDoc) => Record<string, unknown>;
+  /** Maps the body onto props (just the header for patterns without a mapper in MAPPERS). */
+  fromMarkdown: (doc: MdDoc) => Record<string, unknown>;
 }
 
 /** "SlideCover", "slide-cover", "Cover", "big stat" → "cover" / "bigstat". */
@@ -182,6 +183,6 @@ export const PATTERN_TEMPLATES: Record<string, PatternTemplate> = Object.fromEnt
     .filter(([name, value]) => /^Slide[A-Z]/.test(name) && name !== "SlideShell" && typeof value === "function")
     .map(([name, Component]) => {
       const key = patternKey(name);
-      return [key, { Component: Component as ComponentType<Record<string, unknown>>, fromMarkdown: MAPPERS[key] }];
+      return [key, { Component: Component as ComponentType<Record<string, unknown>>, fromMarkdown: MAPPERS[key] ?? header }];
     }),
 );
