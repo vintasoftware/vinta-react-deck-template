@@ -49,7 +49,7 @@ export function markdownSlide(id: string, source: string): DeckSlide {
       throw new Error('"props:" must be a mapping of pattern props (e.g. props: { tone: invert-navy }).');
     }
 
-    const props = { ...withoutUndefined(template.fromMarkdown?.(doc) ?? {}), ...(overrides as Record<string, unknown>) };
+    const props = { ...withoutUndefined(template.fromMarkdown(doc)), ...(overrides as Record<string, unknown>) };
     const Layout = template.Component;
     // Patterns have required props a body may not supply; a render error shows the error slide, not a blank deck.
     const Component = () => (
