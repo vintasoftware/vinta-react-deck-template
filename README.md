@@ -40,7 +40,8 @@ The brief above is an [Agent Skill](https://agentsmd.net/) authored **once** at 
 Edit only `.agents/skills/create-deck/SKILL.md`; the other two are symlinks, so there's nothing to keep
 in sync. (Symlinks need `git config core.symlinks true` on Windows checkouts.)
 
-**Controls:** `←/→`/`Space` navigate · `o` overview · `f` fullscreen · number + `Enter` to jump ·
+**Controls:** `←/→`/`Space` navigate · `o` overview · `f` fullscreen · `p` presenter window (clock,
+timer, speaker notes, previous/next slides — synced with the deck window) · number + `Enter` to jump ·
 `#/N` deep-links a slide within the current deck.
 
 ### Self-contained

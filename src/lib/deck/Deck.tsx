@@ -5,38 +5,11 @@ import {
   useMemo,
   useRef,
   useState,
-  type ComponentType,
 } from "react";
+import { PresenterView } from "./Presenter";
+import { Stage } from "./Stage";
+import { useDeckSync } from "./sync";
 import { SLIDE_W, SLIDE_H, type DeckSlide } from "./types";
-
-/** Renders one slide component scaled to `scale`, sized to the scaled box. */
-function Stage({
-  Component,
-  scale,
-  className = "",
-}: {
-  Component: ComponentType;
-  scale: number;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`relative shrink-0 overflow-hidden bg-white ${className}`}
-      style={{ width: SLIDE_W * scale, height: SLIDE_H * scale }}
-    >
-      <div
-        style={{
-          width: SLIDE_W,
-          height: SLIDE_H,
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-        }}
-      >
-        <Component />
-      </div>
-    </div>
-  );
-}
 
 /** Fit scale for a viewport, leaving `margin` px of breathing room. */
 function fitScale(vw: number, vh: number, margin = 0): number {
@@ -50,8 +23,10 @@ export interface DeckProps {
 /**
  * The slideshow runtime. Renders one slide at a time, scaled to fit, with:
  * keyboard nav (← → Space PageUp/Dn Home End, digits+Enter to jump), `f`
- * fullscreen, `o` overview grid, `#/N` URL-hash deep-linking, a progress HUD,
- * and touch-swipe. Append `?print` to the URL to stack every slide for export.
+ * fullscreen, `o` overview grid, `p` presenter window, `#/N` URL-hash
+ * deep-linking, a progress HUD, and touch-swipe. Append `?print` to the URL to
+ * stack every slide for export, or `?presenter` for the speaker's console (the
+ * window `p` opens), which stays on the same slide as the audience window.
  */
 export function Deck({ slides }: DeckProps) {
   const count = slides.length;
@@ -61,6 +36,9 @@ export function Deck({ slides }: DeckProps) {
   const solo = soloParam == null ? null : clamp(parseInt(soloParam, 10) - 1, 0, slides.length - 1);
   const shotParam = params.get("shot");
   const shot = shotParam == null ? null : clamp(parseInt(shotParam, 10) - 1, 0, slides.length - 1);
+  const isPresenter = params.has("presenter");
+  /** Capture modes render static slides: no navigation, no sync. */
+  const isStatic = isPrint || solo != null || shot != null;
 
   const [idx, setIdx] = useState(() => hashIndex(count));
   const [overview, setOverview] = useState(false);
@@ -74,6 +52,21 @@ export function Deck({ slides }: DeckProps) {
   const next = useCallback(() => setIdx((i) => clamp(i + 1, 0, count - 1)), [count]);
   const prev = useCallback(() => setIdx((i) => clamp(i - 1, 0, count - 1)), [count]);
 
+  // Follow (and drive) the other window of an audience + presenter pair.
+  useDeckSync({
+    role: isPresenter ? "presenter" : "audience",
+    idx,
+    onRemote: go,
+    enabled: !isStatic,
+  });
+
+  useEffect(() => {
+    if (!isPresenter) return;
+    const title = document.title;
+    document.title = `Presenter · ${title}`;
+    return () => { document.title = title; };
+  }, [isPresenter]);
+
   // Fit the active slide to the window (single-slide mode).
   useLayoutEffect(() => {
     if (isPrint) return;
@@ -85,9 +78,9 @@ export function Deck({ slides }: DeckProps) {
 
   // Keep the URL hash in sync (deep links + reload position).
   useEffect(() => {
-    if (isPrint || solo != null || shot != null) return;
+    if (isStatic) return;
     history.replaceState(null, "", `#/${idx + 1}`);
-  }, [idx, isPrint, solo]);
+  }, [idx, isStatic]);
 
   // Toggle a body class so print mode can scroll.
   useEffect(() => {
@@ -96,9 +89,11 @@ export function Deck({ slides }: DeckProps) {
 
   // Keyboard controls.
   useEffect(() => {
-    if (isPrint || solo != null || shot != null) return;
+    if (isStatic) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      // Form fields (the presenter's "go to" select) keep their own keys.
+      if (e.target instanceof Element && e.target.matches("input, select, textarea")) return;
       switch (e.key) {
         case "ArrowRight":
         case "PageDown":
@@ -111,6 +106,9 @@ export function Deck({ slides }: DeckProps) {
         case "End": go(count - 1); break;
         case "o": case "O": setOverview((v) => !v); break;
         case "Escape": setOverview(false); break;
+        case "p": case "P":
+          if (!isPresenter) openPresenter(idx);
+          break;
         case "f": case "F":
           if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
           else document.exitFullscreen?.();
@@ -122,21 +120,21 @@ export function Deck({ slides }: DeckProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isPrint, next, prev, go, count, jump]);
+  }, [isStatic, isPresenter, next, prev, go, count, jump, idx]);
 
   // React to manual hash edits / browser back-forward.
   useEffect(() => {
-    if (isPrint || solo != null || shot != null) return;
+    if (isStatic) return;
     const onHash = () => setIdx(hashIndex(count));
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
-  }, [isPrint, count]);
+  }, [isStatic, count]);
 
   // Touch swipe.
   const touchX = useRef<number | null>(null);
   useEffect(() => {
-    if (isPrint || solo != null || shot != null) return;
-    const start = (e: TouchEvent) => (touchX.current = e.touches[0].clientX);
+    if (isStatic) return;
+    const start =(e: TouchEvent) => (touchX.current = e.touches[0].clientX);
     const end = (e: TouchEvent) => {
       if (touchX.current == null) return;
       const dx = e.changedTouches[0].clientX - touchX.current;
@@ -149,7 +147,7 @@ export function Deck({ slides }: DeckProps) {
       window.removeEventListener("touchstart", start);
       window.removeEventListener("touchend", end);
     };
-  }, [isPrint, next, prev]);
+  }, [isStatic, next, prev]);
 
   if (count === 0) return <div className="p-10 text-white">No slides found.</div>;
 
@@ -198,6 +196,21 @@ export function Deck({ slides }: DeckProps) {
     );
   }
 
+  // ---- Presenter console (the window opened with `p`) ----
+  if (isPresenter) {
+    return (
+      <PresenterView
+        slides={slides}
+        idx={idx}
+        jump={jump}
+        onGo={go}
+        onPrev={prev}
+        onNext={next}
+        onOverview={() => setOverview(true)}
+      />
+    );
+  }
+
   // ---- Single slide ----
   const cur = slides[idx];
   return (
@@ -211,6 +224,7 @@ export function Deck({ slides }: DeckProps) {
         onPrev={prev}
         onNext={next}
         onOverview={() => setOverview(true)}
+        onPresenter={() => openPresenter(idx)}
       />
     </div>
   );
@@ -260,6 +274,7 @@ function Hud({
   onPrev,
   onNext,
   onOverview,
+  onPresenter,
 }: {
   idx: number;
   count: number;
@@ -268,6 +283,7 @@ function Hud({
   onPrev: () => void;
   onNext: () => void;
   onOverview: () => void;
+  onPresenter: () => void;
 }) {
   return (
     <div className="fixed bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[13px] text-white backdrop-blur">
@@ -276,9 +292,19 @@ function Hud({
       <button className="px-2 py-0.5 hover:text-vinta-blue-soft" onClick={onNext} aria-label="Next">›</button>
       <span className="mx-1 h-4 w-px bg-white/25" />
       <button className="px-2 py-0.5 hover:text-vinta-blue-soft" onClick={onOverview} aria-label="Overview" title="Overview (O)">⊞</button>
+      <button className="px-2 py-0.5 hover:text-vinta-blue-soft" onClick={onPresenter} aria-label="Presenter view" title="Presenter view (P)">⧉</button>
       {title && <span className="ml-1 hidden max-w-[280px] truncate text-white/55 sm:inline">{title}</span>}
     </div>
   );
+}
+
+/**
+ * Opens the speaker's console for the current deck in its own small window (or
+ * re-focuses it, moved to slide `idx`, if it is already open).
+ */
+function openPresenter(idx: number) {
+  const url = `${window.location.pathname}?presenter#/${idx + 1}`;
+  window.open(url, "vinta-deck-presenter", "popup,width=1120,height=720")?.focus();
 }
 
 function clamp(n: number, lo: number, hi: number) {
