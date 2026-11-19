@@ -6,9 +6,12 @@ export const SLIDE_H = 1080;
 
 /** Metadata a slide file exports alongside its default component. */
 export interface SlideMeta {
-  /** Short title shown in the overview grid and speaker HUD. */
+  /** Short title shown in the overview grid, the HUD and the presenter window. */
   title?: string;
-  /** Optional speaker notes (not rendered on the slide itself). */
+  /**
+   * Speaker notes, shown only in the presenter window (`p`) — never on the
+   * slide itself. Plain text; line breaks (`\n`) are kept.
+   */
   notes?: string;
 }
 

@@ -15,7 +15,14 @@ npm run build          # typecheck + production build
 ```
 
 **Slideshow controls:** `←/→` or `Space` move · `Home/End` jump to ends · type a number then
-`Enter` to jump · `f` fullscreen · `o` overview grid · `#/N` deep-links slide N.
+`Enter` to jump · `f` fullscreen · `o` overview grid · `p` presenter window · `#/N` deep-links slide N.
+
+**Presenter mode:** press `p` (or the `⧉` button in the HUD) to open the speaker's console in a small
+separate window — keep it on your laptop screen and put the deck window on the projector. It shows the
+clock and an elapsed timer (pause/reset), the slide number, the current slide with the previous and next
+ones, the slide's **speaker notes** (`meta.notes`), and navigation (previous/next, a "go to" list, the
+overview grid, plus all the keyboard shortcuts). The two windows follow each other, whichever one you
+navigate in. It is the same deck at `?presenter`, so both windows must be in the same browser.
 
 **Two decks (by URL path):**
 - `/` → **your main slides** (`src/slides/`) — this is where you build your presentation.
@@ -38,12 +45,16 @@ their props in **`src/template/CATALOG.md`**. Build from the `@/lib` primitives 
 1. Create `src/slides/NN-name.tsx` — this is your main deck at `/`. (Files are auto-discovered and
    **ordered by filename** — no registry edit.) Use a two-digit prefix, e.g. `04-results.tsx`.
 2. `export default` a component that returns a `<Slide>`.
-3. Optionally `export const meta = { title, notes }` — `title` shows in the overview and HUD.
+3. Optionally `export const meta = { title, notes }` — `title` shows in the overview and HUD; `notes`
+   are your speaker notes (plain text, `\n` for line breaks), shown only in the presenter window (`p`).
 
 ```tsx
 import { Slide, SectionHeader, Columns, NumberedItem } from "@/lib";
 
-export const meta = { title: "Results" };
+export const meta = {
+  title: "Results",
+  notes: "Three phases, one PR each.\nMention the stacked-branch workflow.",
+};
 
 export default function Slide51() {
   return (
