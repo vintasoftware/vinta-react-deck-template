@@ -35,7 +35,7 @@ npm install
 5. Review the outline and the previews Claude shows you, ask for changes in the same chat and, when it looks right,
    approve publishing. You get the artifact link to present or share.
 
-In the artifact: arrow keys or click to change slides, **O** for the overview, **F** for full screen.
+In the artifact: arrow keys or a click to change slides (a click on the left third goes back), **O** for the overview, **F** for full screen.
 Presenting from your own machine instead (`npm run dev`)? **P** opens the presenter window with your speaker notes.
 
 ## Ready-made prompts

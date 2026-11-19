@@ -5,6 +5,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type MouseEvent,
 } from "react";
 import { PresenterView } from "./Presenter";
 import { Stage } from "./Stage";
@@ -22,7 +23,8 @@ export interface DeckProps {
 
 /**
  * The slideshow runtime. Renders one slide at a time, scaled to fit, with:
- * keyboard nav (← → Space PageUp/Dn Home End, digits+Enter to jump), `f`
+ * keyboard nav (← → Space PageUp/Dn Home End, digits+Enter to jump), click to navigate (left third
+ * back, elsewhere forward), `f`
  * fullscreen, `o` overview grid, `p` presenter window, `#/N` URL-hash
  * deep-linking, a progress HUD, and touch-swipe. Append `?print` to the URL to
  * stack every slide for export, or `?presenter` for the speaker's console (the
@@ -76,10 +78,15 @@ export function Deck({ slides }: DeckProps) {
     return () => window.removeEventListener("resize", fit);
   }, [isPrint]);
 
-  // Keep the URL hash in sync (deep links + reload position).
+  // Keep the URL hash in sync (deep links + reload position). A published artifact runs in a sandboxed
+  // iframe that may deny history access: the deck then goes on without deep links instead of crashing.
   useEffect(() => {
     if (isStatic) return;
-    history.replaceState(null, "", `#/${idx + 1}`);
+    try {
+      history.replaceState(null, "", `#/${idx + 1}`);
+    } catch {
+      /* no history access (sandboxed artifact) */
+    }
   }, [idx, isStatic]);
 
   // Toggle a body class so print mode can scroll.
@@ -213,9 +220,15 @@ export function Deck({ slides }: DeckProps) {
 
   // ---- Single slide ----
   const cur = slides[idx];
+  // Click to navigate (as in vinta-slidedeck's artifact viewer): the left third of the window goes back, anywhere
+  // else advances. Links, buttons and form fields — inside a slide or in the HUD — keep their own click.
+  const onClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (e.target instanceof Element && e.target.closest("a, button, input, select, textarea, [data-deck-hud]")) return;
+    (e.clientX < window.innerWidth / 3 ? prev : next)();
+  };
   return (
     // data-deck-index/count let scripts (npm run build-deck) know which slide is showing.
-    <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1c]" data-deck-index={idx} data-deck-count={count}>
+    <div className="fixed inset-0 flex items-center justify-center bg-[#1a1a1c]" onClick={onClick} data-deck-index={idx} data-deck-count={count}>
       <Stage Component={cur.Component} scale={scale} className="shadow-2xl" />
       <Hud
         idx={idx}

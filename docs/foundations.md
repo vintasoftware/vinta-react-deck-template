@@ -184,7 +184,7 @@ Rule: simplify heavy construction, **keeping the look**.
 ## 8. Token reference
 
 <!-- tokens:start -->
-_Generated from `src/styles/tokens.css` on 2026-11-19 by `npm run sync-harness`. Do not edit by hand._
+_Generated from `src/components/tokens.css` on 2026-11-19 by `npm run sync-harness`. Do not edit by hand._
 
 ### Tier 1 · Primary (26)
 

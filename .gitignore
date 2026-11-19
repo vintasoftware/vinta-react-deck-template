@@ -11,3 +11,5 @@ output
 storybook-static
 gallery
 *storybook.log
+# npm run test-storybook -- --coverage
+coverage

@@ -15,7 +15,7 @@ npm run dev            # slideshow at http://localhost:5173
 npm run build          # typecheck + production build
 ```
 
-**Slideshow controls:** `←/→` or `Space` move · `Home/End` jump to ends · type a number then
+**Slideshow controls:** `←/→`, `Space` or a click move (a click on the left third goes back) · `Home/End` jump to ends · type a number then
 `Enter` to jump · `f` fullscreen · `o` overview grid · `p` presenter window · `#/N` deep-links slide N.
 
 **Presenter mode:** press `p` (or the `⧉` button in the HUD) to open the speaker's console in a small

@@ -31,7 +31,7 @@ variant, when to use it and its limits).
 | `/patterns` | Every pattern, with examples — pick from here | `src/components/patterns/` |
 | `/samples` | Sample presentations built from the patterns (fictional data) | `src/samples/` |
 
-**Controls:** `←/→`/`Space` navigate · `o` overview · `f` fullscreen · `p` presenter window (clock,
+**Controls:** `←/→`/`Space` or a click navigate (left third of the window goes back) · `o` overview · `f` fullscreen · `p` presenter window (clock,
 timer, speaker notes, previous/next slides — synced with the deck window) · number + `Enter` to jump ·
 `#/N` deep-links a slide within the current deck.
 
@@ -46,6 +46,9 @@ timer, speaker notes, previous/next slides — synced with the deck window) · n
 | `npm run build-deck [-- samples] [--shots] [--name "Title"]` | Your deck as one self-contained HTML in `output/exports/<name>/`, ready to publish as a Claude artifact (with `text.txt` to scan and `artifact.json`). See the publish-deck skill |
 | `npm run export` | PDF + editable PPTX of your deck in `export/` (`--format pdf\|pptx`, `--deck patterns\|samples`) |
 | `npm run render-clip -- <story-id> --out <name>` | Records an animated story as a looping MP4 + cover PNG in `output/exports/clips/`, for use outside the deck (email, Google Slides). Storybook must be running; needs `ffmpeg`. `--transparent` (WebM with alpha), `--selector`, `--seconds`, `--skip`… (header of `scripts/render-clip.mjs`) |
+| `npm run test-storybook` | Renders every Storybook story in headless Chromium (Vitest); a11y issues are reported |
+| `npm run sync-harness` | Regenerates the token reference in `docs/foundations.md` from `src/components/tokens.css` |
+| `npm run team-photos -- crops` | Re-cuts the team photos in `public/assets/team/` from `assets/team-photos/` per `crops.json` (`library <dir>` adds originals; needs `cwebp`) |
 | `npm run init -- <name>` | Rename a copy of this template (package, page title, this heading) |
 
 ## Where things are

@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm'
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
+    '@chromatic-com/storybook',
+    '@storybook/addon-vitest',
     '@storybook/addon-a11y',
     // GitHub-flavored markdown, so the tables in the foundations pages (src/foundations/*.mdx) render as tables.
     { name: '@storybook/addon-docs', options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } } },

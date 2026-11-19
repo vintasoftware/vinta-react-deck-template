@@ -5,9 +5,9 @@ Carried over from vinta-slidedeck where they still apply, plus what is specific 
 ## Design system
 
 - Team photos in `public/assets/team/` are real Vinta employees; the names next to the portraits in stories are
-  examples. Never pair a team photo with a client's name (quotes, cases). The optimized source library and the
-  cropping script stay in vinta-slidedeck (`assets/team-photos/`, `npm run team-photos`); full-size originals are in
-  the Drive folder `team-photos-originals`.
+  examples. Never pair a team photo with a client's name (quotes, cases). The optimized source library is in
+  `assets/team-photos/` (12 MB, cut with `npm run team-photos`); full-size originals are in the Drive folder
+  `team-photos-originals`.
 - Carta, PlusPlus, Lastmile, Tesorio and Splendid Spoon only have a white logo in `Logo/clients.ts` (from the case
   library): use them on dark backgrounds.
 - The vivid patterns use the DS title size (H1, 60px) instead of the templates' 64px, and the vivid layouts
@@ -37,13 +37,14 @@ Carried over from vinta-slidedeck where they still apply, plus what is specific 
 
 ## Storybook and the gallery
 
-- Ported without slidedeck's Vitest (`@storybook/addon-vitest`) and Chromatic addons, so stories aren't run as
-  tests; the a11y addon reports in the Storybook UI only (`a11y.test: 'todo'`).
+- `npm run test-storybook` renders every story in headless Chromium; a11y violations are reported, not failures
+  (`a11y.test: 'todo'` in `.storybook/preview.tsx`). The Chromatic addon is installed, but publishing to Chromatic
+  needs a Chromatic project and its token (`npx chromatic --project-token …`).
+- The first `npm run test-storybook` right after installing the packages reported 5 unhandled "Cannot read properties
+  of null (reading 'useRef')" errors with every test passing; it didn't happen again in 4 runs, cold caches included.
 - `npm run render-clip` records through Storybook's dev server with virtual time; it restarts a session that hangs
   and keeps going from the last saved frame. Over 20 MB, Google Slides rejects the MP4 (raise `--crf` or lower
   `--seconds`).
-- `npm run sync-harness` (regenerates the token reference in `docs/foundations.md` from `tokens.css`) isn't ported:
-  update that section by hand when a token changes.
 - Storybook's dev server compiles each story on first open, so the first `npm run gallery` takes a few minutes;
   later runs can use `--skip-existing`.
 

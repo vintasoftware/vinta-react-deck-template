@@ -244,15 +244,20 @@ Font becomes DM Sans/DM Mono; an exact color within ΔE<3 of a token uses the to
 
 ## Verification and maintenance
 
-- Clean `npx tsc -b` and passing `npm run build-storybook` (and `npm run build`) before calling anything done.
+- Clean `npx tsc -b`, passing `npm run build-storybook` and `npm run test-storybook` (every story rendered in
+  headless Chromium), and `npm run build`, before calling anything done.
 - **Template gallery** (`gallery/`, the page non-technical users open with `npm run gallery`): after adding or
   changing a pattern, a story or a sample, run `npm run gallery:build` (`--skip-existing` to reshoot only new
   stories). The gallery's categories (by use, in deck order) and plain-language labels live in
   `scripts/gallery-catalog.mjs`: a new pattern must be added there (and to the pattern catalog tables above, where
   the limits come from), or it lands in "Uncategorized" and the script prints a warning.
 - `docs/foundations.md` and `docs/layout.md` are the written source of truth; Storybook is the visual truth.
-  If they diverge, tell the user. (vinta-slidedeck regenerates the token reference in `docs/foundations.md` with
-  `npm run sync-harness`; that script is not ported here, so update that section by hand when a token changes.)
+  If they diverge, tell the user.
+- Changed a token? Run `npm run sync-harness` (regenerates the token reference in `docs/foundations.md` from
+  `tokens.css`) and review the text.
+- New or different team photo crop? Edit `assets/team-photos/crops.json` and run `npm run team-photos -- crops`
+  (`--force` to rewrite existing crops; `library <originals-dir>` adds photos to the optimized library). Needs
+  `cwebp` (`brew install webp`) and macOS `sips`.
 
 ---
 
@@ -270,7 +275,8 @@ props): when omitted, they show the original Figma asset; pass `<img src="..." /
 | `SlideClosing` | `contact.avatar`, `logo`, `background` |
 Client images: `public/assets/clients/<client>/`.
 
-**Team photos:** `public/assets/team/<key>.webp`, pre-cut crops (the source photo library and its cropping script stay in vinta-slidedeck). Keys: `cover-split`, `cover-mesh`, `card-a/b/c`,
+**Team photos:** `public/assets/team/<key>.webp`, cut by `npm run team-photos -- crops` from the optimized library in
+`assets/team-photos/` (`crops.json` says which photo and box each key uses). Keys: `cover-split`, `cover-mesh`, `card-a/b/c`,
 `points`, `rich-feature`, `rich-band`, `rich-list`, `rich-glass-a/b`, `rich-deliver`, `teamph-1/2/3`, `team-1/2/3`, `agenda`,
 `big-stat`, `content`, `two-column`, `quote-panel`, `quote-bleed`, `quote-circle`, `case-split`, `case-band`. Studio portraits
 (`team-*`, `teamph-*`) are for team slides only; names next to them in stories are examples. Never pair a team photo with a

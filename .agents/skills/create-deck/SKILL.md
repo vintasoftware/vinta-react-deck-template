@@ -141,5 +141,5 @@ repository: work in a checkout of the template (clone it next to this one if the
 
 - **Reorder:** rename files (the `NN-` prefix drives order).
 - **Change a slide:** edit only that file; keep its pattern unless the user asks for another.
-- **Controls:** `←/→` move, `o` overview grid, `f` fullscreen, `p` presenter window (clock, timer, notes,
+- **Controls:** `←/→` or a click move (left third of the window goes back), `o` overview grid, `f` fullscreen, `p` presenter window (clock, timer, notes,
   previous/next slides; synced with the deck window), number + `Enter` to jump.

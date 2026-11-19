@@ -1,0 +1,326 @@
+{
+ "cover-split": {
+  "source": "VINTA_GRUPOS_15",
+  "x": 0,
+  "y": 123,
+  "w": 1600,
+  "h": 2154,
+  "slot": [
+   792,
+   1066
+  ],
+  "note": "Woman working on a laptop on a sofa"
+ },
+ "cover-mesh": {
+  "source": "VINTA_GRUPOS_1",
+  "x": 256,
+  "y": 0,
+  "w": 1888,
+  "h": 1600,
+  "slot": [
+   708,
+   600
+  ],
+  "note": "Three on a sofa with a laptop"
+ },
+ "agenda": {
+  "source": "VINTA_127",
+  "x": 240,
+  "y": 14,
+  "w": 2160,
+  "h": 1412,
+  "slot": [
+   520,
+   340
+  ],
+  "note": "Two colleagues talking at a laptop"
+ },
+ "big-stat": {
+  "source": "VINTA_110",
+  "x": 0,
+  "y": 318,
+  "w": 2400,
+  "h": 1125,
+  "slot": [
+   640,
+   300
+  ],
+  "note": "Team at a long table"
+ },
+ "content": {
+  "source": "VINTA_GRUPOS_42",
+  "x": 0,
+  "y": 406,
+  "w": 2400,
+  "h": 947,
+  "slot": [
+   760,
+   300
+  ],
+  "note": "Two people with laptops among plants"
+ },
+ "two-column": {
+  "source": "VINTA_GRUPOS_56",
+  "x": 0,
+  "y": 188,
+  "w": 1600,
+  "h": 1448,
+  "slot": [
+   840,
+   760
+  ],
+  "note": "Bearded engineer smiling at a laptop"
+ },
+ "card-a": {
+  "source": "VINTA_128",
+  "x": 120,
+  "y": 0,
+  "w": 2280,
+  "h": 1370,
+  "slot": [
+   466,
+   280
+  ],
+  "note": "Two colleagues laughing at a laptop"
+ },
+ "card-b": {
+  "source": "VINTA_155",
+  "x": 0,
+  "y": 0,
+  "w": 2400,
+  "h": 1442,
+  "slot": [
+   466,
+   280
+  ],
+  "note": "Two colleagues at a table"
+ },
+ "card-c": {
+  "source": "VINTA_144",
+  "x": 0,
+  "y": 0,
+  "w": 2400,
+  "h": 1442,
+  "slot": [
+   466,
+   280
+  ],
+  "note": "Three people discussing"
+ },
+ "points": {
+  "source": "VINTA_GRUPOS_45",
+  "x": 722,
+  "y": 0,
+  "w": 1436,
+  "h": 1600,
+  "slot": [
+   700,
+   780
+  ],
+  "note": "Three engineers around two laptops"
+ },
+ "case-split": {
+  "source": "VINTA_GRUPOS_16",
+  "x": 0,
+  "y": 185,
+  "w": 1600,
+  "h": 2030,
+  "slot": [
+   840,
+   1066
+  ],
+  "note": "Man smiling at a laptop"
+ },
+ "case-band": {
+  "source": "VINTA_GRUPOS_33",
+  "x": 0,
+  "y": 731,
+  "w": 2400,
+  "h": 458,
+  "slot": [
+   1920,
+   366
+  ],
+  "note": "Team at a reception desk"
+ },
+ "quote-bleed": {
+  "source": "VINTA_GRUPOS_12",
+  "x": 0,
+  "y": 134,
+  "w": 2400,
+  "h": 1332,
+  "slot": [
+   1920,
+   1066
+  ],
+  "note": "Team on sofas"
+ },
+ "quote-circle": {
+  "source": "VINTA_GRUPOS_56-copy",
+  "x": 40,
+  "y": 0,
+  "w": 1520,
+  "h": 1520,
+  "slot": [
+   552,
+   552
+  ],
+  "note": "Bearded man smiling"
+ },
+ "quote-panel": {
+  "source": "VINTA_GRUPOS_74",
+  "x": 0,
+  "y": 67,
+  "w": 1600,
+  "h": 2267,
+  "slot": [
+   480,
+   680
+  ],
+  "note": "Man with a laptop by a brick wall"
+ },
+ "team-1": {
+  "source": "VINTA__13",
+  "x": 304,
+  "y": 128,
+  "w": 992,
+  "h": 992,
+  "slot": [
+   300,
+   300
+  ],
+  "note": "Studio portrait, man with glasses"
+ },
+ "team-2": {
+  "source": "VINTA__38",
+  "x": 304,
+  "y": 104,
+  "w": 992,
+  "h": 992,
+  "slot": [
+   300,
+   300
+  ],
+  "note": "Studio portrait, bald man with beard"
+ },
+ "team-3": {
+  "source": "VINTA__24",
+  "x": 304,
+  "y": 104,
+  "w": 992,
+  "h": 992,
+  "slot": [
+   300,
+   300
+  ],
+  "note": "Studio portrait, woman with glasses"
+ },
+ "teamph-1": {
+  "source": "VINTA__25",
+  "x": 120,
+  "y": 159,
+  "w": 1360,
+  "h": 1123,
+  "slot": [
+   436,
+   360
+  ],
+  "note": "Studio portrait"
+ },
+ "teamph-2": {
+  "source": "VINTA__15",
+  "x": 120,
+  "y": 159,
+  "w": 1360,
+  "h": 1123,
+  "slot": [
+   436,
+   360
+  ],
+  "note": "Studio portrait"
+ },
+ "teamph-3": {
+  "source": "VINTA__31",
+  "x": 120,
+  "y": 159,
+  "w": 1360,
+  "h": 1123,
+  "slot": [
+   436,
+   360
+  ],
+  "note": "Studio portrait"
+ },
+ "rich-feature": {
+  "source": "VINTA_GRUPOS_2",
+  "x": 0,
+  "y": 23,
+  "w": 2400,
+  "h": 1577,
+  "slot": [
+   852,
+   560
+  ],
+  "note": "Three on a sofa"
+ },
+ "rich-band": {
+  "source": "VINTA_GRUPOS_87",
+  "x": 0,
+  "y": 170,
+  "w": 2400,
+  "h": 525,
+  "slot": [
+   1920,
+   420
+  ],
+  "note": "Three people standing"
+ },
+ "rich-list": {
+  "source": "VINTA_GRUPOS_3",
+  "x": 427,
+  "y": 0,
+  "w": 1546,
+  "h": 1600,
+  "slot": [
+   692,
+   716
+  ],
+  "note": "Three on a sofa"
+ },
+ "rich-glass-a": {
+  "source": "VINTA_GRUPOS_65",
+  "x": 0,
+  "y": 98,
+  "w": 2400,
+  "h": 1084,
+  "slot": [
+   620,
+   280
+  ],
+  "note": "Two colleagues laughing"
+ },
+ "rich-glass-b": {
+  "source": "VINTA_159",
+  "x": 0,
+  "y": 130,
+  "w": 2400,
+  "h": 1084,
+  "slot": [
+   620,
+   280
+  ],
+  "note": "Two colleagues in conversation"
+ },
+ "rich-deliver": {
+  "source": "VINTA_GRUPOS_11",
+  "x": 0,
+  "y": 217,
+  "w": 2400,
+  "h": 1326,
+  "slot": [
+   760,
+   420
+  ],
+  "note": "Two on a sofa with laptops"
+ }
+}
