@@ -101,5 +101,6 @@ Optional props: `fontSize` (px), `dots` (the window's traffic-light dots, on by 
 
 - **Set the cover/closing:** edit `src/slides/01-cover.tsx` and the closing slide (title, `MetaRow`, contact).
 - **Reorder:** rename files (the `NN-` prefix drives order).
-- **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid.
+- **Present:** `npm run dev`, open `/`, press `f` for fullscreen, `←/→` to move, `o` for the overview grid, `p` for the presenter window (clock, timer, notes, previous/next slides; synced with the deck window).
+- **Speaker notes:** add `notes` to a slide's `meta` (`export const meta = { title: "…", notes: "…" }`). Plain text, `\n` for line breaks; shown only in the presenter window, never on the slide.
 - **Turn an outline into a deck:** map each section to the closest layout from `/template`, create one `src/slides/NN-*.tsx` per slide, then screenshot-check each with `?shot=N`.

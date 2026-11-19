@@ -1,6 +1,10 @@
 import { Slide19 } from "@/template";
 
-export const meta = { title: "Start here" };
+export const meta = {
+  title: "Start here",
+  notes:
+    "Three steps to a deck:\n1. Add a slide file under src/slides/.\n2. Pick a layout from /template.\n3. Check CATALOG.md and AUTHORING.md for props and tokens.",
+};
 
 /** Onboarding — delete this once you're building. Layout: template Slide19 (see CATALOG.md). */
 export default function StartHere() {
