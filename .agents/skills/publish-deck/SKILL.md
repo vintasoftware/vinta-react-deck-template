@@ -34,6 +34,10 @@ the slides, the next build keeps them.
    HTML was edited by hand (above). It fails on a missing image, a script error or any network request: fix it
    and run again. In `output/exports/<name>/` it writes the HTML, `text.txt` (each slide's words and links) and
    `artifact.json` (what to publish).
+   **Size:** an artifact page holds at most 16 MB. The build embeds each image once and PNGs over 100 KB as WebP
+   (with `cwebp`; if it says cwebp is missing, ask the user to `brew install webp`), and when the HTML would be over
+   16 MB it fails without writing anything and lists the heaviest images. Then shrink or drop those images in
+   `public/assets` (WebP or JPEG for photos) or split the deck; never publish an HTML over the limit.
 2. **Scan before publishing.** Read `text.txt` whole, plus any text edited in the HTML by hand since (`text.txt`
    doesn't have it). Stop, publish nothing and tell the user if it has:
    - patient or health data, real or simulated (never PHI);

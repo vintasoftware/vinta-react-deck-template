@@ -10,11 +10,16 @@
 //
 // Output in output/exports/<name>/ (gitignored): <name>.html, text.txt (each slide's words and links, to scan
 // before publishing), artifact.json (what to pass to the Artifact tool) and, with --shots, artifact-preview/.
-import { execFileSync } from 'node:child_process'
+//
+// Size: a Claude artifact page holds at most 16 MB, so each image is embedded once (by content) and PNGs over
+// 100 KB are re-encoded to WebP with `cwebp` (brew install webp; cached in output/.cache/webp/), keeping the PNG
+// when WebP isn't smaller. Without cwebp the PNGs go in as they are. A build over the limit fails before writing.
+import { execFile, execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { promisify } from 'node:util'
 import { build } from 'vite'
 import { chromium } from 'playwright'
 
@@ -22,7 +27,10 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const PUBLIC = path.join(ROOT, 'public')
 const DECKS = ['main', 'patterns', 'samples']
 const WAIT_MS = 1500 // time per slide for animations to load their images
-const WARN_MB = 25
+const LIMIT_MB = 16 // Claude artifact page limit; MB here is 10^6 bytes, the conservative reading
+const WEBP_MIN_BYTES = 100 * 1024 // smaller PNGs (logos, icons) stay lossless
+const WEBP_ARGS = ['-q', '88', '-m', '6', '-alpha_q', '100', '-metadata', 'none'] // no visible loss on the backgrounds
+const WEBP_CACHE = path.join(ROOT, 'output', '.cache', 'webp')
 const MIME = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.gif': 'image/gif', '.mp4': 'video/mp4', '.webm': 'video/webm' }
 
 const argv = process.argv.slice(2)
@@ -104,11 +112,25 @@ for (const [, , p] of css.matchAll(/url\((['"]?)(\/assets\/[^'")]+)\1\)/g)) used
   if (errors.length) fail(`Errors rendering the deck:\n- ${[...new Set(errors)].join('\n- ')}`)
 }
 
-// 3. Assemble the final HTML with the path → data URI map
-const assets = {}
-for (const asset of [...used].sort()) assets[asset] = dataUri(path.join(PUBLIC, asset))
-css = css.replace(/url\((['"]?)(\/assets\/[^'")]+)\1\)/g, (m, _q, p) => (assets[p] ? `url("${assets[p]}")` : m))
-const html = renderHtml(title, css, js, assets)
+// 3. Assemble the final HTML with the path → data URI map (each image once, heavy PNGs as WebP)
+const images = await embedImages([...used].sort())
+css = css.replace(/url\((['"]?)(\/assets\/[^'")]+)\1\)/g, (m, _q, p) =>
+  p in images.index ? `url("${images.uris[images.index[p]]}")` : m,
+)
+const html = renderHtml(title, css, js, images)
+const mb = Buffer.byteLength(html) / 1e6
+if (mb > LIMIT_MB) {
+  const heaviest = [...images.list]
+    .sort((a, b) => b.size - a.size)
+    .slice(0, 8)
+    .map((e) => `- ${(e.size / 1e6).toFixed(1)} MB  ${e.paths.join(', ')}${e.webp ? ' (as WebP)' : ''}`)
+  fail(
+    `The HTML would be ${mb.toFixed(1)} MB, over the ${LIMIT_MB} MB a Claude artifact page holds; nothing was written.\n` +
+      (images.cwebp ? '' : 'cwebp was not found, so PNGs went in uncompressed: install it (brew install webp) and build again.\n') +
+      `Heaviest embedded images:\n${heaviest.join('\n')}\n` +
+      'Shrink or drop images in public/assets (WebP or JPEG for photos), or split the deck.',
+  )
+}
 const outFile = path.join(dir, `${slug}.html`)
 const outUrl = pathToFileURL(outFile).href
 // The HTML may have been edited by hand since the last build: keep that version instead of overwriting it.
@@ -165,7 +187,6 @@ writeManifest({})
   await page.close()
   await browser.close()
   if (errors.length) fail(`The final HTML is not self-contained:\n- ${[...new Set(errors)].join('\n- ')}`)
-  const mb = Buffer.byteLength(html) / 1024 / 1024
   const textFile = path.join(dir, 'text.txt')
   writeFileSync(textFile, `${sections.join('\n\n')}\n\n# Links\n${[...links].sort().join('\n')}\n`)
 
@@ -175,16 +196,76 @@ writeManifest({})
     mb: Number(mb.toFixed(1)),
   })
 
-  console.log(`\nArtifact: ${path.relative(ROOT, outFile)} (${count} slides, ${used.size} images, ${mb.toFixed(1)} MB)`)
+  const webp = images.list.filter((e) => e.webp)
+  const saved = webp.reduce((sum, e) => sum + e.originalSize - e.size, 0)
+  console.log(`\nArtifact: ${path.relative(ROOT, outFile)} (${count} slides, ${used.size} images, ${mb.toFixed(1)} MB of ${LIMIT_MB})`)
+  if (webp.length) console.log(`Images: ${webp.length} PNGs embedded as WebP, ${(saved / 1e6).toFixed(1)} MB smaller`)
   console.log(`Scan: ${path.relative(ROOT, textFile)} · Publish: ${path.relative(ROOT, manifestFile)}`)
   if (shots) console.log(`Preview: ${path.relative(ROOT, path.join(dir, 'artifact-preview'))}/`)
-  if (mb > WARN_MB) console.warn(`Warning: file over ${WARN_MB} MB. Large images in public/assets weigh more than everything else.`)
 }
 
-function renderHtml(docTitle, styles, script, assetMap) {
+// The data URIs for the images in use: one per distinct content (paths with the same bytes share it), PNGs over
+// WEBP_MIN_BYTES re-encoded to WebP when cwebp is installed and the WebP is smaller.
+async function embedImages(paths) {
+  const cwebp = cwebpVersion()
+  if (!cwebp) console.warn('cwebp not found (brew install webp): PNGs are embedded uncompressed.')
+  const byHash = new Map()
+  for (const p of paths) {
+    const file = path.join(PUBLIC, p)
+    const bytes = readFileSync(file)
+    const hash = sha256(bytes)
+    if (byHash.has(hash)) byHash.get(hash).paths.push(p)
+    else byHash.set(hash, { paths: [p], file, bytes, hash })
+  }
+  const list = await Promise.all(
+    [...byHash.values()].map(async ({ paths, file, bytes, hash }) => {
+      let type = MIME[path.extname(file).toLowerCase()] ?? 'application/octet-stream'
+      let data = bytes
+      if (cwebp && type === 'image/png' && bytes.length > WEBP_MIN_BYTES) {
+        const webp = await toWebp(file, hash, cwebp)
+        if (webp.length < bytes.length) [type, data] = ['image/webp', webp]
+      }
+      const uri = `data:${type};base64,${data.toString('base64')}`
+      return { paths, uri, size: uri.length, originalSize: Math.ceil(bytes.length / 3) * 4, webp: data !== bytes }
+    }),
+  )
+  const index = {}
+  list.forEach((e, i) => e.paths.forEach((p) => (index[p] = i)))
+  return { uris: list.map((e) => e.uri), index, list, cwebp }
+}
+
+// Cached by PNG content, cwebp version and settings, so rebuilding a deck doesn't re-encode.
+async function toWebp(file, hash, version) {
+  const key = sha256(`${hash} ${version} ${WEBP_ARGS.join(' ')}`).slice(0, 32)
+  const out = path.join(WEBP_CACHE, `${key}.webp`)
+  if (!existsSync(out)) {
+    mkdirSync(WEBP_CACHE, { recursive: true })
+    const tmp = `${out}.${process.pid}.tmp`
+    try {
+      await promisify(execFile)('cwebp', ['-quiet', ...WEBP_ARGS, file, '-o', tmp])
+    } catch (err) {
+      fail(`cwebp failed on ${path.relative(ROOT, file)}: ${err.stderr || err.message}`)
+    }
+    renameSync(tmp, out)
+  }
+  return readFileSync(out)
+}
+
+function cwebpVersion() {
+  try {
+    return execFileSync('cwebp', ['-version'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim()
+  } catch {
+    return ''
+  }
+}
+
+function renderHtml(docTitle, styles, script, images) {
   const safe = (s) => s.replace(/<\/(script|style)/gi, '<\\/$1')
   const json = (v) => JSON.stringify(v).replace(/</g, '\\u003c')
-  const map = assetMap ? `window.__DECK_ASSETS__=${json(assetMap)};` : ''
+  // Path → data URI, written as path → index into the list of URIs so an image shared by several paths goes in once.
+  const map = images
+    ? `window.__DECK_ASSETS__=(function(d,m){for(var k in m)m[k]=d[m[k]];return m})(${json(images.uris)},${json(images.index)});`
+    : ''
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -222,11 +303,6 @@ function trackErrors(page) {
   page.on('pageerror', (err) => errors.push(`script error: ${err.message}`))
   page.on('console', (msg) => msg.type() === 'error' && !msg.text().includes('ERR_FAILED') && errors.push(`console: ${msg.text()}`))
   return errors
-}
-
-function dataUri(file) {
-  const type = MIME[path.extname(file).toLowerCase()] ?? 'application/octet-stream'
-  return `data:${type};base64,${readFileSync(file).toString('base64')}`
 }
 
 // What to pass to the Artifact tool; the description's fixed shape finds the artifact again from another session.
